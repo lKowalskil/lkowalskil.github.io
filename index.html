@@ -1,237 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Chrono by Nyxelium — professional time tracking, Pomodoro focus, and productivity analytics in a privacy-first package.">
-    <title>Chrono – Time Tracker by Nyxelium</title>
+    <meta name="description"
+        content="Nyxelium builds small, offline-first Android apps — Chrono, Pocket Cult, Mossby and Nuzzle. No account to create, free to use, and easy to keep.">
+    <meta name="theme-color" content="#101318">
+    <title>Nyxelium — Offline-first apps, engineered to be kept</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nyxelium — Offline-first apps, engineered to be kept">
+    <meta property="og:description"
+        content="Small, calm, offline-first Android apps. No account to create, free to use, available on Google Play.">
+    <meta property="og:url" content="https://lkowalskil.github.io/">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
-<body>
-    <a class="skip-link" href="#main">Skip to content</a>
 
+<body>
+    <a class="skip-link" href="#apps">Skip to content</a>
+
+    <!-- ═══ HEADER ═══ -->
     <header class="site-header">
-        <div class="container header-container">
-            <div class="brand">
-                <span class="brand-mark" aria-hidden="true">⌛</span>
-                <span class="brand-name">Chrono</span>
-            </div>
-            <nav class="site-nav" aria-label="Primary">
-                <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
-                    <span class="nav-toggle-bar"></span>
-                    <span class="nav-toggle-bar"></span>
-                    <span class="nav-toggle-bar"></span>
-                    <span class="sr-only">Toggle navigation</span>
-                </button>
-                <ul id="site-menu">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#audience">Who It’s For</a></li>
-                    <li><a href="#safety">Data Safety</a></li>
-                    <li><a href="#developer">Developer</a></li>
-                    <li><a href="#download" class="cta-link">Download</a></li>
-                </ul>
-            </nav>
-        </div>
+        <a class="header-brand" href="#top">
+            <span class="mark" aria-hidden="true"></span>NYXELIUM
+        </a>
+        <div class="header-tag">ANDROID DEV</div>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="#apps">Apps</a>
+            <a href="#spec">Spec</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <a class="header-cta" href="#apps">Get the apps <span aria-hidden="true">→</span></a>
     </header>
 
-    <main id="main">
-        <section class="hero" id="download">
-            <div class="container hero-content">
-                <div class="hero-copy">
-                    <p class="eyebrow">Nyxelium presents</p>
-                    <h1>Chrono – Time Tracker & Pomodoro Powerhouse</h1>
-                    <p class="lead">Measure, analyze, and level up every hour. Chrono pairs elegant time tracking with a focused Pomodoro rhythm so you can ship work, meet deadlines, and protect deep focus.</p>
+    <main>
+        <!-- ═══ HERO ═══ -->
+        <section id="top" class="hero">
+            <div class="hero-copy">
+                <div class="hero-grid-bg" aria-hidden="true"></div>
+                <div class="hero-inner">
+                    <p class="hero-eyebrow">/// OFFLINE-FIRST · NO ACCOUNT NEEDED · FREE TO USE</p>
+                    <h1 class="hero-title">
+                        <span class="line l1">Offline apps.</span>
+                        <span class="line l2">Engineered</span>
+                        <span class="line l3">to be <span class="kept">kept<span class="caret"
+                                    aria-hidden="true"></span></span></span>
+                    </h1>
+                    <p class="hero-lead">Nyxelium builds small, calm Android tools that work offline and stay out of
+                        your way — no account to create, no clutter.</p>
                     <div class="hero-actions">
-                        <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.nyxelium.chrono" target="_blank" rel="noopener">Get Chrono on Google Play</a>
-                        <a class="btn secondary" href="#features">Explore Capabilities</a>
+                        <a class="btn btn-solid" href="#apps">Browse apps ↓</a>
+                        <a class="btn btn-outline" href="#spec">Read the spec</a>
                     </div>
-                    <dl class="app-highlights">
+                </div>
+            </div>
+            <div class="hero-icons">
+                <div class="hero-icons-row">
+                    <div class="icon-cell br pop1" data-parallax="-0.03">
+                        <img src="assets/img/chrono-icon.png" alt="Chrono app icon">
+                    </div>
+                    <div class="icon-cell rot pop2" data-parallax="0.045">
+                        <img src="assets/img/cult-icon.png" alt="Pocket Cult app icon">
+                    </div>
+                </div>
+                <div class="hero-icons-row">
+                    <div class="icon-cell br pop3" data-parallax="0.06">
+                        <img src="assets/img/mossby-icon.png" alt="Mossby app icon">
+                    </div>
+                    <div class="icon-cell rot pop4" data-parallax="-0.045">
+                        <img src="assets/img/nuzzle-icon.png" alt="Nuzzle app icon">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ MARQUEE ═══ -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>NO ACCOUNT NEEDED /// OFFLINE-FIRST /// FREE TO USE /// BUILT WITH FLUTTER /// NO ACCOUNT NEEDED
+                    /// OFFLINE-FIRST /// FREE TO USE /// BUILT WITH FLUTTER ///&nbsp;</span>
+                <span>NO ACCOUNT NEEDED /// OFFLINE-FIRST /// FREE TO USE /// BUILT WITH FLUTTER /// NO ACCOUNT NEEDED
+                    /// OFFLINE-FIRST /// FREE TO USE /// BUILT WITH FLUTTER ///&nbsp;</span>
+            </div>
+        </div>
+
+        <!-- ═══ STATS ═══ -->
+        <section class="stats" aria-label="Studio at a glance">
+            <div><span class="num" data-count="3">3</span> — LIVE ON GOOGLE PLAY</div>
+            <div><span class="num" data-count="11">11</span> — LANGUAGES</div>
+            <div><span class="num"><span data-count="100">100</span>%</span> — FREE TO START</div>
+            <div><span class="num">0</span> — ACCOUNTS NEEDED</div>
+        </section>
+
+        <!-- ═══ APPS ═══ -->
+        <section id="apps" class="apps">
+            <!-- Chrono -->
+            <article class="app-card br reveal" data-reveal="0">
+                <div class="app-card-head">
+                    <div class="app-id">
+                        <img src="assets/img/chrono-icon.png" alt="Chrono icon">
                         <div>
-                            <dt>500+</dt>
-                            <dd>Downloads</dd>
+                            <div class="app-name">Chrono</div>
+                            <div class="app-genre">Time Tracker · Tools</div>
                         </div>
-                        <div>
-                            <dt>Rated for 3+</dt>
-                            <dd>Content Rating</dd>
-                        </div>
-                        <div>
-                            <dt>No Ads</dt>
-                            <dd>During Focus Sessions</dd>
-                        </div>
-                    </dl>
+                    </div>
+                    <span class="chip"><span class="dot"></span>LIVE ON PLAY</span>
                 </div>
-                <div class="hero-card" role="presentation">
-                    <div class="card-screen">
-                        <div class="card-headline">Deep focus unlocked</div>
-                        <ul class="card-list">
-                            <li>Pomodoro focus cycles</li>
-                            <li>Real-time activity logging</li>
-                            <li>Offline-first data storage</li>
-                        </ul>
-                        <div class="card-footer">Version 1.0.5 live · Updated Aug 20, 2025</div>
+                <div class="app-media">
+                    <img class="app-shot" src="assets/img/chrono-01.png" alt="Chrono screen">
+                    <img class="app-shot offset" src="assets/img/chrono-02.png" alt="Chrono screen">
+                    <div class="app-text">
+                        <p class="app-tagline">Stop guessing where your time goes.</p>
+                        <p class="app-desc">A Pomodoro focus timer and full time tracker in one offline app — for
+                            freelancers logging billable hours, students structuring study sessions, and anyone doing
+                            deep work.</p>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="section" id="whats-new">
-            <div class="container">
-                <h2>What’s New in 1.0.5</h2>
-                <div class="split">
-                    <ul class="feature-list">
-                        <li><strong>Pomodoro focus timer</strong> with configurable work, short break, and long break durations.</li>
-                        <li><strong>Streak tracking</strong> so momentum and consistency stay visible.</li>
-                        <li><strong>Secure data clearing</strong> to reset quietly when you need a fresh start.</li>
-                        <li><strong>Improved onboarding & localization</strong> for smoother first sessions worldwide.</li>
-                        <li><strong>Bug fixes & stability</strong> delivering a calmer, crash-free experience.</li>
-                    </ul>
-                    <div class="update-card">
-                        <p class="card-kicker">Release cadence</p>
-                        <h3>Quality that compounds</h3>
-                        <p>Chrono evolves with the community. Feedback cycles directly shape roadmap milestones, from richer analytics to team-friendly exports.</p>
-                        <a class="inline-link" href="mailto:hello@nyxelium.dev">Share product feedback →</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section accent" id="features">
-            <div class="container">
-                <h2>Built for Precision and Flow</h2>
-                <p class="section-lead">Chrono trims friction out of focus work with instant logging, structured breaks, and analytics that reveal the real story behind every day.</p>
-                <div class="feature-grid">
-                    <article class="feature-card">
-                        <h3>Fast Start & Edit</h3>
-                        <p>Tap, track, and tweak within seconds. Chrono safeguards accuracy with explicit edits and note-taking.</p>
-                    </article>
-                    <article class="feature-card">
-                        <h3>Pomodoro Engine</h3>
-                        <p>Automatic focus / short break / long break cycles keep energy high without manual juggling.</p>
-                    </article>
-                    <article class="feature-card">
-                        <h3>Custom Categories</h3>
-                        <p>Color-coded activity tags and 200+ icons create a visual map of where effort flows.</p>
-                    </article>
-                    <article class="feature-card">
-                        <h3>Advanced Analytics</h3>
-                        <p>Day, week, month, and year breakdowns surface trends, imbalances, and hidden drains.</p>
-                    </article>
-                    <article class="feature-card">
-                        <h3>Offline First</h3>
-                        <p>SQLite storage keeps data local, private, and resilient—no account required.</p>
-                    </article>
-                    <article class="feature-card">
-                        <h3>CSV Exports</h3>
-                        <p>Generate clean timesheets for invoice prep, retrospective analytics, and archival.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="audience">
-            <div class="container audience-grid">
-                <div>
-                    <h2>Designed for High-Intent Work</h2>
-                    <p class="section-lead">Chrono supports creators who balance deep focus with clear reporting. Students, freelancers, and teams rely on its clarity to defend meaningful hours.</p>
-                </div>
-                <dl class="audience-list">
-                    <div>
-                        <dt>Freelancers & Consultants</dt>
-                        <dd>Billable clarity, clean exports, and category insights for every client.</dd>
-                    </div>
-                    <div>
-                        <dt>Students & Lifelong Learners</dt>
-                        <dd>Structured Pomodoro sessions, streak accountability, and mindful breaks.</dd>
-                    </div>
-                    <div>
-                        <dt>Developers & Makers</dt>
-                        <dd>Context switching awareness and deep work support for complex builds.</dd>
-                    </div>
-                    <div>
-                        <dt>Remote Teams</dt>
-                        <dd>Track focus versus meetings to calibrate async collaboration.</dd>
-                    </div>
-                </dl>
-            </div>
-        </section>
-
-        <section class="section dark" id="safety">
-            <div class="container safety-grid">
-                <div>
-                    <h2>Data Safety & Trust</h2>
-                    <p class="section-lead">Privacy is built-in. Chrono stores everything locally and keeps your attention free from tracking pixels.</p>
-                </div>
-                <ul class="safety-list">
-                    <li>📍 <strong>No data shared</strong> with third parties.</li>
-                    <li>🔒 <strong>No data collected</strong> beyond what you save on-device.</li>
-                    <li>👪 <strong>Google Play Families Policy</strong> compliance for a trustworthy experience.</li>
-                    <li>🗃️ <strong>Local-first storage</strong> and manual CSV export puts you in control.</li>
+                <ul class="app-features">
+                    <li>Pomodoro cycles</li>
+                    <li>Daily &amp; weekly analytics</li>
+                    <li>200+ category icons</li>
+                    <li>CSV &amp; calendar export</li>
+                    <li>Home-screen widget</li>
+                    <li>11 languages</li>
                 </ul>
-            </div>
+                <a class="btn btn-solid btn-sm"
+                    href="https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker" target="_blank"
+                    rel="noopener">Get on Google Play</a>
+            </article>
+
+            <!-- Pocket Cult -->
+            <article class="app-card reveal" data-reveal="120">
+                <div class="app-card-head">
+                    <div class="app-id">
+                        <img src="assets/img/cult-icon.png" alt="Pocket Cult icon">
+                        <div>
+                            <div class="app-name">Pocket Cult</div>
+                            <div class="app-genre">Idle RPG · Simulation</div>
+                        </div>
+                    </div>
+                    <span class="chip"><span class="dot"></span>LIVE ON PLAY</span>
+                </div>
+                <div class="app-media">
+                    <img class="app-shot" src="assets/img/cult-01.png" alt="Pocket Cult screen">
+                    <img class="app-shot offset" src="assets/img/cult-02.png" alt="Pocket Cult screen">
+                    <div class="app-text">
+                        <p class="app-tagline">Be the bad guy. Rule from the shadows.</p>
+                        <p class="app-desc">A tongue-in-cheek idle dungeon keeper — build an evil lair, summon a demon
+                            army, and crush the heroes who dare to raid it. Your cult works while you sleep.</p>
+                    </div>
+                </div>
+                <ul class="app-features">
+                    <li>15 buildings, 6 tiers</li>
+                    <li>10 unique minions</li>
+                    <li>Full offline progress</li>
+                    <li>Prestige &amp; ascension</li>
+                    <li>No forced ads</li>
+                    <li>6 languages</li>
+                </ul>
+                <a class="btn btn-solid btn-sm"
+                    href="https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon" target="_blank"
+                    rel="noopener">Get on Google Play</a>
+            </article>
+
+            <!-- Mossby -->
+            <article class="app-card br reveal" data-reveal="0">
+                <div class="app-card-head">
+                    <div class="app-id">
+                        <img src="assets/img/mossby-icon.png" alt="Mossby icon">
+                        <div>
+                            <div class="app-name">Mossby</div>
+                            <div class="app-genre">Plant Care · Home</div>
+                        </div>
+                    </div>
+                    <span class="chip"><span class="dot"></span>LIVE ON PLAY</span>
+                </div>
+                <div class="app-media">
+                    <img class="app-shot" src="assets/img/mossby-01.png" alt="Mossby screen">
+                    <img class="app-shot offset" src="assets/img/mossby-02.png" alt="Mossby screen">
+                    <div class="app-text">
+                        <p class="app-tagline">Stop killing your houseplants by accident.</p>
+                        <p class="app-desc">A calm plant-care advisor that warns you before a plant lands in a spot
+                            that's too dark — or before you pair two plants that shouldn't share a pot.</p>
+                    </div>
+                </div>
+                <ul class="app-features">
+                    <li>Smart watering schedules</li>
+                    <li>Light-aware placement</li>
+                    <li>Pairing warnings</li>
+                    <li>Zones, pots &amp; catalog</li>
+                    <li>Care streaks &amp; history</li>
+                    <li>Light &amp; dark themes</li>
+                </ul>
+                <a class="btn btn-solid btn-sm" href="https://play.google.com/store/apps/details?id=com.nyxelium.mossby"
+                    target="_blank" rel="noopener">Get on Google Play</a>
+            </article>
+
+            <!-- Nuzzle (in development) -->
+            <article class="app-card dev reveal" data-reveal="120">
+                <div class="app-card-head">
+                    <div class="app-id">
+                        <img src="assets/img/nuzzle-icon.png" alt="Nuzzle icon">
+                        <div>
+                            <div class="app-name">Nuzzle</div>
+                            <div class="app-genre">Pet Care · Lifestyle</div>
+                        </div>
+                    </div>
+                    <span class="chip dev"><span class="dot"></span>IN DEVELOPMENT</span>
+                </div>
+                <div class="app-media">
+                    <img class="app-shot" src="assets/img/nuzzle-01.png" alt="Nuzzle screen">
+                    <img class="app-shot offset" src="assets/img/nuzzle-02.png" alt="Nuzzle screen">
+                    <div class="app-text">
+                        <p class="app-tagline">Keep every pet healthy, gently.</p>
+                        <p class="app-desc">The calm, offline way to stay on top of feeding, meds, grooming and vet
+                            visits — with health flags that quietly surface what needs attention.</p>
+                    </div>
+                </div>
+                <ul class="app-features">
+                    <li>Auto-scheduled reminders</li>
+                    <li>Per-pet health timeline</li>
+                    <li>Weight tracking</li>
+                    <li>Household calendar</li>
+                    <li>Works offline</li>
+                </ul>
+                <a class="btn btn-solid btn-sm" href="mailto:kowalski.dev07@gmail.com">Follow along →</a>
+            </article>
         </section>
 
-        <section class="section" id="gallery">
-            <div class="container">
-                <h2>Interface Snapshots</h2>
-                <p class="section-lead">Chrono pairs calming typography with high contrast visual cues for rapid comprehension.</p>
-                <div class="gallery-grid">
-                    <figure class="gallery-card">
-                        <div class="gallery-placeholder">Session Timeline</div>
-                        <figcaption>Track and edit work blocks with precise timestamps.</figcaption>
-                    </figure>
-                    <figure class="gallery-card">
-                        <div class="gallery-placeholder">Pomodoro Flow</div>
-                        <figcaption>Automated focus and break cycles keep you on pace.</figcaption>
-                    </figure>
-                    <figure class="gallery-card">
-                        <div class="gallery-placeholder">Category Insights</div>
-                        <figcaption>Visual charts spotlight high-value versus interrupt-driven time.</figcaption>
-                    </figure>
-                    <figure class="gallery-card">
-                        <div class="gallery-placeholder">Dark Mode</div>
-                        <figcaption>Switch to low-light friendly layouts for late sessions.</figcaption>
-                    </figure>
+        <!-- ═══ SPEC ═══ -->
+        <section id="spec" class="spec">
+            <div class="spec-intro reveal" data-reveal="0">
+                <p class="section-eyebrow">/// THE SPEC</p>
+                <h2 class="section-h2">Every app ships against the same contract.</h2>
+                <p class="section-lead">Six requirements, checked before every release. If a feature breaks one of them,
+                    the feature doesn't ship.</p>
+            </div>
+            <div class="spec-grid">
+                <div class="spec-cell reveal" data-reveal="0">
+                    <div class="spec-num">REQ—01</div>
+                    <div class="spec-title">Offline-first</div>
+                    <div class="spec-desc">Core features work without a connection, and the content you create stays on
+                        your device.</div>
+                </div>
+                <div class="spec-cell reveal" data-reveal="70">
+                    <div class="spec-num">REQ—02</div>
+                    <div class="spec-title">No account needed</div>
+                    <div class="spec-desc">No sign-up, no login — open the app and start. Free versions show ads and use
+                        optional, consent-based analytics.</div>
+                </div>
+                <div class="spec-cell reveal" data-reveal="140">
+                    <div class="spec-num">REQ—03</div>
+                    <div class="spec-title">Zero friction</div>
+                    <div class="spec-desc">Open and go. No forced onboarding, no dark patterns, no nagging
+                        notifications.</div>
+                </div>
+                <div class="spec-cell reveal" data-reveal="210">
+                    <div class="spec-num">REQ—04</div>
+                    <div class="spec-title">Localized</div>
+                    <div class="spec-desc">Fully translated across many languages so the apps feel native wherever you
+                        are.</div>
+                </div>
+                <div class="spec-cell reveal" data-reveal="280">
+                    <div class="spec-num">REQ—05</div>
+                    <div class="spec-title">Light &amp; fast</div>
+                    <div class="spec-desc">Small downloads, smooth performance, accessible layouts in light and dark
+                        themes.</div>
+                </div>
+                <div class="spec-cell reveal" data-reveal="350">
+                    <div class="spec-num">REQ—06</div>
+                    <div class="spec-title">Fair pricing</div>
+                    <div class="spec-desc">Free to use, with honest optional upgrades — never a wall between you and the
+                        basics.</div>
                 </div>
             </div>
         </section>
 
-        <section class="section highlight" id="developer">
-            <div class="container developer-card">
-                <div>
-                    <p class="card-kicker">About Nyxelium</p>
-                    <h2>Human-focused, privacy-first tools</h2>
-                    <p>Nyxelium crafts thoughtful apps that respect attention, data, and momentum. Chrono is built in the open, shaped by the rhythms of modern knowledge work, and optimized for reliable daily use.</p>
-                </div>
-                <div class="developer-meta">
-                    <h3>Connect</h3>
-                    <ul>
-                        <li><a href="https://github.com/lKowalskil" target="_blank" rel="noopener">GitHub</a></li>
-                        <li><a href="https://nyxelium.dev" target="_blank" rel="noopener">nyxelium.dev</a></li>
-                        <li><a href="mailto:hello@nyxelium.dev">hello@nyxelium.dev</a></li>
-                    </ul>
-                </div>
+        <!-- ═══ STUDIO ═══ -->
+        <section class="studio">
+            <div class="studio-intro reveal" data-reveal="0">
+                <p class="section-eyebrow">/// THE STUDIO</p>
+                <h2 class="section-h2">One small studio. Built in the open.</h2>
+                <p>Nyxelium builds thoughtful Android apps that respect attention, data, and
+                    momentum. Every app is built with Flutter, shaped by real daily use, and refined release after
+                    release.</p>
+                <p>Have feedback or an idea? We'd genuinely love to hear it.</p>
             </div>
-        </section>
-
-        <section class="section cta-final">
-            <div class="container">
-                <h2>Track better. Focus deeper. Own your time.</h2>
-                <p>Install Chrono today, set up your first category, and experience how structured focus transforms output.</p>
-                <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.nyxelium.chrono" target="_blank" rel="noopener">Download Chrono</a>
+            <div class="studio-links reveal" data-reveal="120">
+                <a class="studio-link"
+                    href="https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker" target="_blank"
+                    rel="noopener">
+                    <span><span class="label">STORE</span>Apps on Google Play</span>
+                    <span class="arw">→</span>
+                </a>
+                <a class="studio-link" href="https://github.com/lKowalskil" target="_blank" rel="noopener">
+                    <span><span class="label">CODE</span>github.com/lKowalskil</span>
+                    <span class="arw">→</span>
+                </a>
+                <a class="studio-link" href="mailto:kowalski.dev07@gmail.com">
+                    <span><span class="label">EMAIL</span>kowalski.dev07@gmail.com</span>
+                    <span class="arw">→</span>
+                </a>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="container footer-container">
-            <p>&copy; <span id="current-year"></span> Nyxelium. All rights reserved.</p>
-            <a href="mailto:hello@nyxelium.dev">Support</a>
+    <!-- ═══ FOOTER ═══ -->
+    <footer id="contact" class="footer">
+        <div class="footer-top">
+            <div class="footer-cta reveal" data-reveal="0">
+                <h2>Your content.<br><span class="accent">Your device.</span><br>Yours to keep.</h2>
+                <a class="btn btn-accent" href="#apps">Explore the apps ↑</a>
+            </div>
+            <a class="footer-link" href="mailto:kowalski.dev07@gmail.com">
+                <span class="label">EMAIL</span>
+                <span>kowalski.dev07@gmail.com →</span>
+            </a>
+            <a class="footer-link" href="https://github.com/lKowalskil" target="_blank" rel="noopener">
+                <span class="label">CODE</span>
+                <span>github.com/lKowalskil →</span>
+            </a>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM — ALL RIGHTS
+                RESERVED</span>
+            <div class="footer-legal">
+                <a href="privacy-policy.html">MOSSBY PRIVACY</a>
+                <a href="privacy-policy-nuzzle.html">NUZZLE PRIVACY</a>
+                <a href="app-ads.txt">APP-ADS.TXT</a>
+            </div>
+            <span>GOOGLE PLAY IS A TRADEMARK OF GOOGLE LLC</span>
         </div>
     </footer>
 
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>

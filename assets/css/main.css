@@ -378,6 +378,7 @@ h1, h2, h3, p { margin: 0; }
   transition: border-color 0.2s var(--ease);
 }
 .app-features li:hover { border-color: var(--accent); }
+.app-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* ═══════════════════ SPEC ═══════════════════ */
 .spec {

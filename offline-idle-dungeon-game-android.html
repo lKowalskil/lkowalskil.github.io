@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="What makes an offline idle dungeon game satisfying? A practical look at offline progress, resource choices, upgrades, and prestige loops.">
+    <meta name="theme-color" content="#101318">
+    <title>Offline Idle Dungeon Games: What Makes Them Good?</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="What Makes an Offline Idle Dungeon Game Satisfying?">
+    <meta property="og:description"
+        content="Progress you can understand, upgrades that change decisions, and a prestige loop worth returning to.">
+    <meta property="og:url" content="https://lkowalskil.github.io/offline-idle-dungeon-game-android.html">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/cult/feature-graphic.png">
+    <link rel="canonical" href="https://lkowalskil.github.io/offline-idle-dungeon-game-android.html">
+
+    <link rel="icon" type="image/png" href="assets/img/cult-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Article",
+          "headline": "What Makes an Offline Idle Dungeon Game Satisfying?",
+          "description": "A practical look at offline progress, resource choices, upgrades, and prestige loops.",
+          "datePublished": "2026-07-23",
+          "dateModified": "2026-07-23",
+          "mainEntityOfPage": "https://lkowalskil.github.io/offline-idle-dungeon-game-android.html",
+          "author": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" },
+          "publisher": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" }
+        },
+        {
+          "@type": "VideoGame",
+          "name": "Pocket Cult: Idle Dungeon RPG",
+          "gamePlatform": "Android",
+          "genre": ["Idle", "Simulation", "Dark fantasy"],
+          "url": "https://lkowalskil.github.io/pocket-cult.html",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="pocket-cult.html">Pocket Cult</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon"
+            target="_blank" rel="noopener">Get Pocket Cult <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">GUIDE—03 · GAME DESIGN · 7 MIN READ</p>
+                <h1 class="guide-title">Progress should continue. Decisions should not disappear.</h1>
+                <p class="guide-deck">The parts of an offline idle dungeon game that make returning feel rewarding:
+                    understandable progress, meaningful upgrades, and a reset that changes the next run.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Featured game">
+                <div class="guide-product">
+                    <img src="assets/img/cult-icon.png" alt="Pocket Cult app icon">
+                    <div>
+                        <span class="guide-label">FEATURED GAME</span>
+                        <strong>Pocket Cult</strong>
+                        <p>An offline idle dungeon game where you build the lair and play the villain.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>OFFLINE PROGRESS</li>
+                    <li>DUNGEON MANAGEMENT</li>
+                    <li>10 MINION TYPES</li>
+                    <li>PRESTIGE + ETERNITY</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#offline-progress">Honest offline progress</a>
+                        <a href="#choices">Choices that survive automation</a>
+                        <a href="#upgrades">Upgrades you can feel</a>
+                        <a href="#prestige">A worthwhile prestige loop</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="offline-progress" class="article-section">
+                    <p class="guide-label">01 · THE PROMISE</p>
+                    <h2>Offline progress should respect the time you were away.</h2>
+                    <p>An idle game makes a clear promise: the system keeps moving when you are not staring at it. When
+                        the player returns, the game should explain how long it progressed, what was earned, and whether
+                        a cap or efficiency rule changed the result.</p>
+                    <p>The reward needs context. “You earned 48,000 gold” is less useful than showing what that gold now
+                        unlocks: a building tier, another minion, or the upgrade that removes the current bottleneck.</p>
+                    <div class="note">
+                        <p><strong>Good offline design creates a decision:</strong> the returning reward should open a
+                            choice, not merely produce a larger number to acknowledge.</p>
+                    </div>
+                </section>
+
+                <section id="choices" class="article-section">
+                    <p class="guide-label">02 · MANAGEMENT</p>
+                    <h2>Automation is satisfying when allocation still matters.</h2>
+                    <p>Idle does not have to mean passive. A strong dungeon-management loop asks where workers belong,
+                        which resource is limiting growth, and whether short-term production is worth a long-term
+                        sacrifice.</p>
+                    <div class="step-grid">
+                        <div class="step">
+                            <span class="step-num">CHOICE—01</span>
+                            <strong>Build</strong>
+                            <p>Expand capacity, unlock production, or prepare the next tier of the dungeon.</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-num">CHOICE—02</span>
+                            <strong>Staff</strong>
+                            <p>Assign different minions where their power and affinities matter most.</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-num">CHOICE—03</span>
+                            <strong>Balance</strong>
+                            <p>Keep production, upkeep, storage, and defense from becoming the same solved problem.</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-num">CHOICE—04</span>
+                            <strong>Sacrifice</strong>
+                            <p>Trade a useful asset now for the resource or permanent power that accelerates later.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="upgrades" class="article-section">
+                    <p class="guide-label">03 · MOMENTUM</p>
+                    <h2>The best upgrade changes your plan, not only the decimal point.</h2>
+                    <p>Percentage boosts have a place, but memorable upgrades alter what the player can do. A new
+                        building can create another resource path. A new minion can make an old room valuable again. A
+                        capacity increase can turn a constrained layout into an expansion opportunity.</p>
+                    <p>A readable idle game also surfaces the next meaningful target. The player should understand why
+                        progress slowed and identify at least two reasonable ways to address it. Hidden formulas may
+                        drive the simulation; visible consequences should drive the decision.</p>
+                    <h3>A practical test for an upgrade</h3>
+                    <ul>
+                        <li>Can the player explain what changed without opening a calculator?</li>
+                        <li>Does the upgrade unlock or improve a choice they already understand?</li>
+                        <li>Will it remain relevant for more than the next thirty seconds?</li>
+                    </ul>
+                </section>
+
+                <section id="prestige" class="article-section">
+                    <p class="guide-label">04 · RESET</p>
+                    <h2>Prestige works when the next run tells a different story.</h2>
+                    <p>A prestige reset asks the player to surrender visible progress for permanent power. That trade
+                        feels worthwhile when the next run moves faster, opens new upgrade routes, or changes which
+                        bottlenecks deserve attention.</p>
+                    <p>The timing is part of the strategy. Reset too early and the permanent reward is small; wait too
+                        long and temporary progress slows. Deeper layers can extend that question across many runs,
+                        provided each layer remains understandable.</p>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">05 · QUICK ANSWERS</p>
+                    <h2>Pocket Cult and offline idle play, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>Can Pocket Cult progress offline?</strong>
+                            <p>Yes. The cult generates resources while the app is closed and summarizes the return.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Is an internet connection required to play?</strong>
+                            <p>No. The core dungeon-building and idle progression work offline.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>What do you manage?</strong>
+                            <p>Buildings, production, storage, minion assignments, upkeep, defense, research, and
+                                permanent upgrades.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Does it have prestige?</strong>
+                            <p>Yes. Ascension awards permanent Corruption upgrades, with an additional Eternity layer
+                                for deeper progression.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="product-callout">
+                    <img src="assets/img/cult-icon.png" alt="">
+                    <div>
+                        <span class="guide-label">RULE FROM THE SHADOWS</span>
+                        <strong>Pocket Cult — Idle Dungeon RPG</strong>
+                        <p>Build the dungeon, summon the army, and let your cult work while you are away.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm"
+                        href="https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon" target="_blank"
+                        rel="noopener">Open Google Play →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="pocket-cult.html">POCKET CULT</a>
+                <a href="privacy-policy-cult.html">PRIVACY</a>
+            </div>
+            <span>LAST REVIEWED · JULY 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

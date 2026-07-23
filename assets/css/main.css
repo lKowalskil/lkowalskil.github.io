@@ -380,6 +380,51 @@ h1, h2, h3, p { margin: 0; }
 .app-features li:hover { border-color: var(--accent); }
 .app-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
+/* ═══════════════════ GUIDES ═══════════════════ */
+.guides {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  border-bottom: 1px solid var(--ink);
+}
+.guides-intro {
+  padding: 72px 56px;
+  border-right: 1px solid var(--ink);
+}
+.guides-intro .btn { margin-top: 30px; }
+.guide-links { display: grid; grid-template-rows: repeat(3, 1fr); }
+.guide-link {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(160px, 0.7fr) 1.2fr 1fr 28px;
+  gap: 24px;
+  align-items: center;
+  padding: 32px 38px;
+  border-bottom: 1px solid var(--hairline);
+  transition: background 0.2s var(--ease), padding-left 0.2s var(--ease);
+}
+.guide-link:last-child { border-bottom: none; }
+.guide-link:hover { background: var(--white); padding-left: 46px; }
+.guide-index {
+  font: 500 11px 'JetBrains Mono', monospace;
+  color: var(--accent);
+  letter-spacing: 0.035em;
+}
+.guide-link strong {
+  font-size: 19px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.guide-link > span:nth-child(3) {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.guide-link .arw {
+  color: var(--accent);
+  font-size: 22px;
+  justify-self: end;
+}
+
 /* ═══════════════════ SPEC ═══════════════════ */
 .spec {
   display: grid;
@@ -559,6 +604,10 @@ h1, h2, h3, p { margin: 0; }
   .spec-intro { border-right: none; padding: 56px 40px; }
   .spec-grid { grid-template-columns: 1fr 1fr; }
 
+  .guides { grid-template-columns: 1fr; }
+  .guides-intro { border-right: none; padding: 56px 40px; }
+  .guide-link { grid-template-columns: 0.7fr 1.2fr 1fr 28px; }
+
   .studio { grid-template-columns: 1fr; }
   .studio-intro { border-right: none; padding: 56px 40px; }
   .studio-link { padding: 24px 40px; }
@@ -581,7 +630,15 @@ h1, h2, h3, p { margin: 0; }
   .app-shot { width: 140px; }
   .app-text { flex-basis: 100%; margin-top: 8px; }
   .spec-grid { grid-template-columns: 1fr; }
-  .spec-intro, .studio-intro { padding: 48px 24px; }
+  .spec-intro, .studio-intro, .guides-intro { padding: 48px 24px; }
+  .guide-link {
+    grid-template-columns: 1fr 28px;
+    gap: 10px 18px;
+    padding: 26px 24px;
+  }
+  .guide-link:hover { padding-left: 28px; }
+  .guide-link strong, .guide-link > span:nth-child(3) { grid-column: 1; }
+  .guide-link .arw { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
   .studio-link { padding: 22px 24px; }
   .studio-link:hover { padding-left: 32px; }
   .section-h2 { font-size: 34px; }

@@ -14,12 +14,13 @@
     <meta property="og:description"
         content="Small, calm, offline-first Android apps. No account to create, free to use, available on Google Play.">
     <meta property="og:url" content="https://lkowalskil.github.io/">
+    <link rel="canonical" href="https://lkowalskil.github.io/">
 
     <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -35,8 +36,8 @@
         <div class="header-tag">ANDROID DEV</div>
         <nav class="header-nav" aria-label="Primary">
             <a href="#apps">Apps</a>
+            <a href="guides.html">Guides</a>
             <a href="#spec">Spec</a>
-            <a href="#contact">Contact</a>
         </nav>
         <a class="header-cta" href="#apps">Get the apps <span aria-hidden="true">→</span></a>
     </header>
@@ -239,6 +240,37 @@
             </article>
         </section>
 
+        <!-- ═══ GUIDES ═══ -->
+        <section id="guides" class="guides">
+            <div class="guides-intro reveal" data-reveal="0">
+                <p class="section-eyebrow">/// PRACTICAL GUIDES</p>
+                <h2 class="section-h2">Use your apps with more intention.</h2>
+                <p class="section-lead">Straightforward field notes on focus, plant care, and idle-game design—written
+                    from the problems behind the apps.</p>
+                <a class="btn btn-outline btn-sm" href="guides.html">Browse every guide →</a>
+            </div>
+            <div class="guide-links">
+                <a class="guide-link reveal" data-reveal="70" href="offline-time-tracker-android.html">
+                    <span class="guide-index">GUIDE—01 · PRODUCTIVITY</span>
+                    <strong>How to track time offline on Android</strong>
+                    <span>Build a useful record of your day without an account or permanent connection.</span>
+                    <span class="arw" aria-hidden="true">→</span>
+                </a>
+                <a class="guide-link reveal" data-reveal="140" href="plant-watering-reminder-android.html">
+                    <span class="guide-index">GUIDE—02 · PLANT CARE</span>
+                    <strong>Build a better houseplant watering routine</strong>
+                    <span>Use reminders as a prompt to check each plant, not a command to water blindly.</span>
+                    <span class="arw" aria-hidden="true">→</span>
+                </a>
+                <a class="guide-link reveal" data-reveal="210" href="offline-idle-dungeon-game-android.html">
+                    <span class="guide-index">GUIDE—03 · GAME DESIGN</span>
+                    <strong>What makes an offline idle game satisfying?</strong>
+                    <span>A practical look at progress, meaningful upgrades, and prestige loops.</span>
+                    <span class="arw" aria-hidden="true">→</span>
+                </a>
+            </div>
+        </section>
+
         <!-- ═══ SPEC ═══ -->
         <section id="spec" class="spec">
             <div class="spec-intro reveal" data-reveal="0">
@@ -336,6 +368,7 @@
             <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM — ALL RIGHTS
                 RESERVED</span>
             <div class="footer-legal">
+                <a href="guides.html">GUIDES</a>
                 <a href="privacy-policy-chrono.html">CHRONO PRIVACY</a>
                 <a href="privacy-policy-cult.html">POCKET CULT PRIVACY</a>
                 <a href="privacy-policy-hexbrew.html">HEXBREW PRIVACY</a>

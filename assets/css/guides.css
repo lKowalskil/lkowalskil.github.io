@@ -291,6 +291,47 @@
   line-height: 1.5;
 }
 
+.related-guides {
+  max-width: 900px;
+  margin-top: 72px;
+  padding-top: 34px;
+  border-top: 1px solid var(--ink);
+}
+
+.related-guides > .guide-label { color: var(--accent); }
+
+.related-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 18px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+}
+
+.related-guide-grid a {
+  min-height: 132px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px;
+  background: var(--bg);
+  transition: background 0.2s var(--ease);
+}
+
+.related-guide-grid a:hover { background: var(--white); }
+
+.related-guide-grid strong {
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.related-guide-grid span {
+  color: var(--accent);
+  font-size: 22px;
+}
+
 .guide-footer {
   background: var(--ink);
   color: var(--bg);
@@ -314,10 +355,49 @@
 
 .guide-index-hero .guide-deck { margin-top: 32px; }
 
+.guide-clusters {
+  border-bottom: 1px solid var(--ink);
+}
+
+.guide-cluster + .guide-cluster {
+  border-top: 1px solid var(--ink);
+}
+
+.guide-cluster-head {
+  display: grid;
+  grid-template-columns: 0.7fr 1.35fr 1fr;
+  gap: 48px;
+  align-items: end;
+  padding: 48px 56px;
+  background: var(--panel-muted);
+  border-bottom: 1px solid var(--ink);
+}
+
+.guide-cluster-head .guide-kicker { margin: 0; }
+
+.guide-cluster-head h2 {
+  max-width: 16ch;
+  font-size: clamp(30px, 3vw, 48px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.guide-cluster-head > p:last-child {
+  max-width: 48ch;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
 .guide-card-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border-bottom: 1px solid var(--ink);
+}
+
+.guide-cluster .guide-card-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-bottom: none;
 }
 
 .guide-card {
@@ -339,13 +419,16 @@
   margin-bottom: 72px;
 }
 
-.guide-card h2 {
+.guide-card h2,
+.guide-card h3 {
   max-width: 12ch;
   font-size: 34px;
   line-height: 1.05;
   letter-spacing: -0.035em;
   margin: 18px 0;
 }
+
+.guide-cluster .guide-card h3 { font-size: clamp(26px, 2.25vw, 34px); }
 
 .guide-card p {
   color: var(--muted);
@@ -385,6 +468,8 @@
   .article-shell { grid-template-columns: 1fr; }
   .article-rail { display: none; }
   .guide-card-grid { grid-template-columns: 1fr; }
+  .guide-cluster .guide-card-grid { grid-template-columns: 1fr; }
+  .guide-cluster-head { grid-template-columns: 1fr; gap: 20px; }
   .guide-card {
     min-height: 0;
     border-right: none;
@@ -407,11 +492,14 @@
   .article-section + .article-section { margin-top: 52px; padding-top: 52px; }
   .step-grid { grid-template-columns: 1fr; }
   .quick-answer { grid-template-columns: 1fr; gap: 8px; }
+  .related-guide-grid { grid-template-columns: 1fr; }
+  .related-guide-grid a { min-height: 0; }
   .product-callout {
     grid-template-columns: auto 1fr;
     padding: 26px 24px;
   }
   .product-callout .btn { grid-column: 1 / -1; justify-content: center; }
   .guide-card { padding: 34px 24px; }
+  .guide-cluster-head { padding: 40px 24px; }
   .guide-method > div { padding: 48px 24px; }
 }

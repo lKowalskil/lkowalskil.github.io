@@ -3,18 +3,31 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description"
         content="What makes an offline idle dungeon game satisfying? A practical look at offline progress, resource choices, upgrades, and prestige loops.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
     <meta name="theme-color" content="#101318">
-    <title>Offline Idle Dungeon Games: What Makes Them Good?</title>
+    <title>Offline Idle Dungeon Games: What Makes Them Good? · Nyxelium</title>
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="What Makes an Offline Idle Dungeon Game Satisfying?">
     <meta property="og:description"
         content="Progress you can understand, upgrades that change decisions, and a prestige loop worth returning to.">
     <meta property="og:url" content="https://lkowalskil.github.io/offline-idle-dungeon-game-android.html">
+    <meta property="og:site_name" content="Nyxelium">
     <meta property="og:image" content="https://lkowalskil.github.io/assets/img/cult/feature-graphic.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="500">
+    <meta property="og:image:alt" content="Pocket Cult — offline idle dungeon game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What Makes an Offline Idle Dungeon Game Satisfying?">
+    <meta name="twitter:description" content="A practical look at offline progress, resource choices, upgrades and prestige loops.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/cult/feature-graphic.png">
+    <meta name="twitter:image:alt" content="Pocket Cult — offline idle dungeon game">
     <link rel="canonical" href="https://lkowalskil.github.io/offline-idle-dungeon-game-android.html">
 
     <link rel="icon" type="image/png" href="assets/img/cult-icon.png">
@@ -37,16 +50,39 @@
           "datePublished": "2026-07-23",
           "dateModified": "2026-07-23",
           "mainEntityOfPage": "https://lkowalskil.github.io/offline-idle-dungeon-game-android.html",
+          "image": "https://lkowalskil.github.io/assets/img/cult/feature-graphic.png",
           "author": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" },
           "publisher": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" }
         },
         {
-          "@type": "VideoGame",
+          "@type": ["VideoGame", "MobileApplication"],
           "name": "Pocket Cult: Idle Dungeon RPG",
+          "operatingSystem": "ANDROID",
+          "applicationCategory": "GameApplication",
           "gamePlatform": "Android",
           "genre": ["Idle", "Simulation", "Dark fantasy"],
           "url": "https://lkowalskil.github.io/pocket-cult.html",
+          "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon",
+          "image": "https://lkowalskil.github.io/assets/img/cult/feature-graphic.png",
+          "description": "Offline idle dungeon RPG and dark fantasy management game for Android.",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": "Can Pocket Cult progress offline?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The cult generates resources while the app is closed and summarizes the return." } },
+            { "@type": "Question", "name": "Is an internet connection required to play?", "acceptedAnswer": { "@type": "Answer", "text": "No. The core dungeon-building and idle progression work offline." } },
+            { "@type": "Question", "name": "What do you manage?", "acceptedAnswer": { "@type": "Answer", "text": "Buildings, production, storage, minion assignments, upkeep, defense, research, and permanent upgrades." } },
+            { "@type": "Question", "name": "Does it have prestige?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Ascension awards permanent Corruption upgrades, with an additional Eternity layer for deeper progression." } }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Nyxelium", "item": "https://lkowalskil.github.io/" },
+            { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://lkowalskil.github.io/guides.html" },
+            { "@type": "ListItem", "position": 3, "name": "What Makes an Offline Idle Dungeon Game Satisfying?", "item": "https://lkowalskil.github.io/offline-idle-dungeon-game-android.html" }
+          ]
         }
       ]
     }
@@ -77,7 +113,7 @@
             </div>
             <aside class="guide-hero-aside" aria-label="Featured game">
                 <div class="guide-product">
-                    <img src="assets/img/cult-icon.png" alt="Pocket Cult app icon">
+                    <img src="assets/img/cult-icon.webp" width="256" height="256" alt="Pocket Cult app icon" decoding="async">
                     <div>
                         <span class="guide-label">FEATURED GAME</span>
                         <strong>Pocket Cult</strong>
@@ -215,7 +251,7 @@
                 </aside>
 
                 <aside class="product-callout">
-                    <img src="assets/img/cult-icon.png" alt="">
+                    <img src="assets/img/cult-icon.webp" width="256" height="256" alt="" loading="lazy" decoding="async">
                     <div>
                         <span class="guide-label">RULE FROM THE SHADOWS</span>
                         <strong>Pocket Cult — Idle Dungeon RPG</strong>
@@ -241,7 +277,7 @@
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js" defer></script>
 </body>
 
 </html>

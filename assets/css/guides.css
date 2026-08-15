@@ -148,6 +148,7 @@
 .article-body {
   background: var(--bg);
   padding: 72px clamp(40px, 7vw, 112px) 84px;
+  min-width: 0;
 }
 
 .article-section {
@@ -483,7 +484,8 @@
 
 @media (max-width: 620px) {
   .guide-hero-copy, .guide-index-hero { padding: 56px 24px 48px; }
-  .guide-title { font-size: 48px; }
+  .guide-title { font-size: clamp(40px, 13vw, 48px); }
+  .guide-index-hero h1 { font-size: clamp(44px, 15vw, 58px); }
   .guide-deck { font-size: 17px; }
   .guide-hero-aside { grid-template-columns: 1fr; }
   .guide-product { border-right: none; border-bottom: 1px solid var(--ink); padding: 34px 24px; }

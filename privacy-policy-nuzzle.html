@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Privacy Policy — Nuzzle</title>
+  <meta name="description" content="Privacy Policy for the Nuzzle offline pet-care and reminders app by Nyxelium.">
+  <meta name="robots" content="index,follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; upgrade-insecure-requests">
+  <link rel="canonical" href="https://lkowalskil.github.io/privacy-policy-nuzzle.html">
   <style>
     :root {
       --sage: #5F8266;
@@ -51,12 +56,21 @@
     p + p { margin-top: .75rem; }
     ul { padding-left: 1.35rem; margin: .5rem 0 .75rem; }
     li { margin: .3rem 0; }
-    a { color: var(--sage); }
+    a { color: var(--sage); overflow-wrap: anywhere; }
+    a:focus-visible { outline: 3px solid var(--sage); outline-offset: 3px; }
     .muted { color: var(--muted); }
     footer {
       margin-top: 3rem; padding-top: 1.25rem;
       border-top: 1px solid var(--line);
       color: var(--muted); font-size: .9rem;
+    }
+    @media (max-width: 480px) {
+      body {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+        padding-bottom: max(4rem, env(safe-area-inset-bottom));
+      }
+      h1 { font-size: 1.75rem; }
     }
   </style>
 </head>
@@ -152,6 +166,7 @@
   <a href="mailto:kovalchuk.egor1357@gmail.com">kovalchuk.egor1357@gmail.com</a>.</p>
 
   <footer>
+    <a href="index.html">Nyxelium home</a><br>
     © 2026 Nyxelium · Nuzzle — Pet Care &amp; Reminders
   </footer>
 </main>

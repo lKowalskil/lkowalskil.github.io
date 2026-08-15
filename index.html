@@ -3,17 +3,31 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description"
         content="Nyxelium builds small, offline-first Android apps — Chrono, Pocket Cult, Mossby and Nuzzle. No account to create, free to use, and easy to keep.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
     <meta name="theme-color" content="#101318">
-    <title>Nyxelium — Offline-first apps, engineered to be kept</title>
+    <title>Offline Android Apps for Focus, Plant Care &amp; Idle Play · Nyxelium</title>
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Nyxelium — Offline-first apps, engineered to be kept">
     <meta property="og:description"
         content="Small, calm, offline-first Android apps. No account to create, free to use, available on Google Play.">
     <meta property="og:url" content="https://lkowalskil.github.io/">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nyxelium — Offline-first apps, engineered to be kept">
+    <meta name="twitter:description" content="Small, calm, offline-first Android apps with no account required.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
     <link rel="canonical" href="https://lkowalskil.github.io/">
 
     <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
@@ -23,6 +37,72 @@
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://lkowalskil.github.io/#organization",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "logo": "https://lkowalskil.github.io/assets/img/favicon.svg",
+          "sameAs": ["https://github.com/lKowalskil"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://lkowalskil.github.io/#website",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "description": "Offline-first Android apps for focus, plant care and idle play.",
+          "publisher": { "@id": "https://lkowalskil.github.io/#organization" }
+        },
+        {
+          "@type": "ItemList",
+          "name": "Nyxelium Android apps",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "MobileApplication",
+                "name": "Chrono",
+                "operatingSystem": "ANDROID",
+                "applicationCategory": "ProductivityApplication",
+                "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "MobileApplication",
+                "name": "Pocket Cult",
+                "operatingSystem": "ANDROID",
+                "applicationCategory": "GameApplication",
+                "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "MobileApplication",
+                "name": "Mossby",
+                "operatingSystem": "ANDROID",
+                "applicationCategory": "LifestyleApplication",
+                "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.mossby",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -66,18 +146,18 @@
             <div class="hero-icons">
                 <div class="hero-icons-row">
                     <div class="icon-cell br pop1" data-parallax="-0.03">
-                        <img src="assets/img/chrono-icon.png" alt="Chrono app icon">
+                        <img src="assets/img/chrono-icon.webp" width="256" height="256" alt="Chrono app icon" decoding="async">
                     </div>
                     <div class="icon-cell rot pop2" data-parallax="0.045">
-                        <img src="assets/img/cult-icon.png" alt="Pocket Cult app icon">
+                        <img src="assets/img/cult-icon.webp" width="256" height="256" alt="Pocket Cult app icon" decoding="async">
                     </div>
                 </div>
                 <div class="hero-icons-row">
                     <div class="icon-cell br pop3" data-parallax="0.06">
-                        <img src="assets/img/mossby-icon.png" alt="Mossby app icon">
+                        <img src="assets/img/mossby-icon.webp" width="256" height="256" alt="Mossby app icon" decoding="async">
                     </div>
                     <div class="icon-cell rot pop4" data-parallax="-0.045">
-                        <img src="assets/img/nuzzle-icon.png" alt="Nuzzle app icon">
+                        <img src="assets/img/nuzzle-icon.webp" width="256" height="256" alt="Nuzzle app icon" decoding="async">
                     </div>
                 </div>
             </div>
@@ -107,7 +187,7 @@
             <article class="app-card br reveal" data-reveal="0">
                 <div class="app-card-head">
                     <div class="app-id">
-                        <img src="assets/img/chrono-icon.png" alt="Chrono icon">
+                        <img src="assets/img/chrono-icon.webp" width="256" height="256" alt="Chrono icon" loading="lazy" decoding="async">
                         <div>
                             <div class="app-name">Chrono</div>
                             <div class="app-genre">Time Tracker · Tools</div>
@@ -116,8 +196,8 @@
                     <span class="chip"><span class="dot"></span>LIVE ON PLAY</span>
                 </div>
                 <div class="app-media">
-                    <img class="app-shot" src="assets/img/chrono-01.png" alt="Chrono screen">
-                    <img class="app-shot offset" src="assets/img/chrono-02.png" alt="Chrono screen">
+                    <img class="app-shot" src="assets/img/chrono-01.webp" width="440" height="782" alt="Chrono focus timer and activity tracking screen" loading="lazy" decoding="async">
+                    <img class="app-shot offset" src="assets/img/chrono-02.webp" width="440" height="782" alt="Chrono productivity statistics screen" loading="lazy" decoding="async">
                     <div class="app-text">
                         <p class="app-tagline">Stop guessing where your time goes.</p>
                         <p class="app-desc">A Pomodoro focus timer and full time tracker in one offline app — for
@@ -142,7 +222,7 @@
             <article class="app-card reveal" data-reveal="120">
                 <div class="app-card-head">
                     <div class="app-id">
-                        <img src="assets/img/cult-icon.png" alt="Pocket Cult icon">
+                        <img src="assets/img/cult-icon.webp" width="256" height="256" alt="Pocket Cult icon" loading="lazy" decoding="async">
                         <div>
                             <div class="app-name">Pocket Cult</div>
                             <div class="app-genre">Idle RPG · Simulation</div>
@@ -151,8 +231,8 @@
                     <span class="chip"><span class="dot"></span>LIVE ON PLAY</span>
                 </div>
                 <div class="app-media">
-                    <img class="app-shot" src="assets/img/cult-01.png" alt="Pocket Cult screen">
-                    <img class="app-shot offset" src="assets/img/cult-02.png" alt="Pocket Cult screen">
+                    <img class="app-shot" src="assets/img/cult-01.webp" width="440" height="782" alt="Pocket Cult idle dungeon management screen" loading="lazy" decoding="async">
+                    <img class="app-shot offset" src="assets/img/cult-02.webp" width="440" height="782" alt="Pocket Cult offline progress and resources screen" loading="lazy" decoding="async">
                     <div class="app-text">
                         <p class="app-tagline">Be the bad guy. Rule from the shadows.</p>
                         <p class="app-desc">A tongue-in-cheek idle dungeon keeper — build an evil lair, summon a demon
@@ -179,7 +259,7 @@
             <article class="app-card br reveal" data-reveal="0">
                 <div class="app-card-head">
                     <div class="app-id">
-                        <img src="assets/img/mossby-icon.png" alt="Mossby icon">
+                        <img src="assets/img/mossby-icon.webp" width="256" height="256" alt="Mossby icon" loading="lazy" decoding="async">
                         <div>
                             <div class="app-name">Mossby</div>
                             <div class="app-genre">Plant Care · Home</div>
@@ -188,8 +268,8 @@
                     <span class="chip"><span class="dot"></span>LIVE ON PLAY</span>
                 </div>
                 <div class="app-media">
-                    <img class="app-shot" src="assets/img/mossby-01.png" alt="Mossby screen">
-                    <img class="app-shot offset" src="assets/img/mossby-02.png" alt="Mossby screen">
+                    <img class="app-shot" src="assets/img/mossby-01.webp" width="440" height="782" alt="Mossby houseplant care overview screen" loading="lazy" decoding="async">
+                    <img class="app-shot offset" src="assets/img/mossby-02.webp" width="440" height="782" alt="Mossby plant watering schedule screen" loading="lazy" decoding="async">
                     <div class="app-text">
                         <p class="app-tagline">Stop killing your houseplants by accident.</p>
                         <p class="app-desc">A calm plant-care advisor that warns you before a plant lands in a spot
@@ -212,7 +292,7 @@
             <article class="app-card dev reveal" data-reveal="120">
                 <div class="app-card-head">
                     <div class="app-id">
-                        <img src="assets/img/nuzzle-icon.png" alt="Nuzzle icon">
+                        <img src="assets/img/nuzzle-icon.webp" width="256" height="256" alt="Nuzzle icon" loading="lazy" decoding="async">
                         <div>
                             <div class="app-name">Nuzzle</div>
                             <div class="app-genre">Pet Care · Lifestyle</div>
@@ -221,8 +301,8 @@
                     <span class="chip dev"><span class="dot"></span>IN DEVELOPMENT</span>
                 </div>
                 <div class="app-media">
-                    <img class="app-shot" src="assets/img/nuzzle-01.png" alt="Nuzzle screen">
-                    <img class="app-shot offset" src="assets/img/nuzzle-02.png" alt="Nuzzle screen">
+                    <img class="app-shot" src="assets/img/nuzzle-01.webp" width="247" height="440" alt="Nuzzle pet care schedule screen" loading="lazy" decoding="async">
+                    <img class="app-shot offset" src="assets/img/nuzzle-02.webp" width="247" height="440" alt="Nuzzle pet health timeline screen" loading="lazy" decoding="async">
                     <div class="app-text">
                         <p class="app-tagline">Keep every pet healthy, gently.</p>
                         <p class="app-desc">The calm, offline way to stay on top of feeding, meds, grooming and vet
@@ -380,7 +460,7 @@
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js" defer></script>
 </body>
 
 </html>

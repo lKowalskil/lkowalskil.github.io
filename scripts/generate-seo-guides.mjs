@@ -10,16 +10,18 @@ const apps = {
   chrono: {
     name: 'Chrono',
     icon: 'assets/img/chrono-icon.png',
+    displayIcon: 'assets/img/chrono-icon.webp',
     screenshot: 'assets/img/chrono-01.png',
     playUrl: 'https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker',
     privacyUrl: 'privacy-policy-chrono.html',
-    category: 'ProductivityApplication',
+    category: 'BusinessApplication',
     description: 'Offline Pomodoro timer and time tracker for Android.',
     facts: ['NO ACCOUNT REQUIRED', 'POMODORO + OPEN TIMER', 'CSV & CALENDAR EXPORT', 'LOCAL TIME HISTORY'],
   },
   mossby: {
     name: 'Mossby',
     icon: 'assets/img/mossby-icon.png',
+    displayIcon: 'assets/img/mossby-icon.webp',
     screenshot: 'assets/img/mossby-01.png',
     playUrl: 'https://play.google.com/store/apps/details?id=com.nyxelium.mossby',
     privacyUrl: 'privacy-policy-mossby.html',
@@ -30,6 +32,7 @@ const apps = {
   cult: {
     name: 'Pocket Cult',
     icon: 'assets/img/cult-icon.png',
+    displayIcon: 'assets/img/cult-icon.webp',
     screenshot: 'assets/img/cult-01.png',
     playUrl: 'https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon',
     privacyUrl: 'privacy-policy-cult.html',
@@ -44,7 +47,7 @@ const pages = [
     file: 'freelancer-time-tracker-android.html',
     app: 'chrono',
     guide: 'GUIDE—04 · FREELANCE WORK · 8 MIN READ',
-    title: 'Freelancer Time Tracker for Android: Billable Hours & CSV · Nyxelium',
+    title: 'Freelancer Time Tracker: Billable Hours & CSV · Nyxelium',
     ogTitle: 'A Practical Android Time Tracker for Freelancers',
     description: 'Track freelance billable hours on Android with an offline timesheet, client categories and CSV export. No account required.',
     headline: 'Turn working hours into a timesheet you can actually invoice.',
@@ -591,6 +594,7 @@ function render(page) {
         datePublished: published,
         dateModified: published,
         mainEntityOfPage: canonical,
+        image: `${siteUrl}/${app.screenshot}`,
         keywords: page.keywords,
         audience: { '@type': 'Audience', audienceType: page.audience },
         author: { '@type': 'Organization', name: 'Nyxelium', url: `${siteUrl}/` },
@@ -614,6 +618,9 @@ function render(page) {
         operatingSystem: 'ANDROID',
         applicationCategory: app.category,
         installUrl: app.playUrl,
+        url: app.playUrl,
+        image: `${siteUrl}/${app.icon}`,
+        description: app.description,
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       },
     ],
@@ -624,8 +631,11 @@ function render(page) {
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="${esc(page.description)}">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
     <meta name="theme-color" content="#101318">
     <title>${esc(page.title)}</title>
 
@@ -633,8 +643,17 @@ function render(page) {
     <meta property="og:title" content="${esc(page.ogTitle)}">
     <meta property="og:description" content="${esc(page.description)}">
     <meta property="og:url" content="${canonical}">
+    <meta property="og:site_name" content="Nyxelium">
     <meta property="og:image" content="${siteUrl}/${app.screenshot}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="440">
+    <meta property="og:image:height" content="782">
+    <meta property="og:image:alt" content="${esc(app.name)} Android app screen">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${esc(page.ogTitle)}">
+    <meta name="twitter:description" content="${esc(page.description)}">
+    <meta name="twitter:image" content="${siteUrl}/${app.screenshot}">
+    <meta name="twitter:image:alt" content="${esc(app.name)} Android app screen">
     <link rel="canonical" href="${canonical}">
 
     <link rel="icon" type="image/png" href="${app.icon}">
@@ -670,7 +689,7 @@ ${JSON.stringify(schema, null, 2)}
             </div>
             <aside class="guide-hero-aside" aria-label="Featured app">
                 <div class="guide-product">
-                    <img src="${app.icon}" alt="${app.name} app icon">
+                    <img src="${app.displayIcon}" width="256" height="256" alt="${app.name} app icon" decoding="async">
                     <div>
                         <span class="guide-label">FEATURED TOOL</span>
                         <strong>${app.name}</strong>
@@ -720,7 +739,7 @@ ${page.related.map((file) => `                        <a href="${file}"><strong>
                 </aside>
 
                 <aside class="product-callout">
-                    <img src="${app.icon}" alt="">
+                    <img src="${app.displayIcon}" width="256" height="256" alt="" loading="lazy" decoding="async">
                     <div>
                         <span class="guide-label">TRY THE WORKFLOW</span>
                         <strong>${app.name}</strong>
@@ -744,7 +763,7 @@ ${page.related.map((file) => `                        <a href="${file}"><strong>
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js" defer></script>
 </body>
 
 </html>

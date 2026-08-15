@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Signet — Privacy Policy</title>
 <meta name="description" content="Privacy Policy for the Signet batch photo watermarking app by Nyxelium.">
+<meta name="robots" content="index,follow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; upgrade-insecure-requests">
+<link rel="canonical" href="https://lkowalskil.github.io/privacy-policy-signet.html">
 <style>
   :root{
     --accent:#B97824; --bright:#E0A34E; --ink:#17130E; --ink-soft:#61584B;
@@ -21,17 +25,19 @@
   h1{font-size:30px;line-height:1.2;margin:18px 0 8px}
   h2{font-size:21px;margin:38px 0 10px;padding-top:6px}
   .meta{color:var(--ink-soft);font-size:14px}
-  a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+  a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}
+  a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
   ul{padding-left:22px} li{margin:6px 0}
   .lead{font-size:17px;color:var(--ink-soft)}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:18px 0}
   .tldr{border-left:4px solid var(--bright)}
-  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-collapse:collapse;margin:14px 0;font-size:14.5px}
   th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
   th{background:#F5ECDE;font-weight:600}
   code{background:#F1EBE1;padding:1px 6px;border-radius:5px;font-size:13px}
   .note{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
   footer{margin-top:54px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-soft);font-size:13.5px}
+  @media(max-width:480px){.wrap{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right));padding-bottom:max(64px,env(safe-area-inset-bottom))}h1{font-size:28px}.card{padding:16px}}
   @media (prefers-color-scheme:dark){
     :root{--cream:#0C0C0E;--ink:#F4F3F0;--ink-soft:#A19D94;--line:#2B2822;--card:#141417;--accent:#E0A34E}
     th{background:#1C1915} code{background:#201D18}
@@ -125,7 +131,7 @@ on-device batch photo watermarking app for Android (package <code>com.nyxelium.s
 <p><strong>Nyxelium</strong><br>Email: <a href="mailto:kovalchuk.egor1357@gmail.com">kovalchuk.egor1357@gmail.com</a></p>
 
 <footer>
-  <p>Related pages: <a href="signet-support.html">Signet Support</a> · <a href="terms-signet.html">Signet Terms of Use</a></p>
+  <p>Related pages: <a href="index.html">Nyxelium home</a> · <a href="signet-support.html">Signet Support</a> · <a href="terms-signet.html">Signet Terms of Use</a></p>
   <p>Google policy reference: <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
   <p>© 2026 Nyxelium. Signet and the Signet mark are trademarks of Nyxelium.</p>
 </footer>

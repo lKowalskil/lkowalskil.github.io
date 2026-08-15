@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signet — Support</title>
+<meta name="description" content="Help, troubleshooting and contact information for the Signet batch photo watermarking app by Nyxelium.">
+<style>
+  :root{--accent:#B97824;--bright:#E0A34E;--ink:#17130E;--ink-soft:#61584B;--cream:#F8F5EF;--line:#E9DFD0;--card:#FFF;--success:#3E8265;--danger:#B45445}
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:760px;margin:0 auto;padding:40px 22px 80px}
+  header{border-bottom:2px solid var(--line);padding-bottom:22px;margin-bottom:32px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:20px;color:var(--accent)}
+  .mark{width:15px;height:15px;border:2px solid var(--bright);border-radius:50%;display:grid;place-items:center}.mark::after{content:"";width:5px;height:5px;background:var(--bright);transform:rotate(45deg)}
+  h1{font-size:30px;line-height:1.2;margin:18px 0 8px} h2{font-size:21px;margin:38px 0 10px;padding-top:6px} h3{font-size:17px;margin:24px 0 6px}
+  .meta,.note{color:var(--ink-soft);font-size:14px} .lead{font-size:17px;color:var(--ink-soft)}
+  a{color:var(--accent);text-decoration:underline;text-underline-offset:2px} ul,ol{padding-left:22px} li{margin:7px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:18px 0}.accent{border-left:4px solid var(--bright)}
+  code{background:#F1EBE1;padding:1px 6px;border-radius:5px;font-size:13px}
+  footer{margin-top:54px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-soft);font-size:13.5px}
+  @media(prefers-color-scheme:dark){:root{--cream:#0C0C0E;--ink:#F4F3F0;--ink-soft:#A19D94;--line:#2B2822;--card:#141417;--accent:#E0A34E}code{background:#201D18}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><span class="mark" aria-hidden="true"></span> Signet</div>
+  <h1>Support</h1>
+  <p class="meta">Help for Signet on Android &nbsp;·&nbsp; Last updated: 12 August 2026</p>
+</header>
+
+<p class="lead">Signet adds text or transparent-logo watermarks to batches of photos on your device. This page covers the initial unlimited Android release.</p>
+
+<div class="card accent">
+  <strong>Contact support</strong>
+  <p>Email <a href="mailto:kovalchuk.egor1357@gmail.com?subject=Signet%20support">kovalchuk.egor1357@gmail.com</a>. Please include your Signet version, phone model, Android version, the output format and the exact message shown by the App.</p>
+  <p class="note">Do not email private source photos, watermark logos or metadata unless we specifically agree that one sample is necessary. Remove sensitive information first.</p>
+</div>
+
+<h2>Start a watermark job</h2>
+<ol>
+  <li>Open Signet and choose <strong>Select photos</strong> or import from Files.</li>
+  <li>Select one or more JPEG or PNG photos using Android’s system picker.</li>
+  <li>Add a text watermark or transparent PNG logo.</li>
+  <li>Review placement across portrait, landscape and square photos.</li>
+  <li>Adjust an individual photo if it needs a different position or visibility.</li>
+  <li>Choose JPEG or PNG output and start export.</li>
+  <li>Use the completion screen to find the successfully saved copies.</li>
+</ol>
+
+<h2>Original photos</h2>
+<p>Signet opens selected source photos as read-only content. It never overwrites them. Every successful export is a new file. If a job fails or is cancelled, Signet does not report a partial output as complete.</p>
+
+<h2>Supported limits in the first release</h2>
+<ul>
+  <li>Android 7.0 or newer.</li>
+  <li>JPEG and PNG photo export.</li>
+  <li>Text and transparent PNG logo watermarks.</li>
+  <li>Maximum <strong>13,000,000 oriented pixels</strong> per selected image. For example, common 12–12.98 MP camera photos are within this measured limit.</li>
+  <li>Actual batch capacity depends on image dimensions, format, available memory, free storage and the phone.</li>
+</ul>
+<p>Images over the supported pixel limit are rejected before export to reduce the risk of the operating system terminating the job.</p>
+
+<h2>Common problems</h2>
+
+<h3>A photo cannot be read</h3>
+<ul>
+  <li>Open the photo in your gallery to confirm it is still available.</li>
+  <li>Try selecting it again through the system picker.</li>
+  <li>If it is cloud-only, download the original to the device first.</li>
+  <li>Convert an unusual or damaged file to a standard JPEG or PNG.</li>
+</ul>
+
+<h3>An export failed</h3>
+<ul>
+  <li>Check that the device has free storage.</li>
+  <li>Keep Signet open while retrying a very large batch.</li>
+  <li>Retry only the failed items from the result screen; successful siblings should not be duplicated.</li>
+  <li>Try JPEG output if a very large PNG job exceeds the device’s available memory.</li>
+</ul>
+
+<h3>I cannot find the output</h3>
+<ul>
+  <li>Use the completion screen’s destination action.</li>
+  <li>Check your Photos/Gallery app and its recent items.</li>
+  <li>If you selected a Files destination, reopen that folder through Android’s Files app.</li>
+</ul>
+
+<h3>The App was closed during export</h3>
+<p>Reopen Signet. The active draft should return, while an incomplete output should not appear as successful. Review the recovered job and retry the items that did not finish.</p>
+
+<h3>Does Signet need internet access?</h3>
+<p>No for the core workflow. Photo selection, watermark editing, preview and export work on-device. The initial release has no ads, subscriptions or enabled remote diagnostics.</p>
+
+<h2>Accessibility</h2>
+<p>Signet supports Android text scaling and TalkBack on the main workflow. If an action is clipped, unlabeled or difficult to reach, report the screen, font-size setting and TalkBack state.</p>
+
+<h2>What to include in a useful report</h2>
+<ul>
+  <li>Signet version and build number from Settings.</li>
+  <li>Phone manufacturer and model.</li>
+  <li>Android version.</li>
+  <li>JPEG or PNG output.</li>
+  <li>Number of photos and approximate megapixels.</li>
+  <li>Whether the watermark was text or a logo.</li>
+  <li>The exact error message and the step where it appeared.</li>
+</ul>
+
+<footer>
+  <p><a href="privacy-policy-signet.html">Privacy Policy</a> · <a href="terms-signet.html">Terms of Use</a></p>
+  <p>© 2026 Nyxelium. Signet and the Signet mark are trademarks of Nyxelium.</p>
+</footer>
+</div>
+</body>
+</html>

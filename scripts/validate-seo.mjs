@@ -67,12 +67,15 @@ for (const file of files) {
   const viewport = metaContent(html, 'name', 'viewport');
   const csp = metaContent(html, 'http-equiv', 'Content-Security-Policy');
   const canonical = capture(html, /<link\b(?=[^>]*\brel=["']canonical["'])[^>]*\bhref=["']([^"']+)["'][^>]*>/i);
+  const favicon = capture(html, /<link\b(?=[^>]*\brel=["']icon["'])[^>]*\bhref=["']([^"']+)["'][^>]*>/i);
   const expectedCanonical = canonicalFor(file);
   const h1Count = [...html.matchAll(/<h1\b/gi)].length;
 
   if (!title) failures.push(`${file}: missing title`);
   if (!description) failures.push(`${file}: missing meta description`);
   if (!canonical) failures.push(`${file}: missing canonical URL`);
+  if (!favicon) failures.push(`${file}: missing favicon`);
+  if (favicon) await requireLocalTarget(file, favicon, 'favicon');
   if (canonical && canonical !== expectedCanonical) {
     failures.push(`${file}: canonical must be ${expectedCanonical}`);
   }
@@ -170,6 +173,9 @@ for (const file of files) {
   if (/\son(?:click|error|load|mouseover)\s*=/i.test(html)) {
     failures.push(`${file}: inline event handler is not allowed`);
   }
+  if (/\bdata-parallax\s*=/i.test(html)) {
+    failures.push(`${file}: scroll parallax is not allowed on content images`);
+  }
 }
 
 const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
@@ -194,6 +200,24 @@ if (!robotsText.includes(`Sitemap: ${siteOrigin}/sitemap.xml`)) {
   failures.push('robots.txt: missing absolute sitemap declaration');
 }
 
+const responsiveStyles = [
+  ['assets/css/main.css', await readFile(resolve(root, 'assets/css/main.css'), 'utf8')],
+  ['assets/css/cult.css', await readFile(resolve(root, 'assets/css/cult.css'), 'utf8')],
+];
+for (const [file, css] of responsiveStyles) {
+  if (!/\bimg\s*\{[^}]*\bheight:\s*auto\s*;/is.test(css)) {
+    failures.push(`${file}: global images must preserve their intrinsic aspect ratio`);
+  }
+}
+const mainStyles = responsiveStyles[0][1];
+if (!/\.app-media\s*\{[^}]*\balign-items:\s*flex-start\s*;/is.test(mainStyles)) {
+  failures.push('assets/css/main.css: app media must not stretch screenshots on the cross axis');
+}
+const interactionScript = await readFile(resolve(root, 'assets/js/main.js'), 'utf8');
+if (/data-parallax/i.test(interactionScript)) {
+  failures.push('assets/js/main.js: scroll parallax must not be reintroduced');
+}
+
 const guideIndex = await readFile(resolve(root, 'guides.html'), 'utf8');
 const guideCardCount = [...guideIndex.matchAll(/class="guide-card"/g)].length;
 if (guideCardCount !== 12) failures.push(`guides.html: expected 12 guide cards, found ${guideCardCount}`);
@@ -202,5 +226,5 @@ if (failures.length) {
   console.error(failures.join('\n'));
   process.exitCode = 1;
 } else {
-  console.log(`Validated ${files.length - 1} indexable HTML pages, ${guideCardCount} guide cards, metadata, structured data, images, security controls, local links, robots and sitemap coverage.`);
+  console.log(`Validated ${files.length - 1} indexable HTML pages, ${guideCardCount} guide cards, metadata, structured data, responsive image safeguards, security controls, local links, robots and sitemap coverage.`);
 }

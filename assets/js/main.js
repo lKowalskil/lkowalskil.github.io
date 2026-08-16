@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   Nyxelium — "Systema" · Reveal, count-up, and hero parallax.
+   Nyxelium — "Systema" · Reveal and count-up interactions.
    Marquee is pure CSS. Reduced motion is respected throughout.
    ═══════════════════════════════════════════════════════════ */
 (function () {
@@ -35,30 +35,6 @@
         });
       }, { threshold: 0.12 });
       reveals.forEach(function (el) { io.observe(el); });
-    }
-  }
-
-  /* ── Hero parallax ── */
-  if (!reduce) {
-    var parallaxEls = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
-    if (parallaxEls.length) {
-      var ticking = false;
-      var apply = function () {
-        var y = window.scrollY || window.pageYOffset;
-        if (y <= 900) {
-          parallaxEls.forEach(function (el) {
-            var f = parseFloat(el.getAttribute('data-parallax'));
-            el.style.transform = 'translateY(' + (y * f * 4).toFixed(1) + 'px)';
-          });
-        }
-        ticking = false;
-      };
-      window.addEventListener('scroll', function () {
-        if (!ticking) {
-          window.requestAnimationFrame(apply);
-          ticking = true;
-        }
-      }, { passive: true });
     }
   }
 

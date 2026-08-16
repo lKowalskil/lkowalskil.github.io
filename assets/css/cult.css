@@ -42,7 +42,11 @@ body {
 }
 
 a { color: inherit; text-decoration: none; touch-action: manipulation; }
-img { display: block; max-width: 100%; }
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
 h1, h2, h3, p { margin: 0; }
 
 a:focus-visible,
@@ -769,6 +773,8 @@ button:focus-visible,
   .hero-art { min-height: 380px; }
   .hero-sprite.lich { width: 56%; left: 4%; }
   .hero-sprite.demon { width: 50%; right: 2%; }
+  .hero-sprite.lich,
+  .hero-sprite.demon { animation: none; }
 
   .stats { grid-template-columns: 1fr; }
   .stats > div { border-right: none; border-bottom: 1px solid var(--line-soft); }

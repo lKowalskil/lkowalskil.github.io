@@ -27,6 +27,123 @@
   @media(max-width:480px){.wrap{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right));padding-bottom:max(64px,env(safe-area-inset-bottom))}h1{font-size:28px}.card{padding:16px}}
   @media(prefers-color-scheme:dark){:root{--cream:#0C0C0E;--ink:#F4F3F0;--ink-soft:#A19D94;--line:#2B2822;--card:#141417;--accent:#E0A34E}code{background:#201D18}}
 </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://lkowalskil.github.io/about.html#person",
+        "name": "Yehor Kovalchuk",
+        "url": "https://lkowalskil.github.io/about.html",
+        "jobTitle": "Android developer",
+        "worksFor": {
+          "@id": "https://lkowalskil.github.io/#organization"
+        },
+        "sameAs": [
+          "https://github.com/lKowalskil"
+        ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://lkowalskil.github.io/#organization",
+        "name": "Nyxelium",
+        "url": "https://lkowalskil.github.io/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+          "width": 512,
+          "height": 512
+        },
+        "email": "kowalski.dev07@gmail.com",
+        "founder": {
+          "@id": "https://lkowalskil.github.io/about.html#person"
+        },
+        "sameAs": [
+          "https://github.com/lKowalskil"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://lkowalskil.github.io/#website",
+        "name": "Nyxelium",
+        "url": "https://lkowalskil.github.io/",
+        "inLanguage": "en",
+        "publisher": {
+          "@id": "https://lkowalskil.github.io/#organization"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://lkowalskil.github.io/signet-support.html#webpage",
+        "url": "https://lkowalskil.github.io/signet-support.html",
+        "name": "Signet Support",
+        "description": "Help, troubleshooting and contact information for the Signet batch photo watermarking app by Nyxelium.",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://lkowalskil.github.io/#website"
+        },
+        "publisher": {
+          "@id": "https://lkowalskil.github.io/#organization"
+        },
+        "about": {
+          "@type": "MobileApplication",
+          "name": "Signet",
+          "operatingSystem": "ANDROID",
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://lkowalskil.github.io/signet-support.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Nyxelium",
+            "item": "https://lkowalskil.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Privacy Policies",
+            "item": "https://lkowalskil.github.io/privacy-policy.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Signet Support",
+            "item": "https://lkowalskil.github.io/signet-support.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://lkowalskil.github.io/signet-support.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "A photo cannot be read Open the photo in your gallery to confirm it is still available. Try selecting it again through the system picker. If it is cloud-only, download the original to the device first. Convert an unusual or damaged file to a standard JPEG or PNG. An export failed Check that the device has free storage. Keep Signet open while retrying a very large batch. Retry only the failed items from the result screen; successful siblings should not be duplicated. Try JPEG output if a very large PNG job exceeds the device’s available memory. I cannot find the output Use the completion screen’s destination action. Check your Photos/Gallery app and its recent items. If you selected a Files destination, reopen that folder through Android’s Files app. The App was closed during export",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Reopen Signet. The active draft should return, while an incomplete output should not appear as successful. Review the recovered job and retry the items that did not finish."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Signet need internet access?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No for the core workflow. Photo selection, watermark editing, preview and export work on-device. The initial release has no ads, subscriptions or enabled remote diagnostics."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 <div class="wrap">

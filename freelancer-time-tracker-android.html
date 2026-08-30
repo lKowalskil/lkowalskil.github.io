@@ -4,28 +4,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="Track freelance billable hours on Android with an offline timesheet, client categories and CSV export. No account required.">
+    <meta name="description" content="Track freelance billable hours on Android with an offline timesheet, client categories and CSV export. No account required, works without a connection.">
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
     <meta name="theme-color" content="#101318">
-    <title>Freelancer Time Tracker: Billable Hours &amp; CSV · Nyxelium</title>
+    <title>Freelancer Time Tracker: Offline Timesheet &amp; CSV Export</title>
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="A Practical Android Time Tracker for Freelancers">
     <meta property="og:description" content="Track freelance billable hours on Android with an offline timesheet, client categories and CSV export. No account required.">
     <meta property="og:url" content="https://lkowalskil.github.io/freelancer-time-tracker-android.html">
     <meta property="og:site_name" content="Nyxelium">
-    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/chrono-01.png">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/chrono/feature-graphic.png">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="440">
-    <meta property="og:image:height" content="782">
-    <meta property="og:image:alt" content="Chrono Android app screen">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="500">
+    <meta property="og:image:alt" content="Chrono — offline time tracker and Pomodoro timer for Android">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="A Practical Android Time Tracker for Freelancers">
     <meta name="twitter:description" content="Track freelance billable hours on Android with an offline timesheet, client categories and CSV export. No account required.">
-    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/chrono-01.png">
-    <meta name="twitter:image:alt" content="Chrono Android app screen">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/chrono/feature-graphic.png">
+    <meta name="twitter:image:alt" content="Chrono — offline time tracker and Pomodoro timer for Android">
     <link rel="canonical" href="https://lkowalskil.github.io/freelancer-time-tracker-android.html">
 
     <link rel="icon" type="image/png" href="assets/img/chrono-icon.png">
@@ -36,110 +36,165 @@
     <link rel="stylesheet" href="assets/css/guides.css">
 
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
     {
-      "@type": "Article",
-      "headline": "A Practical Android Time Tracker for Freelancers",
-      "description": "Track freelance billable hours on Android with an offline timesheet, client categories and CSV export. No account required.",
-      "datePublished": "2026-07-24",
-      "dateModified": "2026-07-24",
-      "mainEntityOfPage": "https://lkowalskil.github.io/freelancer-time-tracker-android.html",
-      "image": "https://lkowalskil.github.io/assets/img/chrono-01.png",
-      "keywords": "freelancer time tracker Android, billable hours tracker app, timesheet app Android, work hours tracker, CSV timesheet export, invoice time tracking",
-      "audience": {
-        "@type": "Audience",
-        "audienceType": "Freelancers, consultants and solo contractors"
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "Nyxelium",
-        "url": "https://lkowalskil.github.io/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Nyxelium",
-        "url": "https://lkowalskil.github.io/"
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
+      "@context": "https://schema.org",
+      "@graph": [
         {
-          "@type": "Question",
-          "name": "What should a freelancer track for each work session?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Track the client or project, duration and a short description of the outcome. Add tags only when they help with an invoice or review."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can Chrono export billable hours?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Chrono exports time entries as CSV so you can filter and total them in Excel, Google Sheets or another spreadsheet."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Does a freelance time tracker need an internet connection?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Not for Chrono’s core timer and local history. You can record work offline and export the data later."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is Chrono an invoicing app?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. Chrono records and exports time; you use the resulting timesheet with your existing invoicing workflow."
-          }
-        }
-      ]
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
+          "@type": "Organization",
+          "@id": "https://lkowalskil.github.io/#organization",
           "name": "Nyxelium",
-          "item": "https://lkowalskil.github.io/"
+          "url": "https://lkowalskil.github.io/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "description": "An independent studio building offline-first Android apps that need no account.",
+          "email": "kowalski.dev07@gmail.com",
+          "founder": {
+            "@id": "https://lkowalskil.github.io/about.html#person"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
         },
         {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Guides",
-          "item": "https://lkowalskil.github.io/guides.html"
+          "@type": "Person",
+          "@id": "https://lkowalskil.github.io/about.html#person",
+          "name": "Yehor Kovalchuk",
+          "url": "https://lkowalskil.github.io/about.html",
+          "jobTitle": "Android developer",
+          "worksFor": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
         },
         {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "A Practical Android Time Tracker for Freelancers",
-          "item": "https://lkowalskil.github.io/freelancer-time-tracker-android.html"
+          "@type": "WebSite",
+          "@id": "https://lkowalskil.github.io/#website",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "description": "Offline-first Android apps for focus, plant care and idle play.",
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "A Practical Android Time Tracker for Freelancers",
+          "description": "Track freelance billable hours on Android with an offline timesheet, client categories and CSV export. No account required.",
+          "datePublished": "2026-07-24",
+          "dateModified": "2026-08-30",
+          "mainEntityOfPage": "https://lkowalskil.github.io/freelancer-time-tracker-android.html",
+          "image": "https://lkowalskil.github.io/assets/img/chrono/feature-graphic.png",
+          "keywords": "freelancer time tracker Android, billable hours tracker app, timesheet app Android, work hours tracker, CSV timesheet export, invoice time tracking",
+          "audience": {
+            "@type": "Audience",
+            "audienceType": "Freelancers, consultants and solo contractors"
+          },
+          "author": {
+            "@id": "https://lkowalskil.github.io/about.html#person"
+          },
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "@id": "https://lkowalskil.github.io/freelancer-time-tracker-android.html#article",
+          "isPartOf": {
+            "@id": "https://lkowalskil.github.io/#website"
+          },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What should a freelancer track for each work session?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Track the client or project, duration and a short description of the outcome. Add tags only when they help with an invoice or review."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can Chrono export billable hours?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Chrono exports time entries as CSV so you can filter and total them in Excel, Google Sheets or another spreadsheet."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does a freelance time tracker need an internet connection?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Not for Chrono’s core timer and local history. You can record work offline and export the data later."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Chrono an invoicing app?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Chrono records and exports time; you use the resulting timesheet with your existing invoicing workflow."
+              }
+            }
+          ],
+          "@id": "https://lkowalskil.github.io/freelancer-time-tracker-android.html#faq"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Nyxelium",
+              "item": "https://lkowalskil.github.io/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://lkowalskil.github.io/guides.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "A Practical Android Time Tracker for Freelancers",
+              "item": "https://lkowalskil.github.io/freelancer-time-tracker-android.html"
+            }
+          ],
+          "@id": "https://lkowalskil.github.io/freelancer-time-tracker-android.html#breadcrumb"
+        },
+        {
+          "@type": "MobileApplication",
+          "name": "Chrono",
+          "operatingSystem": "ANDROID",
+          "applicationCategory": "BusinessApplication",
+          "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker",
+          "url": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker",
+          "image": "https://lkowalskil.github.io/assets/img/chrono-icon.png",
+          "description": "Offline Pomodoro timer and time tracker for Android.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker"
+          },
+          "@id": "https://lkowalskil.github.io/freelancer-time-tracker-android.html#app",
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "author": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
         }
       ]
-    },
-    {
-      "@type": "MobileApplication",
-      "name": "Chrono",
-      "operatingSystem": "ANDROID",
-      "applicationCategory": "BusinessApplication",
-      "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker",
-      "url": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker",
-      "image": "https://lkowalskil.github.io/assets/img/chrono-icon.png",
-      "description": "Offline Pomodoro timer and time tracker for Android.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
     }
-  ]
-}
     </script>
 </head>
 
@@ -159,8 +214,9 @@
         <section class="guide-hero">
             <div class="guide-hero-copy">
                 <p class="guide-kicker">GUIDE—04 · FREELANCE WORK · 8 MIN READ</p>
-                <h1 class="guide-title">Turn working hours into a timesheet you can actually invoice.</h1>
-                <p class="guide-deck">A low-admin time-tracking workflow for freelancers, consultants and solo contractors who need reliable billable hours without moving every session into the cloud.</p>
+                <h1 class="guide-title">A freelancer time tracker that turns hours into an offline timesheet you can invoice.</h1>
+                <p class="guide-deck">A low-admin offline timesheet workflow for freelancers, consultants and solo contractors
+                    who need reliable billable hours without moving every session into the cloud.</p>
             </div>
             <aside class="guide-hero-aside" aria-label="Featured app">
                 <div class="guide-product">
@@ -199,6 +255,7 @@
                     <p class="guide-label">01 · THE BILLABLE SYSTEM</p>
                     <h2>A freelancer time tracker should answer one question: what can I bill?</h2>
 
+          <p class="lede">A freelancer time tracker needs four things to produce an offline timesheet you can invoice from: a client label, a duration, an editable entry, and a CSV export.</p>
           <p>The best freelance time-tracking setup is usually the smallest one that produces a defensible timesheet. You need the client, the kind of work, the duration and enough context to recognize the session later. Everything else is optional administration.</p>
           <p>On Android, a manual work-hours tracker is especially useful when your day moves between a desk, a client site and travel. An offline timer keeps running without depending on a browser tab or a stable connection, while a short note preserves the reason for the charge.</p>
           <div class="note"><p><strong>Start with billing categories, not task lists:</strong> Client A, Client B, internal admin and business development are often enough. Add project tags only when they change how you invoice or review the work.</p></div>
@@ -263,6 +320,7 @@
                         <a href="private-time-tracker-no-account.html"><strong>A Private Offline Time Tracker With No Account</strong><span aria-hidden="true">→</span></a>
                         <a href="pomodoro-study-timer-android.html"><strong>Pomodoro Study Timer and Study-Hours Tracker for Android</strong><span aria-hidden="true">→</span></a>
                         <a href="offline-time-tracker-android.html"><strong>How to track time offline on Android</strong><span aria-hidden="true">→</span></a>
+                        <a href="best-offline-time-tracking-apps-android.html"><strong>Compare the best offline time tracking apps</strong><span aria-hidden="true">→</span></a>
                     </div>
                 </aside>
 
@@ -287,7 +345,7 @@
                 <a href="index.html">STUDIO HOME</a>
                 <a href="privacy-policy-chrono.html">CHRONO PRIVACY</a>
             </div>
-            <span>LAST REVIEWED · JULY 2026</span>
+            <span>LAST REVIEWED · AUGUST 2026</span>
         </div>
     </footer>
 

@@ -47,8 +47,33 @@
           "@id": "https://lkowalskil.github.io/#organization",
           "name": "Nyxelium",
           "url": "https://lkowalskil.github.io/",
-          "logo": "https://lkowalskil.github.io/assets/img/favicon.svg",
-          "sameAs": ["https://github.com/lKowalskil"]
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "description": "An independent studio building offline-first Android apps that need no account.",
+          "email": "kowalski.dev07@gmail.com",
+          "founder": {
+            "@id": "https://lkowalskil.github.io/about.html#person"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://lkowalskil.github.io/about.html#person",
+          "name": "Yehor Kovalchuk",
+          "url": "https://lkowalskil.github.io/about.html",
+          "jobTitle": "Android developer",
+          "worksFor": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
         },
         {
           "@type": "WebSite",
@@ -56,22 +81,54 @@
           "name": "Nyxelium",
           "url": "https://lkowalskil.github.io/",
           "description": "Offline-first Android apps for focus, plant care and idle play.",
-          "publisher": { "@id": "https://lkowalskil.github.io/#organization" }
+          "inLanguage": "en",
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://lkowalskil.github.io/#webpage",
+          "url": "https://lkowalskil.github.io/",
+          "name": "Offline Android Apps for Focus, Plant Care & Idle Play",
+          "description": "Nyxelium builds small, offline-first Android apps — Chrono, Pocket Cult, Mossby and Nuzzle. No account to create, free to use, and easy to keep.",
+          "isPartOf": {
+            "@id": "https://lkowalskil.github.io/#website"
+          },
+          "about": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "primaryImageOfPage": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png"
         },
         {
           "@type": "ItemList",
+          "@id": "https://lkowalskil.github.io/#apps",
           "name": "Nyxelium Android apps",
+          "numberOfItems": 6,
           "itemListElement": [
             {
               "@type": "ListItem",
               "position": 1,
               "item": {
                 "@type": "MobileApplication",
-                "name": "Chrono",
+                "@id": "https://lkowalskil.github.io/#app-chrono",
+                "name": "Chrono — Time Tracker",
                 "operatingSystem": "ANDROID",
-                "applicationCategory": "ProductivityApplication",
+                "applicationCategory": "BusinessApplication",
+                "description": "Offline time tracker and Pomodoro focus timer for Android. No account, CSV export, home-screen widget.",
+                "image": "https://lkowalskil.github.io/assets/img/chrono-icon.png",
+                "publisher": {
+                  "@id": "https://lkowalskil.github.io/#organization"
+                },
                 "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker",
-                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+                "url": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD",
+                  "availability": "https://schema.org/InStock",
+                  "url": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker"
+                }
               }
             },
             {
@@ -79,11 +136,24 @@
               "position": 2,
               "item": {
                 "@type": "MobileApplication",
-                "name": "Pocket Cult",
+                "@id": "https://lkowalskil.github.io/#app-cult",
+                "name": "Pocket Cult: Idle Dungeon",
                 "operatingSystem": "ANDROID",
                 "applicationCategory": "GameApplication",
+                "description": "Offline idle dungeon-keeper game. Build an evil lair, summon minions, prestige. No forced ads.",
+                "image": "https://lkowalskil.github.io/assets/img/cult-icon.png",
+                "publisher": {
+                  "@id": "https://lkowalskil.github.io/#organization"
+                },
                 "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon",
-                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+                "url": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD",
+                  "availability": "https://schema.org/InStock",
+                  "url": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon"
+                }
               }
             },
             {
@@ -91,11 +161,72 @@
               "position": 3,
               "item": {
                 "@type": "MobileApplication",
-                "name": "Mossby",
+                "@id": "https://lkowalskil.github.io/#app-mossby",
+                "name": "Mossby — Plant Care",
                 "operatingSystem": "ANDROID",
                 "applicationCategory": "LifestyleApplication",
+                "description": "Plant care tracker with watering reminders, light-aware placement and a seven-day forecast. Works offline.",
+                "image": "https://lkowalskil.github.io/assets/img/mossby-icon.png",
+                "publisher": {
+                  "@id": "https://lkowalskil.github.io/#organization"
+                },
                 "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.mossby",
-                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+                "url": "https://play.google.com/store/apps/details?id=com.nyxelium.mossby",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD",
+                  "availability": "https://schema.org/InStock",
+                  "url": "https://play.google.com/store/apps/details?id=com.nyxelium.mossby"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "MobileApplication",
+                "@id": "https://lkowalskil.github.io/#app-nuzzle",
+                "name": "Nuzzle — Pet Care",
+                "operatingSystem": "ANDROID",
+                "applicationCategory": "LifestyleApplication",
+                "description": "Offline pet care: feeding, medication, grooming and vet reminders with a per-pet health timeline. In development.",
+                "image": "https://lkowalskil.github.io/assets/img/nuzzle-icon.png",
+                "publisher": {
+                  "@id": "https://lkowalskil.github.io/#organization"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "MobileApplication",
+                "@id": "https://lkowalskil.github.io/#app-hexbrew",
+                "name": "Hexbrew: Idle Alchemy Witch",
+                "operatingSystem": "ANDROID",
+                "applicationCategory": "GameApplication",
+                "description": "A cozy-gothic offline idle apothecary. In development.",
+                "image": "https://lkowalskil.github.io/assets/img/hexbrew-icon.png",
+                "publisher": {
+                  "@id": "https://lkowalskil.github.io/#organization"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "item": {
+                "@type": "MobileApplication",
+                "@id": "https://lkowalskil.github.io/#app-signet",
+                "name": "Signet — Photo Watermarks",
+                "operatingSystem": "ANDROID",
+                "applicationCategory": "MultimediaApplication",
+                "description": "Local-first batch watermarking for photos. Nothing is uploaded. In development.",
+                "image": "https://lkowalskil.github.io/assets/img/signet-icon.png",
+                "publisher": {
+                  "@id": "https://lkowalskil.github.io/#organization"
+                }
               }
             }
           ]
@@ -117,6 +248,7 @@
         <nav class="header-nav" aria-label="Primary">
             <a href="#apps">Apps</a>
             <a href="guides.html">Guides</a>
+            <a href="about.html">About</a>
             <a href="#spec">Spec</a>
         </nav>
         <a class="header-cta" href="#apps">Get the apps <span aria-hidden="true">→</span></a>
@@ -449,11 +581,10 @@
                 RESERVED</span>
             <div class="footer-legal">
                 <a href="guides.html">GUIDES</a>
-                <a href="privacy-policy-chrono.html">CHRONO PRIVACY</a>
-                <a href="privacy-policy-cult.html">POCKET CULT PRIVACY</a>
-                <a href="privacy-policy-hexbrew.html">HEXBREW PRIVACY</a>
-                <a href="privacy-policy-mossby.html">MOSSBY PRIVACY</a>
-                <a href="privacy-policy-nuzzle.html">NUZZLE PRIVACY</a>
+                <a href="about.html">ABOUT</a>
+                <a href="privacy-policy.html">PRIVACY POLICIES</a>
+                <a href="signet-support.html">SIGNET SUPPORT</a>
+                <a href="terms-signet.html">SIGNET TERMS</a>
                 <a href="app-ads.txt">APP-ADS.TXT</a>
             </div>
             <span>GOOGLE PLAY IS A TRADEMARK OF GOOGLE LLC</span>

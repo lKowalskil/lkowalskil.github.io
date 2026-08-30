@@ -41,17 +41,183 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "MobileApplication",
-      "name": "Pocket Cult: Idle Dungeon RPG",
-      "operatingSystem": "ANDROID",
-      "applicationCategory": "GameApplication",
-      "genre": "Idle / Simulation",
-      "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon",
-      "url": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon",
-      "image": "https://lkowalskil.github.io/assets/img/cult/feature-graphic.png",
-      "description": "An offline idle dungeon management RPG for Android with no forced ads or energy timers.",
-      "author": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" },
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://lkowalskil.github.io/#website",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "inLanguage": "en",
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://lkowalskil.github.io/#organization",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "email": "kowalski.dev07@gmail.com",
+          "founder": {
+            "@id": "https://lkowalskil.github.io/about.html#person"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://lkowalskil.github.io/about.html#person",
+          "name": "Yehor Kovalchuk",
+          "url": "https://lkowalskil.github.io/about.html",
+          "jobTitle": "Android developer",
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
+        },
+        {
+          "@type": "ItemPage",
+          "@id": "https://lkowalskil.github.io/pocket-cult.html#webpage",
+          "url": "https://lkowalskil.github.io/pocket-cult.html",
+          "name": "Pocket Cult: Idle Dungeon",
+          "description": "Pocket Cult: Idle Dungeon — build an evil dungeon, summon a demon army, and crush the heroes who raid it. Free on Google Play, 100% offline.",
+          "inLanguage": "en",
+          "isPartOf": {
+            "@id": "https://lkowalskil.github.io/#website"
+          },
+          "primaryImageOfPage": "https://lkowalskil.github.io/assets/img/cult/feature-graphic.png",
+          "mainEntity": {
+            "@id": "https://lkowalskil.github.io/pocket-cult.html#app"
+          },
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
+        },
+        {
+          "@type": [
+            "MobileApplication",
+            "VideoGame"
+          ],
+          "@id": "https://lkowalskil.github.io/pocket-cult.html#app",
+          "name": "Pocket Cult: Idle Dungeon",
+          "alternateName": "Pocket Cult",
+          "operatingSystem": "ANDROID",
+          "applicationCategory": "GameApplication",
+          "applicationSubCategory": "Idle / Simulation",
+          "genre": [
+            "Idle",
+            "Simulation",
+            "Dungeon management"
+          ],
+          "gamePlatform": "Android",
+          "playMode": "SinglePlayer",
+          "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon",
+          "url": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon",
+          "image": "https://lkowalskil.github.io/assets/img/cult/feature-graphic.png",
+          "screenshot": [
+            "https://lkowalskil.github.io/assets/img/cult-01.png",
+            "https://lkowalskil.github.io/assets/img/cult-02.png"
+          ],
+          "description": "An offline idle dungeon-management RPG for Android. Build rooms, summon minions, defend against hero raids and prestige — with no forced ads and no energy timers.",
+          "featureList": [
+            "15 buildings across 6 tiers",
+            "10 unique minions",
+            "Full offline progression",
+            "Prestige and ascension",
+            "No forced ads",
+            "6 languages"
+          ],
+          "inLanguage": [
+            "en",
+            "de",
+            "es",
+            "fr",
+            "pt",
+            "uk"
+          ],
+          "author": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://lkowalskil.github.io/pocket-cult.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Nyxelium",
+              "item": "https://lkowalskil.github.io/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Apps",
+              "item": "https://lkowalskil.github.io/#apps"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Pocket Cult: Idle Dungeon",
+              "item": "https://lkowalskil.github.io/pocket-cult.html"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://lkowalskil.github.io/pocket-cult.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does Pocket Cult work offline?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Progression continues from the device clock while the game is closed, and the save file is stored on the device. No connection is required to play."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are there forced ads or energy timers?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Ads are rewarded only — you press a button to watch one in exchange for a bonus. Nothing interrupts you between decisions, and there is no energy system capping your session."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Pocket Cult free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, free to download and play on Google Play, with optional purchases. The core dungeon-management loop is not paywalled."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the prestige loop in Pocket Cult?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ascension resets your dungeon in exchange for permanent bonuses, so each run starts faster and reaches further than the last. It changes which buildings and minions are worth prioritising rather than only multiplying numbers."
+              }
+            }
+          ]
+        }
+      ]
     }
     </script>
 </head>

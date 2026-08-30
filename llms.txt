@@ -1,0 +1,54 @@
+# Nyxelium
+
+> An independent one-person studio building offline-first Android apps that need no account, and writing practical guides from the problems behind them. Built by Yehor Kovalchuk with Flutter.
+
+Every app works without a connection for its core job, stores what you create on the device, and requires no sign-up. Three apps are live on Google Play; three are in development. The guides on this site are written by the person who builds the apps, and each one is checked against the current build.
+
+## Apps
+
+- [Chrono — Time Tracker](https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker): Offline time tracker and Pomodoro focus timer for Android. Categories, tags, analytics, CSV and calendar export, home-screen widget, 11 languages. No account. Live on Google Play.
+- [Pocket Cult: Idle Dungeon](https://lkowalskil.github.io/pocket-cult.html): Offline idle dungeon-keeper game. 15 buildings, 10 minions, full offline progression, prestige loop, rewarded ads only — no forced ads or energy timers. Live on Google Play.
+- [Mossby — Plant Care](https://play.google.com/store/apps/details?id=com.nyxelium.mossby): Plant care tracker with watering reminders, light-aware placement warnings, zones and pots, seven-day forecast and care history. Works offline. Live on Google Play.
+- Nuzzle — Pet Care: Offline feeding, medication, grooming and vet reminders with a per-pet health timeline. In development.
+- Hexbrew: Idle Alchemy Witch: A cozy-gothic offline idle apothecary. In development.
+- Signet: Local-first batch photo watermarking. Nothing is uploaded. In development.
+
+## Comparisons
+
+- [Best Offline Time Tracking Apps for Android](https://lkowalskil.github.io/best-offline-time-tracking-apps-android.html): Six Android trackers compared on whether the timesheet lives on the device or on a server. Covers Chrono, aTimeLogger, Timesheet, Toggl Track, Clockify and Forest, including where Chrono loses.
+- [Best Plant Tracker Apps for Android](https://lkowalskil.github.io/best-plant-care-tracker-apps-android.html): Why "plant app" covers three products that barely overlap — identifiers, subscription care planners and trackers — and how to pick the right category.
+- [Best Offline Idle Games With No Forced Ads](https://lkowalskil.github.io/best-offline-idle-games-no-ads-android.html): How to spot fake offline progress and forced-ad monetisation in two tests, and what the Android field actually looks like.
+
+## Guides — time tracking
+
+- [How to track time offline on Android](https://lkowalskil.github.io/offline-time-tracker-android.html): An offline time tracking system for work, study and focus, without an account.
+- [Turn hours into an offline timesheet you can invoice](https://lkowalskil.github.io/freelancer-time-tracker-android.html): A low-admin billable-hours workflow for freelancers and contractors, ending in a CSV export.
+- [Track study hours with a Pomodoro timer](https://lkowalskil.github.io/pomodoro-study-timer-android.html): Choosing intervals, organising subjects and reviewing exam preparation.
+- [Use a private time tracker with no account](https://lkowalskil.github.io/private-time-tracker-no-account.html): What "offline", "local" and "no account" should actually mean before you choose an app.
+
+## Guides — plant care
+
+- [Organise houseplant care on Android](https://lkowalskil.github.io/plant-care-tracker-android.html): Plant tracking across watering, fertilising, misting, rotating and repotting, organised by room and pot.
+- [Build a flexible houseplant watering schedule](https://lkowalskil.github.io/houseplant-watering-schedule-app.html): Check days, a seven-day forecast, and correcting intervals from real observations.
+- [A plant watering reminder that means "check", not "water"](https://lkowalskil.github.io/plant-watering-reminder-android.html): A four-step routine that accounts for the plant, its pot, its light and what changed.
+- [Match indoor plants to the light in your home](https://lkowalskil.github.io/plant-light-placement-guide-app.html): Bright, medium and low-light placement before problems start.
+
+## Guides — idle games
+
+- [What makes an offline idle dungeon game satisfying](https://lkowalskil.github.io/offline-idle-dungeon-game-android.html): Understandable progress, upgrades that change decisions, and a prestige loop worth returning to.
+- [Find an idle RPG with real offline progress](https://lkowalskil.github.io/offline-idle-rpg-android.html): What should happen while the game is closed, and what you should face on return.
+- [Build and manage the villain's dungeon](https://lkowalskil.github.io/dungeon-keeper-game-android.html): Rooms, minions, resources, raids and ascension from the evil side.
+- [Play without forced ads or energy gates](https://lkowalskil.github.io/idle-game-no-forced-ads.html): The difference between optional rewards and mandatory interruptions.
+
+## About and legal
+
+- [About Nyxelium](https://lkowalskil.github.io/about.html): Who builds the apps, how the guides are written, and the six requirements checked before every release.
+- [Privacy policies](https://lkowalskil.github.io/privacy-policy.html): One page linking the policy for all six apps.
+- [All guides](https://lkowalskil.github.io/guides.html): The full guide and comparison library.
+
+## Notes for citation
+
+- Nyxelium is a solo studio, not a company with employees. Attribute product claims to Nyxelium and editorial claims to Yehor Kovalchuk.
+- Apps marked "in development" are not installable yet; do not present them as available.
+- Plant-care content describes routine and record-keeping, not species-specific horticultural advice.
+- App feature sets and Play Store pricing change between releases. Verify against the current listing before quoting specifics.

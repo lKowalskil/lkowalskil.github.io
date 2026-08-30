@@ -505,3 +505,27 @@
   .guide-cluster-head { padding: 40px 24px; }
   .guide-method > div { padding: 48px 24px; }
 }
+
+/* ── Cluster grids with fewer than four cards ── */
+.guide-cluster .guide-card-grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.guide-cluster .guide-card-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* ── Non-interactive cards (summary panels, not links) ── */
+.guide-card-static { min-height: auto; }
+.guide-card-static:hover { background: transparent; }
+.guide-card-static h3 { max-width: 16ch; }
+
+@media (max-width: 900px) {
+  .guide-cluster .guide-card-grid.cols-3,
+  .guide-cluster .guide-card-grid.cols-2 { grid-template-columns: 1fr; }
+}
+
+/* ── Lede: the direct answer that opens a section ── */
+.article-section .lede {
+  font-size: clamp(17px, 1.3vw, 19px);
+  line-height: 1.55;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.011em;
+  margin-bottom: 6px;
+}

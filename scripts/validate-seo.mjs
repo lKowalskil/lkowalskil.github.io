@@ -8,6 +8,7 @@ const files = (await readdir(root)).filter((file) => file.endsWith('.html'));
 const failures = [];
 const seenTitles = new Map();
 const seenCanonicals = new Map();
+const noindexCanonicals = new Map();
 
 function capture(html, pattern) {
   return html.match(pattern)?.[1]?.replace(/\s+/g, ' ').trim();
@@ -63,6 +64,9 @@ for (const file of files) {
   const title = capture(html, /<title>([\s\S]*?)<\/title>/i);
   const description = metaContent(html, 'name', 'description');
   const robots = metaContent(html, 'name', 'robots');
+  // Deliberately excluded from search: still needs full metadata and a canonical,
+  // but must never appear in the sitemap.
+  const isNoindex = /(^|,)\s*noindex\s*(,|$)/.test(robots ?? '');
   const referrer = metaContent(html, 'name', 'referrer');
   const viewport = metaContent(html, 'name', 'viewport');
   const csp = metaContent(html, 'http-equiv', 'Content-Security-Policy');
@@ -79,7 +83,11 @@ for (const file of files) {
   if (canonical && canonical !== expectedCanonical) {
     failures.push(`${file}: canonical must be ${expectedCanonical}`);
   }
-  if (!robots?.includes('index') || !robots?.includes('follow')) {
+  if (isNoindex) {
+    if (!robots?.includes('follow')) {
+      failures.push(`${file}: noindex page must still allow follow`);
+    }
+  } else if (!/(^|,)\s*index\s*(,|$)/.test(robots ?? '') || !robots?.includes('follow')) {
     failures.push(`${file}: robots metadata must allow index and follow`);
   }
   if (referrer !== 'strict-origin-when-cross-origin') {
@@ -109,7 +117,8 @@ for (const file of files) {
   }
   if (canonical) {
     if (seenCanonicals.has(canonical)) failures.push(`${file}: duplicate canonical with ${seenCanonicals.get(canonical)}`);
-    seenCanonicals.set(canonical, file);
+    if (isNoindex) noindexCanonicals.set(canonical, file);
+    else seenCanonicals.set(canonical, file);
   }
 
   if (!isLegal) {
@@ -191,6 +200,9 @@ for (const match of sitemap.matchAll(/<url>\s*<loc>([^<]+)<\/loc>\s*<lastmod>([^
 for (const [canonical, file] of seenCanonicals) {
   if (!sitemapUrls.has(canonical)) failures.push(`sitemap.xml: missing canonical for ${file}`);
 }
+for (const [canonical, file] of noindexCanonicals) {
+  if (sitemapUrls.has(canonical)) failures.push(`sitemap.xml: noindex page must not be listed (${file})`);
+}
 for (const loc of sitemapUrls.keys()) {
   if (!seenCanonicals.has(loc)) failures.push(`sitemap.xml: URL is not an indexable canonical ${loc}`);
 }
@@ -218,9 +230,30 @@ if (/data-parallax/i.test(interactionScript)) {
   failures.push('assets/js/main.js: scroll parallax must not be reintroduced');
 }
 
+// Orphan pages do not rank: every guide and comparison must be linked from the hub.
 const guideIndex = await readFile(resolve(root, 'guides.html'), 'utf8');
 const guideCardCount = [...guideIndex.matchAll(/class="guide-card"/g)].length;
-if (guideCardCount !== 12) failures.push(`guides.html: expected 12 guide cards, found ${guideCardCount}`);
+const hubLinks = new Set(
+  [...guideIndex.matchAll(/<a\s+class="guide-card"\s+href="([^"]+)"/g)].map((match) => match[1]),
+);
+const hubExempt = new Set([
+  'index.html',
+  'guides.html',
+  'about.html',
+  '404.html',
+  'pocket-cult.html',
+  'privacy-policy.html',
+  'terms-signet.html',
+  'signet-support.html',
+]);
+for (const file of files) {
+  if (file === 'google54b3a0eff6175f9b.html') continue;
+  if (hubExempt.has(file) || file.startsWith('privacy-policy-')) continue;
+  if (!hubLinks.has(file)) failures.push(`guides.html: missing hub link to ${file}`);
+}
+if (guideCardCount !== hubLinks.size) {
+  failures.push(`guides.html: ${guideCardCount} guide cards but ${hubLinks.size} unique targets`);
+}
 
 if (failures.length) {
   console.error(failures.join('\n'));

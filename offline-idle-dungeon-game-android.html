@@ -22,12 +22,12 @@
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1024">
     <meta property="og:image:height" content="500">
-    <meta property="og:image:alt" content="Pocket Cult — offline idle dungeon game">
+    <meta property="og:image:alt" content="Pocket Cult — offline idle dungeon game for Android">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="What Makes an Offline Idle Dungeon Game Satisfying?">
     <meta name="twitter:description" content="A practical look at offline progress, resource choices, upgrades and prestige loops.">
     <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/cult/feature-graphic.png">
-    <meta name="twitter:image:alt" content="Pocket Cult — offline idle dungeon game">
+    <meta name="twitter:image:alt" content="Pocket Cult — offline idle dungeon game for Android">
     <link rel="canonical" href="https://lkowalskil.github.io/offline-idle-dungeon-game-android.html">
 
     <link rel="icon" type="image/png" href="assets/img/cult-icon.png">
@@ -44,45 +44,153 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "Organization",
+          "@id": "https://lkowalskil.github.io/#organization",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "description": "An independent studio building offline-first Android apps that need no account.",
+          "email": "kowalski.dev07@gmail.com",
+          "founder": {
+            "@id": "https://lkowalskil.github.io/about.html#person"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://lkowalskil.github.io/about.html#person",
+          "name": "Yehor Kovalchuk",
+          "url": "https://lkowalskil.github.io/about.html",
+          "jobTitle": "Android developer",
+          "worksFor": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://lkowalskil.github.io/#website",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "description": "Offline-first Android apps for focus, plant care and idle play.",
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
+        },
+        {
           "@type": "Article",
           "headline": "What Makes an Offline Idle Dungeon Game Satisfying?",
           "description": "A practical look at offline progress, resource choices, upgrades, and prestige loops.",
           "datePublished": "2026-07-23",
-          "dateModified": "2026-07-23",
+          "dateModified": "2026-08-30",
           "mainEntityOfPage": "https://lkowalskil.github.io/offline-idle-dungeon-game-android.html",
           "image": "https://lkowalskil.github.io/assets/img/cult/feature-graphic.png",
-          "author": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" },
-          "publisher": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" }
+          "author": {
+            "@id": "https://lkowalskil.github.io/about.html#person"
+          },
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "@id": "https://lkowalskil.github.io/offline-idle-dungeon-game-android.html#article",
+          "isPartOf": {
+            "@id": "https://lkowalskil.github.io/#website"
+          },
+          "inLanguage": "en"
         },
         {
-          "@type": ["VideoGame", "MobileApplication"],
+          "@type": [
+            "VideoGame",
+            "MobileApplication"
+          ],
           "name": "Pocket Cult: Idle Dungeon RPG",
           "operatingSystem": "ANDROID",
           "applicationCategory": "GameApplication",
           "gamePlatform": "Android",
-          "genre": ["Idle", "Simulation", "Dark fantasy"],
+          "genre": [
+            "Idle",
+            "Simulation",
+            "Dark fantasy"
+          ],
           "url": "https://lkowalskil.github.io/pocket-cult.html",
           "installUrl": "https://play.google.com/store/apps/details?id=com.nyxelium.culttycoon",
           "image": "https://lkowalskil.github.io/assets/img/cult/feature-graphic.png",
           "description": "Offline idle dungeon RPG and dark fantasy management game for Android.",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
         },
         {
           "@type": "FAQPage",
           "mainEntity": [
-            { "@type": "Question", "name": "Can Pocket Cult progress offline?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The cult generates resources while the app is closed and summarizes the return." } },
-            { "@type": "Question", "name": "Is an internet connection required to play?", "acceptedAnswer": { "@type": "Answer", "text": "No. The core dungeon-building and idle progression work offline." } },
-            { "@type": "Question", "name": "What do you manage?", "acceptedAnswer": { "@type": "Answer", "text": "Buildings, production, storage, minion assignments, upkeep, defense, research, and permanent upgrades." } },
-            { "@type": "Question", "name": "Does it have prestige?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Ascension awards permanent Corruption upgrades, with an additional Eternity layer for deeper progression." } }
-          ]
+            {
+              "@type": "Question",
+              "name": "Can Pocket Cult progress offline?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. The cult generates resources while the app is closed and summarizes the return."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is an internet connection required to play?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The core dungeon-building and idle progression work offline."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What do you manage?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Buildings, production, storage, minion assignments, upkeep, defense, research, and permanent upgrades."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does it have prestige?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Ascension awards permanent Corruption upgrades, with an additional Eternity layer for deeper progression."
+              }
+            }
+          ],
+          "@id": "https://lkowalskil.github.io/offline-idle-dungeon-game-android.html#faq"
         },
         {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Nyxelium", "item": "https://lkowalskil.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://lkowalskil.github.io/guides.html" },
-            { "@type": "ListItem", "position": 3, "name": "What Makes an Offline Idle Dungeon Game Satisfying?", "item": "https://lkowalskil.github.io/offline-idle-dungeon-game-android.html" }
-          ]
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Nyxelium",
+              "item": "https://lkowalskil.github.io/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://lkowalskil.github.io/guides.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "What Makes an Offline Idle Dungeon Game Satisfying?",
+              "item": "https://lkowalskil.github.io/offline-idle-dungeon-game-android.html"
+            }
+          ],
+          "@id": "https://lkowalskil.github.io/offline-idle-dungeon-game-android.html#breadcrumb"
         }
       ]
     }
@@ -107,7 +215,7 @@
         <section class="guide-hero">
             <div class="guide-hero-copy">
                 <p class="guide-kicker">GUIDE—03 · GAME DESIGN · 7 MIN READ</p>
-                <h1 class="guide-title">Progress should continue. Decisions should not disappear.</h1>
+                <h1 class="guide-title">An offline idle dungeon game should keep progressing&mdash;without erasing your decisions.</h1>
                 <p class="guide-deck">The parts of an offline idle dungeon game that make returning feel rewarding:
                     understandable progress, meaningful upgrades, and a reset that changes the next run.</p>
             </div>
@@ -147,6 +255,7 @@
                 <section id="offline-progress" class="article-section">
                     <p class="guide-label">01 · THE PROMISE</p>
                     <h2>Offline progress should respect the time you were away.</h2>
+                    <p class="lede">An offline idle dungeon game calculates what happened from elapsed time on the device clock, so closing the app for six hours returns six hours of production rather than a capped bonus.</p>
                     <p>An idle game makes a clear promise: the system keeps moving when you are not staring at it. When
                         the player returns, the game should explain how long it progressed, what was earned, and whether
                         a cap or efficiency rule changed the result.</p>
@@ -247,6 +356,7 @@
                         <a href="offline-idle-rpg-android.html"><strong>Find an idle RPG with real offline progress</strong><span aria-hidden="true">→</span></a>
                         <a href="dungeon-keeper-game-android.html"><strong>Build and manage the villain’s dungeon</strong><span aria-hidden="true">→</span></a>
                         <a href="idle-game-no-forced-ads.html"><strong>Play without forced ads or energy gates</strong><span aria-hidden="true">→</span></a>
+                        <a href="best-offline-idle-games-no-ads-android.html"><strong>Compare offline idle games with no forced ads</strong><span aria-hidden="true">→</span></a>
                     </div>
                 </aside>
 
@@ -273,7 +383,7 @@
                 <a href="pocket-cult.html">POCKET CULT</a>
                 <a href="privacy-policy-cult.html">PRIVACY</a>
             </div>
-            <span>LAST REVIEWED · JULY 2026</span>
+            <span>LAST REVIEWED · AUGUST 2026</span>
         </div>
     </footer>
 

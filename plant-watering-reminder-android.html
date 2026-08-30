@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description"
-        content="Build a better houseplant watering routine with reminders, light-aware zones, care history, and a quick check before you water.">
+        content="A plant watering reminder that prompts a check, not a pour. Build a routine with light-aware zones, care history and a plant watering tracker that learns.">
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
     <meta name="theme-color" content="#101318">
-    <title>Plant Watering Reminder: A Better Routine · Nyxelium</title>
+    <title>Plant Watering Reminder &amp; Watering Tracker for Android</title>
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="A Better Houseplant Watering Reminder System">
@@ -18,16 +18,16 @@
         content="Use reminders as a prompt to check each plant—not as a command to water blindly.">
     <meta property="og:url" content="https://lkowalskil.github.io/plant-watering-reminder-android.html">
     <meta property="og:site_name" content="Nyxelium">
-    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/mossby-01.png">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/mossby/feature-graphic.png">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="440">
-    <meta property="og:image:height" content="782">
-    <meta property="og:image:alt" content="Mossby Android plant-care screen">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="500">
+    <meta property="og:image:alt" content="Mossby — plant care tracker and watering reminders for Android">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="A Better Houseplant Watering Reminder System">
     <meta name="twitter:description" content="Use reminders to check each plant instead of watering blindly by the calendar.">
-    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/mossby-01.png">
-    <meta name="twitter:image:alt" content="Mossby Android plant-care screen">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/mossby/feature-graphic.png">
+    <meta name="twitter:image:alt" content="Mossby — plant care tracker and watering reminders for Android">
     <link rel="canonical" href="https://lkowalskil.github.io/plant-watering-reminder-android.html">
 
     <link rel="icon" type="image/png" href="assets/img/mossby-icon.png">
@@ -44,15 +44,67 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "Organization",
+          "@id": "https://lkowalskil.github.io/#organization",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "description": "An independent studio building offline-first Android apps that need no account.",
+          "email": "kowalski.dev07@gmail.com",
+          "founder": {
+            "@id": "https://lkowalskil.github.io/about.html#person"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://lkowalskil.github.io/about.html#person",
+          "name": "Yehor Kovalchuk",
+          "url": "https://lkowalskil.github.io/about.html",
+          "jobTitle": "Android developer",
+          "worksFor": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://lkowalskil.github.io/#website",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "description": "Offline-first Android apps for focus, plant care and idle play.",
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
+        },
+        {
           "@type": "Article",
           "headline": "How to Build a Better Houseplant Watering Routine",
           "description": "A practical reminder system for checking and caring for houseplants.",
           "datePublished": "2026-07-23",
-          "dateModified": "2026-07-23",
+          "dateModified": "2026-08-30",
           "mainEntityOfPage": "https://lkowalskil.github.io/plant-watering-reminder-android.html",
-          "image": "https://lkowalskil.github.io/assets/img/mossby-01.png",
-          "author": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" },
-          "publisher": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" }
+          "image": "https://lkowalskil.github.io/assets/img/mossby/feature-graphic.png",
+          "author": {
+            "@id": "https://lkowalskil.github.io/about.html#person"
+          },
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "@id": "https://lkowalskil.github.io/plant-watering-reminder-android.html#article",
+          "isPartOf": {
+            "@id": "https://lkowalskil.github.io/#website"
+          },
+          "inLanguage": "en"
         },
         {
           "@type": "MobileApplication",
@@ -63,24 +115,82 @@
           "url": "https://play.google.com/store/apps/details?id=com.nyxelium.mossby",
           "image": "https://lkowalskil.github.io/assets/img/mossby-icon.png",
           "description": "Plant care tracker and watering reminder for Android.",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://play.google.com/store/apps/details?id=com.nyxelium.mossby"
+          },
+          "@id": "https://lkowalskil.github.io/plant-watering-reminder-android.html#app",
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "author": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
         },
         {
           "@type": "FAQPage",
           "mainEntity": [
-            { "@type": "Question", "name": "Should a reminder always mean water now?", "acceptedAnswer": { "@type": "Answer", "text": "No. Treat it as a prompt to inspect the plant and growing medium, then decide." } },
-            { "@type": "Question", "name": "Can Mossby track more than watering?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It supports separate care schedules such as fertilizing, misting, rotating, and repotting." } },
-            { "@type": "Question", "name": "Can I organize plants by location?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Mossby groups plants into zones and pots, including information about light." } },
-            { "@type": "Question", "name": "Does the core app work offline?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Your plant list, photos, schedules, and care history are designed to stay on your device." } }
-          ]
+            {
+              "@type": "Question",
+              "name": "Should a reminder always mean water now?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Treat it as a prompt to inspect the plant and growing medium, then decide."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can Mossby track more than watering?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. It supports separate care schedules such as fertilizing, misting, rotating, and repotting."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I organize plants by location?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Mossby groups plants into zones and pots, including information about light."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does the core app work offline?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Your plant list, photos, schedules, and care history are designed to stay on your device."
+              }
+            }
+          ],
+          "@id": "https://lkowalskil.github.io/plant-watering-reminder-android.html#faq"
         },
         {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Nyxelium", "item": "https://lkowalskil.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://lkowalskil.github.io/guides.html" },
-            { "@type": "ListItem", "position": 3, "name": "A Better Houseplant Watering Reminder System", "item": "https://lkowalskil.github.io/plant-watering-reminder-android.html" }
-          ]
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Nyxelium",
+              "item": "https://lkowalskil.github.io/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://lkowalskil.github.io/guides.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "A Better Houseplant Watering Reminder System",
+              "item": "https://lkowalskil.github.io/plant-watering-reminder-android.html"
+            }
+          ],
+          "@id": "https://lkowalskil.github.io/plant-watering-reminder-android.html#breadcrumb"
         }
       ]
     }
@@ -105,9 +215,10 @@
         <section class="guide-hero">
             <div class="guide-hero-copy">
                 <p class="guide-kicker">GUIDE—02 · PLANT CARE · 6 MIN READ</p>
-                <h1 class="guide-title">A reminder to check, not a command to water.</h1>
+                <h1 class="guide-title">A plant watering reminder that tells you to check, not to water.</h1>
                 <p class="guide-deck">A calm houseplant watering routine that accounts for the plant, its pot, its
-                    light, and what has happened since the last check.</p>
+                    light, and what has happened since the last check&mdash;the job a plant watering tracker should
+                    actually do.</p>
             </div>
             <aside class="guide-hero-aside" aria-label="Featured app">
                 <div class="guide-product">
@@ -145,6 +256,7 @@
                 <section id="calendar-problem" class="article-section">
                     <p class="guide-label">01 · THE PREMISE</p>
                     <h2>A fixed watering day is convenient. Your plants did not agree to it.</h2>
+                    <p class="lede">A plant watering reminder should schedule an inspection, not a pour. The reminder decides when you look; the soil and the plant decide whether you water.</p>
                     <p>“Water every Sunday” is easy to remember, but the plant’s needs can shift as light, temperature,
                         growth, pot size, and soil conditions change. A reminder is most useful when it brings the plant
                         back to your attention and asks for a quick check.</p>
@@ -246,6 +358,7 @@
                         <a href="houseplant-watering-schedule-app.html"><strong>Create a flexible houseplant watering schedule</strong><span aria-hidden="true">→</span></a>
                         <a href="plant-care-tracker-android.html"><strong>Track watering, misting, feeding and repotting</strong><span aria-hidden="true">→</span></a>
                         <a href="plant-light-placement-guide-app.html"><strong>Match indoor plants to the light in your home</strong><span aria-hidden="true">→</span></a>
+                        <a href="best-plant-care-tracker-apps-android.html"><strong>Compare the best plant tracker apps for Android</strong><span aria-hidden="true">→</span></a>
                     </div>
                 </aside>
 
@@ -272,7 +385,7 @@
                 <a href="index.html">STUDIO HOME</a>
                 <a href="privacy-policy-mossby.html">MOSSBY PRIVACY</a>
             </div>
-            <span>LAST REVIEWED · JULY 2026</span>
+            <span>LAST REVIEWED · AUGUST 2026</span>
         </div>
     </footer>
 

@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description"
-        content="Learn how to track work, study, and focus time offline on Android without creating an account. Includes a simple weekly workflow and Pomodoro tips.">
+        content="Offline time tracking on Android for work, study and focus, with no account. A simple weekly workflow, Pomodoro tips and CSV export you control.">
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
     <meta name="theme-color" content="#101318">
-    <title>Offline Time Tracker for Android (No Account) · Nyxelium</title>
+    <title>Offline Time Tracker for Android: No Account, Free</title>
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="How to Track Time Offline on Android">
@@ -18,16 +18,16 @@
         content="A simple system for tracking work, study, and focus sessions without an account or permanent connection.">
     <meta property="og:url" content="https://lkowalskil.github.io/offline-time-tracker-android.html">
     <meta property="og:site_name" content="Nyxelium">
-    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/chrono-01.png">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/chrono/feature-graphic.png">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="440">
-    <meta property="og:image:height" content="782">
-    <meta property="og:image:alt" content="Chrono Android time-tracking screen">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="500">
+    <meta property="og:image:alt" content="Chrono — offline time tracker and Pomodoro timer for Android">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="How to Track Time Offline on Android">
     <meta name="twitter:description" content="A simple offline workflow for tracking work, study and focus without an account.">
-    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/chrono-01.png">
-    <meta name="twitter:image:alt" content="Chrono Android time-tracking screen">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/chrono/feature-graphic.png">
+    <meta name="twitter:image:alt" content="Chrono — offline time tracker and Pomodoro timer for Android">
     <link rel="canonical" href="https://lkowalskil.github.io/offline-time-tracker-android.html">
 
     <link rel="icon" type="image/png" href="assets/img/chrono-icon.png">
@@ -44,15 +44,67 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "Organization",
+          "@id": "https://lkowalskil.github.io/#organization",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "description": "An independent studio building offline-first Android apps that need no account.",
+          "email": "kowalski.dev07@gmail.com",
+          "founder": {
+            "@id": "https://lkowalskil.github.io/about.html#person"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://lkowalskil.github.io/about.html#person",
+          "name": "Yehor Kovalchuk",
+          "url": "https://lkowalskil.github.io/about.html",
+          "jobTitle": "Android developer",
+          "worksFor": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "sameAs": [
+            "https://github.com/lKowalskil"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://lkowalskil.github.io/#website",
+          "name": "Nyxelium",
+          "url": "https://lkowalskil.github.io/",
+          "description": "Offline-first Android apps for focus, plant care and idle play.",
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
+        },
+        {
           "@type": "Article",
           "headline": "How to Track Time Offline on Android Without an Account",
           "description": "A practical system for tracking work, study, and focus time locally on Android.",
           "datePublished": "2026-07-23",
-          "dateModified": "2026-07-23",
+          "dateModified": "2026-08-30",
           "mainEntityOfPage": "https://lkowalskil.github.io/offline-time-tracker-android.html",
-          "image": "https://lkowalskil.github.io/assets/img/chrono-01.png",
-          "author": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" },
-          "publisher": { "@type": "Organization", "name": "Nyxelium", "url": "https://lkowalskil.github.io/" }
+          "image": "https://lkowalskil.github.io/assets/img/chrono/feature-graphic.png",
+          "author": {
+            "@id": "https://lkowalskil.github.io/about.html#person"
+          },
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "@id": "https://lkowalskil.github.io/offline-time-tracker-android.html#article",
+          "isPartOf": {
+            "@id": "https://lkowalskil.github.io/#website"
+          },
+          "inLanguage": "en"
         },
         {
           "@type": "MobileApplication",
@@ -63,24 +115,82 @@
           "url": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker",
           "image": "https://lkowalskil.github.io/assets/img/chrono-icon.png",
           "description": "Offline Pomodoro timer and time tracker for Android.",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker"
+          },
+          "@id": "https://lkowalskil.github.io/offline-time-tracker-android.html#app",
+          "publisher": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          },
+          "author": {
+            "@id": "https://lkowalskil.github.io/#organization"
+          }
         },
         {
           "@type": "FAQPage",
           "mainEntity": [
-            { "@type": "Question", "name": "Does Chrono need an account?", "acceptedAnswer": { "@type": "Answer", "text": "No. You can begin tracking without creating an account." } },
-            { "@type": "Question", "name": "Does the timer work offline?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Core time tracking and the locally stored history work without a permanent connection." } },
-            { "@type": "Question", "name": "Can it run Pomodoro sessions?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Chrono includes configurable focus, short-break, and long-break cycles." } },
-            { "@type": "Question", "name": "Can I export tracked hours?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. CSV export gives you a portable record for invoices or spreadsheet analysis." } }
-          ]
+            {
+              "@type": "Question",
+              "name": "Does Chrono need an account?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. You can begin tracking without creating an account."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does the timer work offline?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Core time tracking and the locally stored history work without a permanent connection."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can it run Pomodoro sessions?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Chrono includes configurable focus, short-break, and long-break cycles."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I export tracked hours?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. CSV export gives you a portable record for invoices or spreadsheet analysis."
+              }
+            }
+          ],
+          "@id": "https://lkowalskil.github.io/offline-time-tracker-android.html#faq"
         },
         {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Nyxelium", "item": "https://lkowalskil.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://lkowalskil.github.io/guides.html" },
-            { "@type": "ListItem", "position": 3, "name": "How to Track Time Offline on Android", "item": "https://lkowalskil.github.io/offline-time-tracker-android.html" }
-          ]
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Nyxelium",
+              "item": "https://lkowalskil.github.io/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://lkowalskil.github.io/guides.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "How to Track Time Offline on Android",
+              "item": "https://lkowalskil.github.io/offline-time-tracker-android.html"
+            }
+          ],
+          "@id": "https://lkowalskil.github.io/offline-time-tracker-android.html#breadcrumb"
         }
       ]
     }
@@ -106,8 +216,8 @@
         <section class="guide-hero">
             <div class="guide-hero-copy">
                 <p class="guide-kicker">GUIDE—01 · PRODUCTIVITY · 7 MIN READ</p>
-                <h1 class="guide-title">Track time without reporting to the cloud.</h1>
-                <p class="guide-deck">A practical offline time-tracking system for Android—useful for freelance hours,
+                <h1 class="guide-title">An offline time tracker that never reports to the cloud.</h1>
+                <p class="guide-deck">A practical offline time tracking system for Android—useful for freelance hours,
                     study sessions, habits, and deep work, without creating another account.</p>
             </div>
             <aside class="guide-hero-aside" aria-label="Featured app">
@@ -146,6 +256,7 @@
                 <section id="why-offline" class="article-section">
                     <p class="guide-label">01 · THE PREMISE</p>
                     <h2>Time tracking should reduce uncertainty, not create admin work.</h2>
+                    <p class="lede">An offline time tracker records work, study and focus sessions on the device itself, so the timer and the history stay available with no connection and no account.</p>
                     <p>The useful question is rarely “How many hours was my phone active?” It is “Where did the time I
                         meant to control actually go?” A manual timer gives each session a purpose: client work, study,
                         exercise, reading, or whatever matters to you.</p>
@@ -250,6 +361,7 @@
                         <a href="freelancer-time-tracker-android.html"><strong>Track freelance billable hours and export a CSV timesheet</strong><span aria-hidden="true">→</span></a>
                         <a href="pomodoro-study-timer-android.html"><strong>Track study hours with a Pomodoro timer</strong><span aria-hidden="true">→</span></a>
                         <a href="private-time-tracker-no-account.html"><strong>Use a private offline time tracker with no account</strong><span aria-hidden="true">→</span></a>
+                        <a href="best-offline-time-tracking-apps-android.html"><strong>Compare the best offline time tracking apps</strong><span aria-hidden="true">→</span></a>
                     </div>
                 </aside>
 
@@ -276,7 +388,7 @@
                 <a href="index.html">STUDIO HOME</a>
                 <a href="privacy-policy-chrono.html">CHRONO PRIVACY</a>
             </div>
-            <span>LAST REVIEWED · JULY 2026</span>
+            <span>LAST REVIEWED · AUGUST 2026</span>
         </div>
     </footer>
 

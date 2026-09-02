@@ -206,6 +206,31 @@ for (const file of files) {
 }
 
 const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
+const sitemapIndex = await readFile(resolve(root, 'sitemap-index.xml'), 'utf8');
+
+// Schema-aware validators cannot resolve an XSD from the namespace alone, so each
+// root element has to point at its schema explicitly or they report the sitemap as
+// having no schema at all.
+const sitemapNamespace = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+const schemaLocations = [
+  ['sitemap.xml', sitemap, 'urlset', `${sitemapNamespace}/sitemap.xsd`],
+  ['sitemap-index.xml', sitemapIndex, 'sitemapindex', `${sitemapNamespace}/siteindex.xsd`],
+];
+for (const [file, xml, rootElement, xsd] of schemaLocations) {
+  if (!xml.includes(`<${rootElement} xmlns="${sitemapNamespace}"`)) {
+    failures.push(`${file}: ${rootElement} must declare the sitemap namespace`);
+  }
+  if (!xml.includes('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')) {
+    failures.push(`${file}: missing the XMLSchema-instance namespace`);
+  }
+  if (!xml.includes(`xsi:schemaLocation="${sitemapNamespace} https://www.sitemaps.org${new URL(xsd).pathname}"`)) {
+    failures.push(`${file}: ${rootElement} must declare xsi:schemaLocation for ${xsd}`);
+  }
+}
+for (const match of sitemapIndex.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+  await requireLocalTarget('sitemap-index.xml', match[1], 'sitemap');
+}
+
 const sitemapUrls = new Map();
 for (const match of sitemap.matchAll(/<url>\s*<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>\s*<\/url>/g)) {
   const [, loc, lastmod] = match;
@@ -256,8 +281,27 @@ for (const [file, alternates] of alternateSets) {
 }
 
 const robotsText = await readFile(resolve(root, 'robots.txt'), 'utf8');
-if (!robotsText.includes(`Sitemap: ${siteOrigin}/sitemap.xml`)) {
-  failures.push('robots.txt: missing absolute sitemap declaration');
+const robotsLines = robotsText.split(/\r?\n/).map((line) => line.trim());
+if (!robotsLines.includes(`Sitemap: ${siteOrigin}/sitemap.xml`)) {
+  failures.push('robots.txt: missing absolute sitemap declaration on a line of its own');
+}
+// robots.txt is one directive per line. A second directive glued onto another's
+// value is not parsed — it is swallowed into the value and silently ignored.
+for (const line of robotsLines) {
+  if (!line || line.startsWith('#')) continue;
+  const separator = line.indexOf(':');
+  if (separator === -1) {
+    failures.push(`robots.txt: line is not a directive — "${line}"`);
+    continue;
+  }
+  const field = line.slice(0, separator).trim();
+  const value = line.slice(separator + 1).trim();
+  if (!/^(user-agent|allow|disallow|sitemap|crawl-delay|host)$/i.test(field)) {
+    failures.push(`robots.txt: unknown directive "${field}"`);
+  }
+  if (/\b(user-agent|allow|disallow|sitemap)\s*:/i.test(value)) {
+    failures.push(`robots.txt: two directives on one line — "${line}"`);
+  }
 }
 
 const responsiveStyles = [

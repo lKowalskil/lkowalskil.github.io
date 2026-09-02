@@ -32,8 +32,5 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-User-agent: * 
-Allow: /sitemap.xml Sitemap: https://lkowalskil.github.io/sitemap.xml
-
 Sitemap: https://lkowalskil.github.io/sitemap.xml
 Sitemap: https://lkowalskil.github.io/sitemap-index.xml

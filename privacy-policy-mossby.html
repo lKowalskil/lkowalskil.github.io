@@ -10,6 +10,15 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; upgrade-insecure-requests">
 <link rel="canonical" href="https://lkowalskil.github.io/privacy-policy-mossby.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mossby — Privacy Policy">
+<meta property="og:description" content="How Mossby stores garden data locally and handles optional, consent-gated usage analytics.">
+<meta property="og:url" content="https://lkowalskil.github.io/privacy-policy-mossby.html">
+<meta property="og:image" content="https://lkowalskil.github.io/assets/img/mossby-icon.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mossby — Privacy Policy">
+<meta name="twitter:description" content="How Mossby stores garden data locally and handles optional, consent-gated usage analytics.">
+<meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/mossby-icon.png">
 <style>
   :root{
     --green:#15A35F; --bright:#2EC46F; --ink:#0F1A14; --ink-soft:#4A5A50;
@@ -104,6 +113,7 @@
         "url": "https://lkowalskil.github.io/privacy-policy-mossby.html",
         "name": "Mossby Privacy Policy",
         "description": "Privacy Policy for the Mossby plant-care app by Nyxelium.",
+        "dateModified": "2026-09-02",
         "inLanguage": "en",
         "isPartOf": {
           "@id": "https://lkowalskil.github.io/#website"
@@ -154,7 +164,7 @@
 <header>
   <div class="brand"><span class="dot"></span> Mossby</div>
   <h1>Privacy Policy</h1>
-  <p class="meta">Effective date: <strong>26 June 2026</strong> &nbsp;·&nbsp; Last updated: 26 June 2026</p>
+  <p class="meta">Effective date: <strong>15 August 2026</strong> &nbsp;·&nbsp; Last updated: 2 September 2026</p>
 </header>
 
 <p class="lead">This Privacy Policy explains how <strong>Mossby</strong> (the “App”), published by
@@ -165,12 +175,13 @@ plant-care and watering-reminder app available on Google Play (package
 <div class="card tldr">
   <strong>The short version</strong>
   <ul>
-    <li>Your plants, photos, schedules and settings are stored <strong>only on your device</strong>. We don’t run a server that collects them, and we can’t see them.</li>
-    <li>We do <strong>not</strong> sell your personal data.</li>
-    <li>If you use the free version, third-party advertising (Google AdMob) and optional analytics (Google Firebase) may collect device and usage data as described below.</li>
-    <li>A paid subscription removes ads. Payments are processed by <strong>Google Play</strong>; we never see your card details.</li>
-    <li>You can opt out of analytics in the App, and control ad personalization through your device and on-screen consent.</li>
+    <li>The App works without an account. There is no advertising, no crash-reporting SDK, and nothing to purchase.</li>
+    <li>Your plants, photos, notes, schedules and greeting name stay on your device. We do not sell or share them.</li>
+    <li>The App includes <strong>optional</strong> Google Analytics for Firebase measurement. In the EEA, the UK and Switzerland it is <strong>off until you switch it on</strong>; elsewhere it is <strong>on by default and you can switch it off</strong>. The control is in <strong>You → Privacy</strong>, and the App shows you a one-time notice saying which of the two applies to you.</li>
+    <li>If enabled, Analytics collects three optional data types: App interactions, a random App-instance ID, and approximate location derived by Google from a masked IP address. These are used for Analytics and are not shared.</li>
+    <li>Android automatic cloud backup and device-to-device transfer are disabled. A manual backup is created only when you choose it; photos are not included.</li>
   </ul>
+  <p class="note"><strong>Which version am I reading about?</strong> This policy describes Mossby as it ships today. If the copy on your device has no <strong>Help improve Mossby</strong> switch under <strong>You → Privacy</strong>, it is an older build: it contains no Analytics SDK and makes no network request of any kind.</p>
 </div>
 
 <h2>1. Information stored on your device</h2>
@@ -182,99 +193,111 @@ plant-care and watering-reminder app available on Google Play (package
 </ul>
 <p>This data is removed when you delete the App or clear its storage. Because it never leaves your device, we cannot retrieve or restore it for you.</p>
 
-<h2>2. Information collected by third parties</h2>
-<p>To offer a free, ad-supported tier and to keep the App stable, we use the trusted third-party services below. These services may collect information directly from your device under their own privacy policies.</p>
+<h2>2. Manual backup and restore</h2>
+<p>Mossby lets you create a plain-JSON backup through the operating system’s save sheet and restore a file you explicitly select. You control the destination. If you choose a cloud-storage provider or another third-party location, that provider handles the file under its own terms and privacy policy.</p>
+<p>The backup contains garden structure, schedules, care history, custom plants and catalog preferences. <strong>Plant photos are excluded</strong>, as are device-specific photo paths and App preferences. Mossby does not automatically upload or read backup files.</p>
 
+<h2>3. Information collected or shared</h2>
+<p>The App includes <strong>no</strong> advertising, crash-reporting, account, social or purchase SDK. It includes one optional measurement SDK, described in section 4.</p>
+<p>We never collect or receive your plant, pot or zone names, notes, photos, greeting name, feedback text, file paths or backup contents. The fixed Analytics allowlist cannot carry them.</p>
+<p>If a future version adds a networked service, advertising, accounts or purchases, we will update this policy and the relevant store disclosures before distributing that version.</p>
+
+<h2>4. Optional usage measurement</h2>
+<p>To understand which parts of Mossby work and where fixed App interactions fail, the App can send pseudonymous usage events using <strong>Google Analytics for Firebase</strong>, provided by Google LLC as our processor.</p>
+
+<h3>Where it starts, and how to change it</h3>
+<p>Which state the App installs in depends on where your device is:</p>
+<ul>
+  <li><strong>In the EEA, the UK and Switzerland, measurement is off.</strong> It starts only after you switch on <strong>Help improve Mossby</strong> in <strong>You → Privacy</strong> or accept it on the notice below. Consent is our legal basis there, and nothing is collected until you give it.</li>
+  <li><strong>Everywhere else it is on when you install the App</strong>, and you can switch it off at any time in the same place. Our legal basis there is our legitimate interest in knowing which parts of the App work.</li>
+</ul>
+<p>The App decides which of the two applies from your device’s region settings and time zone. That determination is never sent anywhere, and a device it cannot place with confidence is treated as being in the first group — off.</p>
+<p>Once you have set up the App and cared for a plant, it shows a <strong>one-time notice</strong> naming what is collected and letting you change the setting on the spot. Where consent is required the notice is a question with two equally weighted answers and no pre-selected reply; elsewhere it says measurement is on and offers to turn it off. Closing it without answering changes nothing and it does not return.</p>
+<p>The switch in <strong>You → Privacy</strong> always shows the state collection is actually in, so it can never read “off” while the App is collecting. Switching it off stops collection and tells the SDK to discard the random App-instance ID held on your device, so a later opt-in starts as a new App instance.</p>
+<p>There is no other way to enable it. Mossby does not ask during setup and has no advertising consent banner.</p>
+
+<h3>What Analytics can collect</h3>
 <table>
-  <thead><tr><th>Service</th><th>Purpose</th><th>Examples of data it may process</th></tr></thead>
+  <thead><tr><th>Google Play data type</th><th>What it means in Mossby</th><th>Purpose and choice</th></tr></thead>
   <tbody>
     <tr>
-      <td><strong>Google AdMob</strong><br>(free version only)</td>
-      <td>Showing ads; measuring and limiting ad frequency; fraud prevention</td>
-      <td>Advertising ID, IP address (used to derive approximate location), device type and OS, app interactions, ad events</td>
+      <td><strong>App activity → App interactions</strong></td>
+      <td>Fixed events such as screen opens, care actions, setup steps, reminder outcomes, backup or restore outcomes, feedback entry points, and bounded failure categories. No free text, crash log or stack trace.</td>
+      <td>Analytics; optional; not shared.</td>
     </tr>
     <tr>
-      <td><strong>Google Firebase</strong><br>(Analytics &amp; Crashlytics)</td>
-      <td>Understanding feature usage; diagnosing crashes and stability issues</td>
-      <td>App instance identifier, device &amp; OS info, crash logs, in-app event counts (e.g. zone created, plant watered)</td>
+      <td><strong>Device or other IDs</strong></td>
+      <td>A random App-instance ID that identifies this installation for Analytics. It is not an account ID, Advertising ID, Android device ID or cross-App ID.</td>
+      <td>Analytics; optional; not shared.</td>
     </tr>
     <tr>
-      <td><strong>Google Play Billing</strong><br>(subscriptions)</td>
-      <td>Processing and validating subscription purchases</td>
-      <td>Purchase token and subscription status. Payment details are handled by Google — <strong>we never receive your card or bank information.</strong></td>
+      <td><strong>Location → Approximate location</strong></td>
+      <td>Google derives coarse geography from the masked IP address used for an Analytics upload. Mossby never asks for location permission and never sends GPS or other location coordinates. Google Analytics does not log or store the IP address.</td>
+      <td>Analytics; optional; not shared.</td>
     </tr>
   </tbody>
 </table>
-<p class="note">Analytics (Firebase) is <strong>off by default</strong> and only runs if you turn on “Share usage data” in the App’s Privacy settings. Advertising data is processed only in the free version and subject to your consent choices (see §5).</p>
+<p>Google also attaches coarse technical context, such as device model, operating-system version, App version and language. Events are encrypted in transit. Google Signals, Ads linking and advertising personalization are not used.</p>
 
-<h2>3. How we use information</h2>
+<h3>What Analytics can never collect from Mossby</h3>
+<p>Plant, pot or zone names; notes; photos or anything derived from them; the greeting name; feedback message text; error messages, crash logs, stack traces or file paths; exact garden counts; purchase history; account information; the Advertising ID; or the Android device ID (SSAID). The Advertising ID and ad-attribution permissions are removed from the App and those identifiers are disabled in configuration.</p>
+
+<h3>Stopping collection and deletion</h3>
+<p>Switching measurement off stops future collection and discards the App-instance ID held on the device. It does not identify or retroactively isolate earlier aggregated events in Google Analytics. Because Mossby has no account and we cannot map an App-instance ID to a person, we cannot look up past events by your name or email.</p>
+
+<h2>5. In-App feedback</h2>
+<p>The <strong>Feedback &amp; about</strong> screen does not transmit anything. It places the text you review on the device clipboard; nothing leaves the device unless you paste it into your own email App and send it yourself.</p>
+<p>An optional technical block, off by default, can add App and operating-system versions, displayed language, theme, a garden-size range, reminder and notification-permission state, and current-session error counts with fixed source labels. It never adds names, notes, photos, greeting text, error messages or file paths.</p>
+<p>A card on that screen asks about possible future photo-symptom research. <strong>That feature does not exist.</strong> The card does not inspect or upload a photo and does not register you for anything; it only prepares editable feedback text on the same screen.</p>
+
+<h2>6. Device permissions and system features</h2>
 <ul>
-  <li>To provide the App’s core features (reminders, care history, illustrations).</li>
-  <li>To display and measure advertising in the free version.</li>
-  <li>To process and restore your subscription, and remove ads for subscribers.</li>
-  <li>To diagnose crashes and improve performance and features (only with analytics enabled).</li>
-  <li>To comply with legal obligations and prevent fraud or abuse.</li>
+  <li><strong>Photos / media picker</strong> — used only when you choose a plant photo from your gallery. The operating system picker controls what you make available.</li>
+  <li><strong>Camera</strong> — the photo chooser also offers <strong>Take a photo</strong>. That hands off to your device’s camera app; Mossby holds no camera permission and receives only the picture you keep, which is copied into App-private storage like any other plant photo.</li>
+  <li><strong>Notifications</strong> — used for care reminders you enable. Scheduling occurs on the device.</li>
+  <li><strong>Vibration</strong> — used only so a care reminder can vibrate when your device settings allow it.</li>
+  <li><strong>Restart completion</strong> — used to restore enabled local reminder schedules after Android restarts.</li>
+  <li><strong>File picker / save sheet</strong> — used only when you start backup export or restore.</li>
+  <li><strong>Internet / network state</strong> — used only by the optional measurement in section 4. Core care, reminders, catalog, advisor, backup and restore work offline.</li>
 </ul>
+<p>Mossby holds no camera permission of its own, and does not request contacts, precise or approximate location, microphone, broad storage access, exact alarms, the Advertising ID or an in-App account.</p>
 
-<h2>4. Legal bases (EEA / UK users)</h2>
-<p>Where the EU/UK GDPR applies, we rely on:</p>
-<ul>
-  <li><strong>Consent</strong> — for personalized ads and for optional usage analytics. You may withdraw consent at any time.</li>
-  <li><strong>Contract</strong> — to provide the App and process subscriptions you request.</li>
-  <li><strong>Legitimate interests</strong> — for non-personalized ads, basic crash diagnostics, security and fraud prevention, balanced against your rights.</li>
-</ul>
+<h2>7. Android backup behavior</h2>
+<p>Mossby opts its App data out of Android automatic cloud backup and device-to-device transfer. A manual backup is created only when you choose the backup action and select a destination.</p>
 
-<h2>5. Advertising &amp; your choices</h2>
-<p>The free version of Mossby shows ads via Google AdMob. Depending on your region and consent:</p>
-<ul>
-  <li><strong>EEA, UK &amp; Switzerland:</strong> we show a consent message (Google’s User Messaging Platform) before serving personalized ads. You can change your choice later from the App’s Privacy settings.</li>
-  <li><strong>Reset or limit your Advertising ID:</strong> Android → <em>Settings → Privacy → Ads</em> (or <em>Google → Ads</em>), where you can reset the ID or turn off ad personalization.</li>
-  <li><strong>Remove ads entirely:</strong> subscribe to the paid plan.</li>
-</ul>
-<p>Learn how Google uses data from apps that use its services:
-<a href="https://policies.google.com/technologies/partner-sites">policies.google.com/technologies/partner-sites</a>.</p>
+<h2>8. Data retention and deletion</h2>
+<p>Local data remains until you delete it in the App, clear App storage or uninstall the App. Copies you manually exported remain wherever you saved them and must be deleted there by you.</p>
+<p>If you enabled measurement, Analytics events are retained for the period configured for the Nyxelium Analytics property and are then deleted automatically. Switching the setting off stops future collection and resets the device’s App-instance ID as described in section 4.</p>
 
-<h2>6. Device permissions</h2>
-<ul>
-  <li><strong>Camera / Photos</strong> — only to let you attach a photo to a plant; used at the moment you pick or take a photo. Photos stay on your device.</li>
-  <li><strong>Notifications</strong> — to deliver watering and care reminders you schedule. You can disable them in your device settings.</li>
-</ul>
-<p>The App requests internet access for ads, analytics and subscription validation in the free/subscribed flows described above.</p>
-
-<h2>7. Data sharing</h2>
-<p>We do not sell your personal information and we do not share it with third parties for their own marketing. Information is processed only by the service providers named in §2, acting on our behalf or as independent controllers under their own policies, and where required by law.</p>
-
-<h2>8. Data retention</h2>
-<p>On-device data persists until you delete it or uninstall the App. Data held by Google services (advertising, analytics, billing) is retained according to Google’s policies. Crash and analytics data is typically retained for a limited period and in aggregated form.</p>
-
-<h2>9. Your rights</h2>
-<p>Depending on where you live (e.g. EEA/UK under GDPR, California under the CCPA/CPRA), you may have rights to access, correct, delete, or restrict processing of your personal data, to object to processing, to data portability, and to not be discriminated against for exercising these rights. Because most of your content lives only on your device, you can exercise access and deletion directly by viewing or removing it in the App. For data held by Google services, see Google’s policy. To make a request to us, contact us at the address below.</p>
+<h2>9. Security</h2>
+<p>Mossby relies on Android’s App sandbox for local data. Imported backups are treated as untrusted and checked for size, structure, version and collection limits before restoration. Analytics uploads use TLS and the App disallows cleartext network traffic.</p>
 
 <h2>10. Children’s privacy</h2>
-<p>Mossby is intended for a general audience and is <strong>not directed to children under 13</strong> (or the equivalent minimum age in your country). We do not knowingly collect personal data from children. Ads are configured for a general audience; if you believe a child has provided us personal data, please contact us so we can address it.</p>
+<p>Mossby is a general-audience utility and is <strong>not directed to children under 13</strong> or the equivalent minimum age in a user’s country. The App has no account and does not collect garden content, names, notes, photos or contact details. Optional pseudonymous measurement can be switched off at any time, and is off by default wherever prior consent is required.</p>
 
-<h2>11. International data transfers</h2>
-<p>Our service providers may process data in countries other than yours, including the United States. Where required, such transfers rely on appropriate safeguards (such as the European Commission’s Standard Contractual Clauses).</p>
+<h2>11. Your privacy rights</h2>
+<p>Depending on where you live, you may have rights concerning personal data. You control local garden content in the App and through Android settings. You control measurement through <strong>You → Privacy</strong>; withdrawing consent stops collection immediately. Optional Analytics carries no account, name, contact detail, advertising identifier or free text, but it does use a random App-instance ID that we cannot map to a person or account.</p>
+<p>For a privacy question, or a request concerning information you separately sent to Nyxelium, contact us below.</p>
 
-<h2>12. Security</h2>
-<p>We rely on your device’s app-sandboxing to protect on-device data and on reputable providers (Google) for processed data. No method of storage or transmission is 100% secure, but we take reasonable measures to protect your information.</p>
+<h2>12. International processing</h2>
+<p>Google may process Analytics data in countries other than yours. Google states that most Firebase services use global infrastructure and provides contractual and legal safeguards where required. See the linked Google and Firebase privacy information.</p>
 
 <h2>13. Changes to this policy</h2>
-<p>We may update this policy from time to time. We will revise the “Last updated” date above and, for material changes, provide notice in the App or on this page. Continued use after changes means you accept the updated policy.</p>
+<p>We may update this policy when the App changes. We will revise the “Last updated” date and provide any notice required by law or store rules.</p>
 
 <h2>14. Contact us</h2>
 <p>If you have questions or requests regarding this policy or your data:</p>
 <p>
   <strong>Nyxelium</strong><br>
-  Email: <a href="mailto:kovalchuk.egor1357@gmail.com">kovalchuk.egor1357@gmail.com</a>
+  Email: <a href="mailto:kowalski.dev07@gmail.com">kowalski.dev07@gmail.com</a>
 </p>
 
 <footer>
   <p><a href="index.html">Nyxelium home</a> · <a href="guides.html">Plant-care guides</a></p>
-  <p>Third-party policies referenced:
+  <p>Third-party information referenced:
   <a href="https://policies.google.com/privacy">Google Privacy Policy</a> ·
-  <a href="https://firebase.google.com/support/privacy">Firebase</a> ·
-  <a href="https://support.google.com/admob/answer/6128543">AdMob data</a>.</p>
+  <a href="https://firebase.google.com/support/privacy">Firebase privacy and security</a> ·
+  <a href="https://support.google.com/analytics/answer/11582702">Google Analytics for Firebase Data Safety guidance</a>.</p>
   <p>© 2026 Nyxelium. Mossby and the Mossby logo are trademarks of Nyxelium.</p>
 </footer>
 

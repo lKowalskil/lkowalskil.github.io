@@ -8,7 +8,7 @@ Every app works without a connection for its core job, stores what you create on
 
 - [Chrono — Time Tracker](https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker): Offline time tracker and Pomodoro focus timer for Android. Categories, tags, analytics, CSV and calendar export, home-screen widget, 11 languages. No account. Live on Google Play.
 - [Pocket Cult: Idle Dungeon](https://lkowalskil.github.io/pocket-cult.html): Offline idle dungeon-keeper game. 15 buildings, 10 minions, full offline progression, prestige loop, rewarded ads only — no forced ads or energy timers. Live on Google Play.
-- [Mossby — Plant Care](https://play.google.com/store/apps/details?id=com.nyxelium.mossby): Plant care tracker with watering reminders, light-aware placement warnings, zones and pots, seven-day forecast and care history. Works offline. Live on Google Play.
+- [Mossby: Plant Care & Watering](https://play.google.com/store/apps/details?id=com.nyxelium.mossby): Plant care tracker with watering reminders, light-aware placement warnings, same-pot pairing checks, zones and pots, five care task types and care history. Works offline, no account. Live on Google Play.
 - Nuzzle — Pet Care: Offline feeding, medication, grooming and vet reminders with a per-pet health timeline. In development.
 - Hexbrew: Idle Alchemy Witch: A cozy-gothic offline idle apothecary. In development.
 - Signet: Local-first batch photo watermarking. Nothing is uploaded. In development.
@@ -29,7 +29,7 @@ Every app works without a connection for its core job, stores what you create on
 ## Guides — plant care
 
 - [Organise houseplant care on Android](https://lkowalskil.github.io/plant-care-tracker-android.html): Plant tracking across watering, fertilising, misting, rotating and repotting, organised by room and pot.
-- [Build a flexible houseplant watering schedule](https://lkowalskil.github.io/houseplant-watering-schedule-app.html): Check days, a seven-day forecast, and correcting intervals from real observations.
+- [Build a flexible houseplant watering schedule](https://lkowalskil.github.io/houseplant-watering-schedule-app.html): Check days, planning a week ahead, and correcting intervals from real observations.
 - [A plant watering reminder that means "check", not "water"](https://lkowalskil.github.io/plant-watering-reminder-android.html): A four-step routine that accounts for the plant, its pot, its light and what changed.
 - [Match indoor plants to the light in your home](https://lkowalskil.github.io/plant-light-placement-guide-app.html): Bright, medium and low-light placement before problems start.
 

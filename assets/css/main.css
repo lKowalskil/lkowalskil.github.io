@@ -418,7 +418,7 @@ button:focus-visible,
   border-right: 1px solid var(--ink);
 }
 .guides-intro .btn { margin-top: 30px; }
-.guide-links { display: grid; grid-template-rows: repeat(3, 1fr); }
+.guide-links { display: grid; grid-template-rows: repeat(4, minmax(0, 1fr)); }
 .guide-link {
   position: relative;
   display: grid;

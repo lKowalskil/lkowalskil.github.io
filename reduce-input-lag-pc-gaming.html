@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Where PC input lag actually comes from, the settings that remove the most of it, the frame cap arithmetic for VRR displays, and how to measure the result yourself.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>How to Reduce Input Lag on PC: The Right Order · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="How to Reduce Input Lag on PC, In the Order That Matters">
+    <meta property="og:description" content="Where PC input lag actually comes from, the settings that remove the most of it, the frame cap arithmetic for VRR displays, and how to measure the result yourself.">
+    <meta property="og:url" content="https://lkowalskil.github.io/reduce-input-lag-pc-gaming.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Reduce Input Lag on PC, In the Order That Matters">
+    <meta name="twitter:description" content="The latency chain from click to photon, and the four settings that shorten it most.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/reduce-input-lag-pc-gaming.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/reduce-input-lag-pc-gaming.html#article",
+      "headline": "How to Reduce Input Lag on PC, In the Order That Matters",
+      "description": "Where PC input lag actually comes from, the settings that remove the most of it, the frame cap arithmetic for VRR displays, and how to measure the result yourself.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/reduce-input-lag-pc-gaming.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "reduce input lag PC, NVIDIA Reflex, AMD Anti-Lag, frame cap G-Sync, VRR vsync settings, latency measurement PresentMon, gaming responsiveness",
+      "articleSection": "Display and latency",
+      "proficiencyLevel": "Intermediate",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "PC gamers tuning responsiveness"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/reduce-input-lag-pc-gaming.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the single best setting to reduce input lag?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enable the in-game latency reduction feature: NVIDIA Reflex, AMD Anti-Lag or Intel XeLL. When the GPU is fully loaded, it keeps the render queue nearly empty, which is where most avoidable latency accumulates. In a GPU-limited game it is usually worth more than every other change combined."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I cap my frame rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On a variable refresh display, yes. Cap a few frames below the panel maximum, for example 138 fps on a 144 Hz display, so the frame rate stays inside the variable refresh range and never falls back to the vertical sync path. A stable cap also feels better than a fluctuating higher average."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does V-Sync add input lag?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Traditional vertical sync does, because frames wait for a refresh interval. The recommended arrangement on a variable refresh display is vertical sync enabled in the driver, disabled in the game, with a frame cap below the refresh ceiling. The cap means you never reach the point where vertical sync engages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a wireless mouse worse for input lag?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A modern low-latency gaming wireless mouse is effectively equivalent to a wired one, on the order of a millisecond or two. Bluetooth peripherals are a different case and are not suitable for latency-sensitive play. Either way, this stage of the chain is small compared with the render queue."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I measure input lag myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use an in-game or vendor overlay that reports render latency, capture frame timing with PresentMon, or record mouse and screen together with a high-frame-rate phone camera and count the frames between movement and response. Change one setting at a time and compare against a baseline in the same scene."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/reduce-input-lag-pc-gaming.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How to Reduce Input Lag on PC, In the Order That Matters",
+          "item": "https://lkowalskil.github.io/reduce-input-lag-pc-gaming.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—04 · DISPLAY &amp; LATENCY · 10 MIN READ</p>
+                <h1 class="guide-title">Input lag, fixed in the order that actually removes milliseconds.</h1>
+                <p class="guide-deck">Most latency advice is a list of settings with no sense of scale. This one is ordered by how much each change is worth, from the render queue that costs tens of milliseconds down to the peripheral polling rate that costs one — including the frame-cap arithmetic that makes variable refresh behave.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Ordered by payoff</strong>
+                        <p>The first two sections contain most of the available improvement. The rest is refinement.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>ORDERED BY PAYOFF</li>
+                    <li>REFLEX · ANTI-LAG · XELL</li>
+                    <li>FRAME-CAP ARITHMETIC</li>
+                    <li>MEASUREMENT INCLUDED</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#chain">Where lag comes from</a>
+                        <a href="#queue">Stop rendering ahead</a>
+                        <a href="#frame-cap">The frame cap</a>
+                        <a href="#display">Display and peripherals</a>
+                        <a href="#not-helping">What does not help</a>
+                        <a href="#measure">Measure the result</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="chain" class="article-section">
+                    <p class="guide-label">01 · THE CHAIN</p>
+                    <h2>Click to photon, and where the milliseconds hide.</h2>
+                    <p class="lede">Input lag is the total time between moving your hand and the screen showing the result. It is a chain, and one link usually dominates the rest.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Stage</th><th>Typical cost</th><th>What controls it</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Peripheral</td><td>1 to 8 ms</td><td>Polling rate, sensor, wireless implementation, switch debounce</td></tr>
+                          <tr><td>OS and game input handling</td><td>1 to 5 ms</td><td>Input processing, background CPU contention</td></tr>
+                          <tr><td>Render queue</td><td>0 to 60 ms</td><td>How many frames the CPU is allowed to run ahead of the GPU</td></tr>
+                          <tr><td>GPU render time</td><td>Frame time</td><td>Settings, resolution, GPU load</td></tr>
+                          <tr><td>Presentation</td><td>0 to 30 ms</td><td>Vertical sync behaviour, buffering, whether the frame waits for a refresh</td></tr>
+                          <tr><td>Display</td><td>1 to 20 ms</td><td>Panel processing, response time, overdrive, picture modes</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Look at the ranges rather than the totals.</strong> The render queue and presentation stages have the widest spread, which is exactly why they are worth fixing first. A better mouse saves a couple of milliseconds; an unbounded render queue at high GPU load can cost forty.</p>
+                </section>
+
+                <section id="queue" class="article-section">
+                    <p class="guide-label">02 · THE BIGGEST WIN</p>
+                    <h2>Stop the CPU running frames ahead of the GPU.</h2>
+                    <p class="lede">When the GPU is fully loaded, the CPU keeps queuing frames it cannot yet draw. Every queued frame is input you have already given that the screen has not shown.</p>
+                    <p>The fix has a vendor name on each platform: <strong>NVIDIA Reflex</strong>, <strong>AMD Anti-Lag</strong> and <strong>Intel XeLL</strong>. All three do essentially the same thing — keep the queue nearly empty by pacing the CPU to the GPU, so a frame is submitted just in time rather than early.</p>
+                    <ul>
+                      <li><strong>In-game Reflex or Anti-Lag is the best version.</strong> The game itself knows when it sampled input, so an integrated implementation beats a driver-level approximation.</li>
+                      <li><strong>Use the driver setting when the game has none.</strong> Low Latency Mode set to Ultra, or the driver-level Anti-Lag, is the fallback.</li>
+                      <li><strong>Ignore the &ldquo;Boost&rdquo; variants unless you are GPU-limited and plugged in.</strong> They raise clocks at idle to shave a little more, at a real power cost.</li>
+                      <li><strong>It does nothing when you are CPU-limited.</strong> If the GPU is at 60 percent load, the queue was already short and there is nothing to drain.</li>
+                    </ul>
+                    <div class="note note-good">
+                      <p><strong>If you change one setting today, change this one.</strong> Enabling in-game Reflex or Anti-Lag in a GPU-limited game is routinely worth more than every other item in this guide combined.</p>
+                    </div>
+                </section>
+
+                <section id="frame-cap" class="article-section">
+                    <p class="guide-label">03 · THE ARITHMETIC</p>
+                    <h2>Cap the frame rate below the refresh rate. Here is why.</h2>
+                    <p class="lede">On a variable-refresh display, letting the frame rate reach the panel maximum pushes you back into the vertical-sync path you installed the display to avoid.</p>
+                    <p>Variable refresh rate — G-Sync, FreeSync, VESA Adaptive-Sync — works by matching the panel to the frame rate. That only works inside the panel&rsquo;s range. Once the frame rate hits the ceiling, one of two things happens: with vertical sync on, frames wait, and latency jumps; with it off, the frame tears. A cap a few frames below the ceiling keeps you inside the variable range at all times.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Display refresh</th><th>Suggested cap</th><th>Notes</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>60 Hz</td><td>57 fps</td><td>Small headroom is enough at low refresh rates.</td></tr>
+                          <tr><td>120 Hz</td><td>116 fps</td><td>—</td></tr>
+                          <tr><td>144 Hz</td><td>138 fps</td><td>The classic case; three to six frames of headroom.</td></tr>
+                          <tr><td>240 Hz</td><td>232 fps</td><td>Headroom scales roughly with refresh rate.</td></tr>
+                          <tr><td>360 Hz and above</td><td>Refresh minus about 3 percent</td><td>At this point the queue matters far more than the cap.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <h3>The combination that works</h3>
+                    <ul>
+                      <li><strong>Variable refresh: on</strong>, in both the driver and the display&rsquo;s own menu. Many panels ship with it disabled.</li>
+                      <li><strong>Vertical sync: on in the driver, off in the game.</strong> This sounds wrong and is the standard recommendation: the driver-level setting acts as a tear-preventing backstop that the frame cap keeps you from ever reaching.</li>
+                      <li><strong>Frame cap: set once, below the ceiling.</strong> Prefer the in-game limiter or the driver limiter; third-party limiters add their own overhead.</li>
+                      <li><strong>Latency reduction: on.</strong> It is what keeps the queue empty inside that arrangement.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>A stable cap beats a higher average.</strong> A locked 116 fps feels better than an 95-to-144 swing, because your hands track frame-time consistency, not the number in the corner.</p>
+                    </div>
+                </section>
+
+                <section id="display" class="article-section">
+                    <p class="guide-label">04 · THE HARDWARE ENDS</p>
+                    <h2>Small, real, and mostly free.</h2>
+                    <h3>The display</h3>
+                    <ul>
+                      <li><strong>Use the game or PC picture mode.</strong> Cinema and Vivid modes add processing. On a TV, game mode is frequently worth 20 to 80 ms on its own — the single largest hardware-side saving available to anyone playing on a television.</li>
+                      <li><strong>Turn off motion interpolation, noise reduction and dynamic contrast.</strong> All three buffer frames to work.</li>
+                      <li><strong>Set overdrive to the middle option.</strong> The most aggressive setting usually introduces overshoot artefacts and rarely helps latency.</li>
+                      <li><strong>Confirm the refresh rate is actually set.</strong> Windows regularly leaves a high-refresh panel at 60 Hz after a driver update or a cable change.</li>
+                    </ul>
+                    <h3>Peripherals</h3>
+                    <ul>
+                      <li><strong>1000 Hz polling is enough.</strong> Beyond that, returns are tiny and CPU cost is real. Verify it is set rather than assuming.</li>
+                      <li><strong>Modern wireless is fine.</strong> A current low-latency wireless mouse is not the reason you lost the duel. Bluetooth for gaming input is a different story.</li>
+                      <li><strong>Turn off keyboard and mouse software effects that sync to the system.</strong> Lighting synchronisation can hold a CPU thread at surprising moments.</li>
+                      <li><strong>Plug into the motherboard, not a hub.</strong> Cheap hubs and unpowered docks add jitter, which is worse than a constant delay.</li>
+                    </ul>
+                </section>
+
+                <section id="not-helping" class="article-section">
+                    <p class="guide-label">05 · THE MYTHS</p>
+                    <h2>Five things that cost time and change nothing.</h2>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">MYTH—01</span>
+                        <strong>Registry latency tweaks</strong>
+                        <p>Copy-pasted registry bundles from forums mostly toggle settings that no longer exist. Some disable power management in ways that hurt.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">MYTH—02</span>
+                        <strong>Stripped-down Windows builds</strong>
+                        <p>Modified installation images trade a couple of milliseconds you cannot measure for missing security updates you will eventually need.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">MYTH—03</span>
+                        <strong>Disabling every service</strong>
+                        <p>On any modern multi-core CPU the background load is not your bottleneck. Close the overlay-heavy applications and stop there.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">MYTH—04</span>
+                        <strong>Frame generation for responsiveness</strong>
+                        <p>It raises smoothness and latency together. Excellent for a single-player game on a high-refresh panel, wrong for anything competitive.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">MYTH—05</span>
+                        <strong>Uncapped frame rates</strong>
+                        <p>Above your refresh ceiling, extra frames are discarded. You get heat, fan noise and a full render queue in exchange for nothing.</p>
+                      </div>
+                    </div>
+                </section>
+
+                <section id="measure" class="article-section">
+                    <p class="guide-label">06 · MEASUREMENT</p>
+                    <h2>Confirm the change instead of believing it.</h2>
+                    <p class="lede">Every setting on this page has a placebo twin. Measure before and after, or you are collecting folklore.</p>
+                    <ul>
+                      <li><strong>In-game latency overlays.</strong> Games with Reflex integration frequently expose a render-latency figure directly. It is the easiest honest number available.</li>
+                      <li><strong>Vendor overlays.</strong> NVIDIA and AMD both surface a latency metric in their own overlay for supported titles.</li>
+                      <li><strong>PresentMon.</strong> Intel&rsquo;s open capture tool records frame times, present timing and stalls for any game. It is the right tool when you want data rather than a number on screen.</li>
+                      <li><strong>A phone camera.</strong> Record at a high frame rate, point it at mouse and monitor together, and count frames between the movement and the response. Crude, hardware-independent, and good enough to detect a 30 ms change.</li>
+                    </ul>
+                    <h3>Test it properly</h3>
+                    <ul>
+                      <li>Change <strong>one</strong> setting at a time and re-measure.</li>
+                      <li>Use the same scene, the same graphics settings and a similar GPU load each run.</li>
+                      <li>Record the numbers. Latency differences below about 5 ms are not reliably perceptible, so a change that small is not worth keeping if it costs you anything else.</li>
+                      <li>Check frame-time consistency alongside the average. Stutter reads as lag even when the mean latency is unchanged.</li>
+                    </ul>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>Input lag, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>What is the single best setting to reduce input lag?</strong>
+                            <p>Enable the in-game latency reduction feature: NVIDIA Reflex, AMD Anti-Lag or Intel XeLL. When the GPU is fully loaded, it keeps the render queue nearly empty, which is where most avoidable latency accumulates. In a GPU-limited game it is usually worth more than every other change combined.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Should I cap my frame rate?</strong>
+                            <p>On a variable refresh display, yes. Cap a few frames below the panel maximum, for example 138 fps on a 144 Hz display, so the frame rate stays inside the variable refresh range and never falls back to the vertical sync path. A stable cap also feels better than a fluctuating higher average.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Does V-Sync add input lag?</strong>
+                            <p>Traditional vertical sync does, because frames wait for a refresh interval. The recommended arrangement on a variable refresh display is vertical sync enabled in the driver, disabled in the game, with a frame cap below the refresh ceiling. The cap means you never reach the point where vertical sync engages.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Is a wireless mouse worse for input lag?</strong>
+                            <p>A modern low-latency gaming wireless mouse is effectively equivalent to a wired one, on the order of a millisecond or two. Bluetooth peripherals are a different case and are not suitable for latency-sensitive play. Either way, this stage of the chain is small compared with the render queue.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>How do I measure input lag myself?</strong>
+                            <p>Use an in-game or vendor overlay that reports render latency, capture frame timing with PresentMon, or record mouse and screen together with a high-frame-rate phone camera and count the frames between movement and response. Change one setting at a time and compare against a baseline in the same scene.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="dlss-vs-fsr-vs-xess-upscaling.html"><strong>DLSS vs FSR vs XeSS: which upscaler to use</strong><span aria-hidden="true">→</span></a>
+                        <a href="clean-gpu-driver-install-windows.html"><strong>Clean-install GPU drivers the safe way</strong><span aria-hidden="true">→</span></a>
+                        <a href="dlss-5-neural-rendering-guide.html"><strong>DLSS 5 neural rendering: the honest version</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>The same instinct applied to phones: fewer moving parts, nothing waiting on a server.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

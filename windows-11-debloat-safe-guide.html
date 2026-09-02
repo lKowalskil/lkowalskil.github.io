@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="A reversible approach to Windows 11 debloating: which settings to change, which apps are safe to remove, how to judge a debloat script, and what to never touch.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>How to Debloat Windows 11 Without Breaking It · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="How to Debloat Windows 11 Safely, Without Breaking It">
+    <meta property="og:description" content="A reversible approach to Windows 11 debloating: which settings to change, which apps are safe to remove, how to judge a debloat script, and what to never touch.">
+    <meta property="og:url" content="https://lkowalskil.github.io/windows-11-debloat-safe-guide.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Debloat Windows 11 Safely, Without Breaking It">
+    <meta name="twitter:description" content="Reversible Windows 11 debloating — what to change, what to remove, and what to leave alone.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/windows-11-debloat-safe-guide.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/windows-11-debloat-safe-guide.html#article",
+      "headline": "How to Debloat Windows 11 Safely, Without Breaking It",
+      "description": "A reversible approach to Windows 11 debloating: which settings to change, which apps are safe to remove, how to judge a debloat script, and what to never touch.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/windows-11-debloat-safe-guide.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "debloat Windows 11, remove preinstalled apps Windows, Windows 11 privacy settings, winget uninstall, disable telemetry Windows 11, Windows debloat script safety",
+      "articleSection": "Windows and privacy",
+      "proficiencyLevel": "Intermediate",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Windows 11 users cleaning up a new machine"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/windows-11-debloat-safe-guide.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is debloating Windows 11 safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Configuration changes are safe and reversible: privacy settings, startup apps, notifications, suggested content and lock screen items. Uninstalling preinstalled store apps is also safe and reversible through winget or the Microsoft Store. Removing system components such as Defender, Windows Update infrastructure or servicing files is not safe and usually requires a reinstall to undo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does debloating make Windows faster?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rarely by much. Preinstalled apps that never run do not consume CPU. Real speed problems come from startup and background applications, a nearly full or mechanical system drive, thermal throttling, memory pressure and overlapping antivirus software. Fix those first and the debloating question mostly disappears."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Windows 11 apps are safe to uninstall?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Store-delivered extras you do not use: Xbox companion apps on a work machine, Clipchamp, news and weather apps, and manufacturer trial software. Keep the Microsoft Store, Windows Security, Edge, Windows Update components and the .NET and Visual C++ runtimes, because other software depends on them in ways that are not obvious until something fails."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I run a debloat script from GitHub?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only after reading what it changes, deselecting the presets, and testing on a machine you can afford to reinstall. Prefer open-source tools that record previous values so changes can be reverted, and skip any section that touches Windows Defender or Windows Update. Never run an elevated one-liner from a video description unreviewed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I undo a debloat script?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Try in this order: System Restore if you created a point, then DISM RestoreHealth followed by sfc scannow, then re-registering the built-in apps with PowerShell. If system components were removed, run a repair install from a current Windows ISO with the keep files and apps option, which replaces the operating system without losing your data."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/windows-11-debloat-safe-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How to Debloat Windows 11 Safely, Without Breaking It",
+          "item": "https://lkowalskil.github.io/windows-11-debloat-safe-guide.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—05 · WINDOWS &amp; PRIVACY · 11 MIN READ</p>
+                <h1 class="guide-title">Debloat Windows 11 without inheriting somebody else&rsquo;s broken machine.</h1>
+                <p class="guide-deck">The popular scripts remove hundreds of things at once, and the ones that matter are a small subset of that list. This is the reversible version: what to switch off in Settings, what is genuinely safe to uninstall, how to read a debloat script before you run it, and the five components that break Windows when removed.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Reversible first</strong>
+                        <p>Every step here can be undone without reinstalling Windows. That is the whole selection criterion.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>REVERSIBLE CHANGES ONLY</li>
+                    <li>WINGET APP REMOVAL</li>
+                    <li>FIVE THINGS TO KEEP</li>
+                    <li>RECOVERY PATH INCLUDED</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#definitions">What debloat means</a>
+                        <a href="#settings">Start in Settings</a>
+                        <a href="#apps">Removing apps</a>
+                        <a href="#scripts">Judging a script</a>
+                        <a href="#performance">Real performance wins</a>
+                        <a href="#recovery">Getting back</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="definitions" class="article-section">
+                    <p class="guide-label">01 · DEFINITIONS</p>
+                    <h2>Three different operations wear the same word.</h2>
+                    <p class="lede">People say &ldquo;debloat&rdquo; and mean anything from turning off suggested content to deleting servicing components. The risk profile is completely different at each level.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Level</th><th>What it does</th><th>Reversible?</th><th>Worth it?</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Configuration</td><td>Settings, policies and registry values: suggestions, ads, telemetry level, startup apps, lock screen content</td><td>Fully</td><td>Yes — nearly all the real benefit lives here</td></tr>
+                          <tr><td>App removal</td><td>Uninstalling preinstalled store apps you do not use</td><td>Yes, reinstall from the store or winget</td><td>Mostly cosmetic, occasionally frees real disk</td></tr>
+                          <tr><td>Component removal</td><td>Stripping servicing stack pieces, Defender, WinSxS, update infrastructure</td><td>No, generally requires a reinstall</td><td>No. This is what produces the machine that cannot take a feature update.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>The useful part is the first row, and it is the part nobody makes videos about</strong>, because switching off six settings is not dramatic. The dramatic scripts operate in the third row, and the cost arrives six months later when a cumulative update fails with an error code nobody can search.</p>
+                    <div class="note">
+                      <p><strong>Set a restore point before anything.</strong> System Protection is off by default on many installations. Turn it on, create a point, and name it after what you are about to do. Two minutes now, versus reinstalling later.</p>
+                    </div>
+                </section>
+
+                <section id="settings" class="article-section">
+                    <p class="guide-label">02 · THE SAFE LAYER</p>
+                    <h2>Twelve switches that account for most of the annoyance.</h2>
+                    <p class="lede">Before any script, spend ten minutes in Settings. This is the layer Microsoft supports, which means it survives feature updates instead of being silently restored by them.</p>
+                    <h3>Privacy and content</h3>
+                    <ul>
+                      <li><strong>Privacy and security &rarr; General:</strong> turn off the advertising ID, personalised ads, suggested content and app-launch tracking.</li>
+                      <li><strong>Privacy and security &rarr; Diagnostics:</strong> set diagnostic data to the required level, turn off tailored experiences, and clear the collected data once.</li>
+                      <li><strong>Personalisation &rarr; Lock screen:</strong> replace Windows Spotlight with a static picture to remove the promotional cards.</li>
+                      <li><strong>Personalisation &rarr; Start:</strong> disable recommendations, recently added apps and tips.</li>
+                      <li><strong>Personalisation &rarr; Device usage:</strong> clear every category. It only exists to shape suggestions.</li>
+                      <li><strong>System &rarr; Notifications:</strong> at the bottom, turn off the suggestions, tips and setup prompts. These are the notifications people mistake for malware.</li>
+                    </ul>
+                    <h3>Performance and behaviour</h3>
+                    <ul>
+                      <li><strong>Apps &rarr; Startup:</strong> the highest-value screen in the whole system. Disable everything you did not deliberately install, especially updaters and launcher helpers.</li>
+                      <li><strong>Search permissions:</strong> turn off cloud content search and search history if you do not want web results in the Start menu.</li>
+                      <li><strong>Widgets and the taskbar:</strong> remove what you do not use — widgets, chat, task view, search box.</li>
+                      <li><strong>Power mode:</strong> set Best performance on a desktop; leave Balanced on a laptop unless you enjoy explaining the battery life to yourself.</li>
+                      <li><strong>Storage sense:</strong> enable it, then configure it. It removes temp files and old downloads on a schedule, which is the cleanup people install third-party tools for.</li>
+                      <li><strong>Delivery optimisation:</strong> restrict update sharing to the local network, or turn it off, if upload bandwidth matters to you.</li>
+                    </ul>
+                    <div class="note note-good">
+                      <p><strong>Stop here if the machine is for work.</strong> Everything above is supported, reversible and update-safe. The remaining sections trade increasing amounts of that safety for decreasing amounts of benefit.</p>
+                    </div>
+                </section>
+
+                <section id="apps" class="article-section">
+                    <p class="guide-label">03 · APP REMOVAL</p>
+                    <h2>Uninstall properly, and know the five you should keep.</h2>
+                    <p class="lede">Preinstalled apps are mostly small. Removing them is about not seeing them, not about reclaiming disk space — with a couple of genuine exceptions.</p>
+                    <p>Two supported routes: right-click and uninstall in the Start menu, or the package manager. The package manager is better because it is scriptable, repeatable on the next machine, and reversible with the same tool.</p>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · LIST AND REMOVE WITH WINGET</div>
+                      <pre><code># See what is installed, with the exact package IDs
+winget list
+
+# Remove a specific package by ID
+winget uninstall --id Microsoft.Teams
+
+# Reinstall it later if you were wrong
+winget install --id Microsoft.Teams
+
+# Export your whole install list before you start changing things
+winget export --output C:\backup\installed-apps.json</code></pre>
+                    </div>
+                    <p>That last command is the point of using winget at all: an exported list is both a record of what you removed and the fastest way to rebuild the machine later with <code>winget import</code>.</p>
+                    <h3>What not to remove</h3>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Component</th><th>Why people remove it</th><th>What actually breaks</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Microsoft Store</td><td>Looks like bloat</td><td>App updates stop, including apps you rely on. Restoring it is awkward.</td></tr>
+                          <tr><td>Windows Security / Defender</td><td>Performance folklore</td><td>You are unprotected, and some third-party suites refuse to install cleanly afterwards.</td></tr>
+                          <tr><td>Microsoft Edge</td><td>Browser preference</td><td>Parts of the OS render web content through it: help pages, PDF handling, some sign-in flows.</td></tr>
+                          <tr><td>Windows Update components</td><td>To stop reboots</td><td>Security updates stop arriving. Use active hours and pause instead.</td></tr>
+                          <tr><td>.NET and Visual C++ runtimes</td><td>They look duplicated</td><td>They are not duplicates. Applications fail to launch with cryptic missing-DLL errors.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Reasonable removals</strong>, by contrast, are the store-delivered extras: Xbox companion apps on a work machine, Clipchamp, the news and weather apps, third-party trials preinstalled by the laptop manufacturer, and duplicated OEM utilities that shadow features Windows already has.</p>
+                </section>
+
+                <section id="scripts" class="article-section">
+                    <p class="guide-label">04 · TOOLS AND SCRIPTS</p>
+                    <h2>How to read a debloat script before you run it.</h2>
+                    <p class="lede">Some of these tools are genuinely well made. The problem is not the tools, it is running one whose defaults you have never read on a machine you depend on.</p>
+                    <h3>The categories</h3>
+                    <ul>
+                      <li><strong>Privacy configurators</strong> — tools that toggle documented settings and policies, usually with an undo. Low risk, and often the fastest way to apply the section above consistently.</li>
+                      <li><strong>Tweak collections with a menu</strong> — broad utilities that bundle app removal, service changes and installers. Fine if you select items deliberately; risky as a one-click preset.</li>
+                      <li><strong>Aggressive removal scripts</strong> — anything that strips components, disables Defender or edits the servicing stack. This is where unrecoverable machines come from.</li>
+                      <li><strong>Modified Windows images</strong> — pre-stripped installation media. You are trusting an anonymous build with your entire operating system, and you will not get feature updates cleanly.</li>
+                    </ul>
+                    <h3>Five checks before you run anything</h3>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">CHECK—01</span>
+                        <strong>Is the source open?</strong>
+                        <p>You should be able to read what it changes. A closed binary that promises to optimise Windows is not a tool, it is a wish.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">CHECK—02</span>
+                        <strong>Is there an undo?</strong>
+                        <p>Good configurators record the previous value and can restore it. If a tool cannot revert, treat every change as permanent.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">CHECK—03</span>
+                        <strong>Does it touch Defender or Update?</strong>
+                        <p>Either one is a red flag on a machine you use for real work. Skip that section, whatever the tool claims about performance.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">CHECK—04</span>
+                        <strong>Are the defaults selected for you?</strong>
+                        <p>A preset that ticks 200 boxes is not a considered configuration. Deselect everything and choose deliberately.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">CHECK—05</span>
+                        <strong>Did you test on something disposable?</strong>
+                        <p>A virtual machine or a spare laptop first. If you would not run it on a client&rsquo;s machine, do not run it on yours.</p>
+                      </div>
+                    </div>
+                    <div class="note note-warn">
+                      <p><strong>Never run a script you found in a video description as administrator without reading it.</strong> The elevated-PowerShell one-liner is the single most effective malware delivery mechanism aimed at enthusiasts, precisely because the audience is used to running exactly that.</p>
+                    </div>
+                </section>
+
+                <section id="performance" class="article-section">
+                    <p class="guide-label">05 · ACTUAL SPEED</p>
+                    <h2>What genuinely makes a Windows machine faster.</h2>
+                    <p class="lede">Debloating is about annoyance, not speed. If the machine feels slow, the cause is almost always on this list instead.</p>
+                    <ul>
+                      <li><strong>Startup and background applications.</strong> Six updaters, two cloud clients and a launcher matter far more than any preinstalled store app that never runs.</li>
+                      <li><strong>Storage.</strong> A mechanical drive holding the system is the single biggest cause of a slow modern PC. A full SSD is the second — keep 10 to 15 percent free.</li>
+                      <li><strong>Memory pressure.</strong> Check the memory tab under load rather than at idle. Sustained high commit with disk activity is the pattern behind everything-freezes-for-a-second.</li>
+                      <li><strong>Thermals and power limits.</strong> A laptop on a soft surface throttles. So does a desktop with three years of dust in the cooler.</li>
+                      <li><strong>Chipset and storage drivers.</strong> Frequently still the generic ones from installation. Vendor packages are worth installing once and then leaving alone.</li>
+                      <li><strong>Antivirus stacking.</strong> Two real-time scanners fighting over the same file system is a genuine, measurable slowdown. Pick one.</li>
+                      <li><strong>Browser tabs and extensions.</strong> Usually the largest single consumer of memory on the machine, and the easiest thing to blame on Windows instead.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>Measure before and after.</strong> Task Manager and Resource Monitor answer the question that matters — what is using the machine right now — and they are already installed. A subjective &ldquo;feels snappier&rdquo; after a 300-change script tells you nothing about which change helped.</p>
+                    </div>
+                </section>
+
+                <section id="recovery" class="article-section">
+                    <p class="guide-label">06 · RECOVERY</p>
+                    <h2>If something is already broken.</h2>
+                    <p class="lede">In rough order: least destructive first. Work down this list, not up it.</p>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL (ADMIN) · REPAIR SYSTEM FILES</div>
+                      <pre><code># Repair the component store from Windows Update
+DISM /Online /Cleanup-Image /RestoreHealth
+
+# Then verify and repair protected system files
+sfc /scannow
+
+# Reinstall the built-in apps for the current user
+Get-AppxPackage -AllUsers | ForEach-Object {
+  Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"
+}</code></pre>
+                    </div>
+                    <ul>
+                      <li><strong>System Restore</strong> — if you made the restore point suggested at the top, this is the whole recovery.</li>
+                      <li><strong>DISM, then SFC</strong> — in that order. SFC repairs from the component store, so a damaged store must be fixed first.</li>
+                      <li><strong>Re-register the built-in apps</strong> — the command above restores Start menu entries and store apps that a script removed per user.</li>
+                      <li><strong>Repair install</strong> — run setup from a current Windows ISO and choose to keep files and apps. This replaces the OS while preserving your data and installed programs, and it fixes almost everything short of component removal.</li>
+                      <li><strong>Clean install</strong> — the honest endpoint if a script stripped servicing components. Restore from the backup you made first.</li>
+                    </ul>
+                    <p>If you are reading this section because a one-click optimiser broke something: start at the repair install. It is faster than three evenings of forum archaeology, and you keep your applications.</p>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>Debloating Windows 11, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>Is debloating Windows 11 safe?</strong>
+                            <p>Configuration changes are safe and reversible: privacy settings, startup apps, notifications, suggested content and lock screen items. Uninstalling preinstalled store apps is also safe and reversible through winget or the Microsoft Store. Removing system components such as Defender, Windows Update infrastructure or servicing files is not safe and usually requires a reinstall to undo.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Does debloating make Windows faster?</strong>
+                            <p>Rarely by much. Preinstalled apps that never run do not consume CPU. Real speed problems come from startup and background applications, a nearly full or mechanical system drive, thermal throttling, memory pressure and overlapping antivirus software. Fix those first and the debloating question mostly disappears.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Which Windows 11 apps are safe to uninstall?</strong>
+                            <p>Store-delivered extras you do not use: Xbox companion apps on a work machine, Clipchamp, news and weather apps, and manufacturer trial software. Keep the Microsoft Store, Windows Security, Edge, Windows Update components and the .NET and Visual C++ runtimes, because other software depends on them in ways that are not obvious until something fails.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Should I run a debloat script from GitHub?</strong>
+                            <p>Only after reading what it changes, deselecting the presets, and testing on a machine you can afford to reinstall. Prefer open-source tools that record previous values so changes can be reverted, and skip any section that touches Windows Defender or Windows Update. Never run an elevated one-liner from a video description unreviewed.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>How do I undo a debloat script?</strong>
+                            <p>Try in this order: System Restore if you created a point, then DISM RestoreHealth followed by sfc scannow, then re-registering the built-in apps with PowerShell. If system components were removed, run a repair install from a current Windows ISO with the keep files and apps option, which replaces the operating system without losing your data.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="local-backup-3-2-1-guide.html"><strong>A 3-2-1 backup you will actually run</strong><span aria-hidden="true">→</span></a>
+                        <a href="wsl2-setup-windows-guide.html"><strong>Set up WSL2 properly on Windows</strong><span aria-hidden="true">→</span></a>
+                        <a href="clean-gpu-driver-install-windows.html"><strong>Clean-install GPU drivers the safe way</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>Apps built on the same preference: no background noise, no account, nothing running that you did not ask for.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

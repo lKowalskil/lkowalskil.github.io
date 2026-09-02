@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="What Google backup does not cover, how to get photos and app data onto your own storage, and a monthly routine that leaves you able to restore a lost phone.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>Back Up an Android Phone Without the Cloud · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="How to Back Up an Android Phone Without the Cloud">
+    <meta property="og:description" content="What Google backup does not cover, how to get photos and app data onto your own storage, and a monthly routine that leaves you able to restore a lost phone.">
+    <meta property="og:url" content="https://lkowalskil.github.io/android-backup-without-cloud.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Back Up an Android Phone Without the Cloud">
+    <meta name="twitter:description" content="A local Android backup routine: photos, app data, messages and the things Google backup quietly skips.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/android-backup-without-cloud.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/android-backup-without-cloud.html#article",
+      "headline": "How to Back Up an Android Phone Without the Cloud",
+      "description": "What Google backup does not cover, how to get photos and app data onto your own storage, and a monthly routine that leaves you able to restore a lost phone.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/android-backup-without-cloud.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "Android backup without Google, local phone backup, adb pull photos, Seedvault, export app data Android, transfer photos to PC, restore new phone",
+      "articleSection": "Android devices",
+      "proficiencyLevel": "Beginner",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Android users who want local copies of their data"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/android-backup-without-cloud.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does Google backup save everything on my phone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It reliably restores account-synced data such as contacts and calendar, and it reinstalls your apps. Whether app internal data returns depends on each app, since apps can opt out. Files in device storage such as downloads, documents and recordings are not covered, and photos are only included if Google Photos backup is enabled."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I back up Android app data without root?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use each app own export function, which is the only reliable route on a stock device. adb backup is deprecated and ignored by most modern apps. Manufacturer transfer tools copy more than Google backup during a phone-to-phone move, and Seedvault provides full encrypted local backup on custom Android builds that include it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the fastest way to copy photos off an Android phone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "adb pull is faster and more repeatable than USB file transfer, and it can be scripted into a dated folder. For an ongoing setup, Syncthing synchronises photos to your computer continuously with no server in the middle. Writing directly to a USB-C drive is the simplest one-off option."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the most important thing to back up before switching phones?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Two-factor authenticator secrets and password manager access. Losing those can lock you out of accounts permanently, and no phone backup helps if you cannot sign in to restore it. Export or transfer the authenticator, and keep printed recovery codes somewhere that does not depend on the phone."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Syncthing a backup?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not on its own. It synchronises, which means a deletion on the phone propagates to your computer. Enable file versioning on the receiving folder, or treat the synced folder as a source that your real versioned backup then protects. The distinction matters exactly once, and expensively."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/android-backup-without-cloud.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How to Back Up an Android Phone Without the Cloud",
+          "item": "https://lkowalskil.github.io/android-backup-without-cloud.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—16 · ANDROID DEVICES · 10 MIN READ</p>
+                <h1 class="guide-title">A local Android backup that covers what Google&rsquo;s quietly does not.</h1>
+                <p class="guide-deck">Android&rsquo;s built-in backup is genuinely useful and genuinely incomplete, and the gaps are only visible when you set up a replacement phone. This is what it does not carry, how to copy the rest onto storage you control, and a monthly routine short enough that you will actually do it.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Your storage, your copy</strong>
+                        <p>Everything here lands on a disk you own. Cloud optional, never required.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>WHAT GOOGLE BACKUP SKIPS</li>
+                    <li>SCRIPTED ADB PULL</li>
+                    <li>APP DATA, HONESTLY</li>
+                    <li>A MONTHLY ROUTINE</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#gaps">What Google misses</a>
+                        <a href="#photos">Photos and files</a>
+                        <a href="#appdata">App data</a>
+                        <a href="#messages">Messages and credentials</a>
+                        <a href="#routine">A monthly routine</a>
+                        <a href="#restore">Setting up a new phone</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="gaps" class="article-section">
+                    <p class="guide-label">01 · THE GAPS</p>
+                    <h2>The built-in backup is a good start and a poor guarantee.</h2>
+                    <p class="lede">Android backup restores a remarkable amount to a new phone. The problem is that what it skips is not obvious until you are standing there with a blank device.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Data</th><th>Covered?</th><th>Notes</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Contacts, calendar, Gmail</td><td>Yes</td><td>Account-synced rather than backed up, which is a different guarantee</td></tr>
+                          <tr><td>Photos and video</td><td>Only with Google Photos backup on</td><td>Subject to storage limits, and original quality is not always retained</td></tr>
+                          <tr><td>App list and settings</td><td>Mostly</td><td>Apps reinstall; whether their data returns depends on the app</td></tr>
+                          <tr><td>App internal data</td><td>Inconsistently</td><td>Apps can opt out, and many that hold important data do</td></tr>
+                          <tr><td>SMS and call log</td><td>Usually</td><td>Sometimes only into the same manufacturer ecosystem</td></tr>
+                          <tr><td>Authenticator codes</td><td>Depends entirely on the app</td><td>The single most damaging thing to lose</td></tr>
+                          <tr><td>Files in device storage</td><td>No</td><td>Downloads, documents, recordings, exported data</td></tr>
+                          <tr><td>Signal, WhatsApp and similar</td><td>Their own mechanism</td><td>Each has a separate backup with its own passphrase</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>The pattern:</strong> anything tied to an account comes back, anything living inside an app is at the app&rsquo;s discretion, and anything sitting in device storage is on you. That last category is where people lose photos they took before the sync was enabled.</p>
+                </section>
+
+                <section id="photos" class="article-section">
+                    <p class="guide-label">02 · PHOTOS AND FILES</p>
+                    <h2>The bulk of it, moved to a disk you own.</h2>
+                    <p class="lede">Four routes, in rough order of how well they scale. Any of them beats not having a copy.</p>
+                    <h3>1. USB file transfer</h3>
+                    <p>Connect the phone, choose file transfer mode rather than charging, and copy <code>DCIM</code> and <code>Pictures</code> to your computer. Fine occasionally; slow and error-prone for tens of gigabytes.</p>
+                    <h3>2. ADB pull, which is faster and scriptable</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">SHELL · PULL THE FOLDERS THAT MATTER</div>
+                      <pre><code>adb pull /sdcard/DCIM ./phone-backup/DCIM
+adb pull /sdcard/Pictures ./phone-backup/Pictures
+adb pull /sdcard/Download ./phone-backup/Download
+adb pull /sdcard/Documents ./phone-backup/Documents
+
+# See what else is taking space and worth taking
+adb shell du -h -d 1 /sdcard | sort -h</code></pre>
+                    </div>
+                    <p>Repeatable, faster than the file transfer protocol, and easy to put in a script. The <a href="android-adb-setup-guide.html">ADB guide</a> covers the setup.</p>
+                    <h3>3. Syncthing, for the version that keeps running</h3>
+                    <p>Syncthing performs continuous, encrypted, peer-to-peer synchronisation between your phone and your computer with no server in the middle. Set it once and photos appear on your machine without you doing anything. <strong>Point it at a versioned folder</strong>, or it faithfully propagates a deletion — synchronisation is not backup, as the <a href="local-backup-3-2-1-guide.html">backup guide</a> explains at length.</p>
+                    <h3>4. Straight to a USB-C drive</h3>
+                    <p>Modern Android phones write directly to USB-C storage. For a one-off before a factory reset, this is the least fuss available: plug in, copy with the files app, unplug.</p>
+                </section>
+
+                <section id="appdata" class="article-section">
+                    <p class="guide-label">03 · APP DATA</p>
+                    <h2>The honest situation, without the outdated advice.</h2>
+                    <p class="lede">This is where old guides mislead. <code>adb backup</code> is deprecated, has been unreliable for years, and is ignored by most modern apps. It is not the answer.</p>
+                    <p>What actually works, in order of preference:</p>
+                    <ul>
+                      <li><strong>The app&rsquo;s own export.</strong> Any app holding data you care about should be able to write a file you keep. Notes, trackers, journals, password managers, two-factor apps and habit trackers usually have this buried in settings. <strong>Use it, and check the export actually opens.</strong></li>
+                      <li><strong>Manufacturer transfer tools.</strong> Samsung, Xiaomi and others provide a phone-to-phone transfer that copies more than Google backup does. Excellent for moving to a new device, useless as an ongoing backup.</li>
+                      <li><strong>Seedvault</strong>, if you run a custom Android build that includes it. Encrypted, local, full-system backup. Not available on a stock retail phone.</li>
+                      <li><strong>Root-level tools</strong> such as Neo Backup. Complete, and require root, which is its own decision with its own consequences.</li>
+                    </ul>
+                    <div class="note note-good">
+                      <p><strong>Make export a selection criterion.</strong> When choosing an app that will hold months of your data, check before you commit that it can write that data to a file you keep. An app with no export is a decision to lose everything in it eventually — which is exactly why every app on this site exports in a plain format.</p>
+                    </div>
+                </section>
+
+                <section id="messages" class="article-section">
+                    <p class="guide-label">04 · THE SMALL, CRITICAL THINGS</p>
+                    <h2>Small files, disproportionate consequences.</h2>
+                    <ul>
+                      <li><strong>Two-factor authenticator codes.</strong> Export them, or print the recovery codes for every account, and store them somewhere that does not require the phone. Losing the authenticator with no recovery codes locks you out of accounts permanently — this is the worst outcome on this entire page.</li>
+                      <li><strong>Password manager.</strong> Keep an emergency kit or an encrypted export somewhere physical. If your vault is only on a phone and in an account you cannot reach without the phone, you have a circular dependency.</li>
+                      <li><strong>Contacts.</strong> Export a vCard file even if they sync. Account-based sync is not a backup: deleting a contact deletes it everywhere.</li>
+                      <li><strong>SMS and call logs.</strong> An SMS backup app writes an XML or JSON archive you can restore anywhere, independent of manufacturer transfer tools.</li>
+                      <li><strong>Messaging apps.</strong> Signal and WhatsApp each have their own backup with their own passphrase or key. Set it up and write the credential down; there is no recovery path without it.</li>
+                      <li><strong>Wi-Fi passwords.</strong> Android can display and share a saved network as a QR code. Capture the ones you will not remember.</li>
+                    </ul>
+                    <div class="note note-warn">
+                      <p><strong>The authenticator is the one that ends badly.</strong> A lost phone with no exported two-factor secrets and no printed recovery codes means account recovery processes that take weeks, if they succeed at all. Do that one first, tonight.</p>
+                    </div>
+                </section>
+
+                <section id="routine" class="article-section">
+                    <p class="guide-label">05 · THE ROUTINE</p>
+                    <h2>Fifteen minutes, once a month.</h2>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">STEP—01</span>
+                        <strong>Pull media</strong>
+                        <p>Connect and copy DCIM, Pictures, Download and Documents to your machine, or confirm Syncthing has been running.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—02</span>
+                        <strong>Export the apps that matter</strong>
+                        <p>The three or four holding real data. Save the exports into the same dated folder as the media.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—03</span>
+                        <strong>Refresh contacts and messages</strong>
+                        <p>A vCard export and an SMS archive. Both are small and take under a minute.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—04</span>
+                        <strong>Fold it into your real backup</strong>
+                        <p>The phone folder should be inside whatever your computer already backs up, so it inherits versioning and the off-site copy.</p>
+                      </div>
+                    </div>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · A DATED PULL</div>
+                      <pre><code>$date = Get-Date -Format "yyyy-MM-dd"
+$dest = "D:\phone-backup\$date"
+New-Item -ItemType Directory -Path $dest -Force
+
+adb pull /sdcard/DCIM      "$dest\DCIM"
+adb pull /sdcard/Pictures  "$dest\Pictures"
+adb pull /sdcard/Download  "$dest\Download"
+adb pull /sdcard/Documents "$dest\Documents"</code></pre>
+                    </div>
+                    <p>Run it, then let your normal backup take the folder off site. That is the whole system: the phone copies into the machine, and the machine is already protected.</p>
+                </section>
+
+                <section id="restore" class="article-section">
+                    <p class="guide-label">06 · RESTORE</p>
+                    <h2>The checklist for the day it matters.</h2>
+                    <p class="lede">Restoring is where you discover what you actually have. Work in this order.</p>
+                    <ul>
+                      <li><strong>Two-factor first.</strong> Before anything else, restore your authenticator or use recovery codes. Everything downstream needs sign-in.</li>
+                      <li><strong>Password manager second.</strong> Same reason.</li>
+                      <li><strong>Then the account restore.</strong> Let Google or the manufacturer tool reinstall apps and settings. Do this before manual work so it does not overwrite it.</li>
+                      <li><strong>Restore app data from your exports.</strong> One app at a time, verifying each import rather than assuming.</li>
+                      <li><strong>Copy media back only if you want it on the phone.</strong> Often you do not — the archive on your computer is the copy that matters.</li>
+                      <li><strong>Reconnect messaging backups</strong> with the passphrases you saved.</li>
+                      <li><strong>Wipe the old phone properly</strong> — sign out of the account first, then factory reset, and only then sell or recycle it.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>Test one restore before you need it.</strong> Import an export into a fresh install of the same app and confirm the data appears. Every backup on this page is a hypothesis until you have done that once.</p>
+                    </div>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>Local Android backups, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>Does Google backup save everything on my phone?</strong>
+                            <p>No. It reliably restores account-synced data such as contacts and calendar, and it reinstalls your apps. Whether app internal data returns depends on each app, since apps can opt out. Files in device storage such as downloads, documents and recordings are not covered, and photos are only included if Google Photos backup is enabled.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>How do I back up Android app data without root?</strong>
+                            <p>Use each app own export function, which is the only reliable route on a stock device. adb backup is deprecated and ignored by most modern apps. Manufacturer transfer tools copy more than Google backup during a phone-to-phone move, and Seedvault provides full encrypted local backup on custom Android builds that include it.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>What is the fastest way to copy photos off an Android phone?</strong>
+                            <p>adb pull is faster and more repeatable than USB file transfer, and it can be scripted into a dated folder. For an ongoing setup, Syncthing synchronises photos to your computer continuously with no server in the middle. Writing directly to a USB-C drive is the simplest one-off option.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>What is the most important thing to back up before switching phones?</strong>
+                            <p>Two-factor authenticator secrets and password manager access. Losing those can lock you out of accounts permanently, and no phone backup helps if you cannot sign in to restore it. Export or transfer the authenticator, and keep printed recovery codes somewhere that does not depend on the phone.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Is Syncthing a backup?</strong>
+                            <p>Not on its own. It synchronises, which means a deletion on the phone propagates to your computer. Enable file versioning on the receiving folder, or treat the synced folder as a source that your real versioned backup then protects. The distinction matters exactly once, and expensively.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="local-backup-3-2-1-guide.html"><strong>A 3-2-1 backup you will actually run</strong><span aria-hidden="true">→</span></a>
+                        <a href="android-adb-setup-guide.html"><strong>Set up ADB and use it properly</strong><span aria-hidden="true">→</span></a>
+                        <a href="private-time-tracker-no-account.html"><strong>What no account should actually mean</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>Every app here stores its data on the device and exports it in a plain format, so this routine covers them.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

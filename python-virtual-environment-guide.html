@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="How Python environments actually work, when to use venv, uv, Poetry, pipx or conda, and how to make a project reproducible on someone else machine.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>Python Virtual Environments Without the Mess · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Python Virtual Environments Without the Mess">
+    <meta property="og:description" content="How Python environments actually work, when to use venv, uv, Poetry, pipx or conda, and how to make a project reproducible on someone else machine.">
+    <meta property="og:url" content="https://lkowalskil.github.io/python-virtual-environment-guide.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Python Virtual Environments Without the Mess">
+    <meta name="twitter:description" content="venv, uv, Poetry, pipx and conda — which one solves your problem, and how to keep a project reproducible.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/python-virtual-environment-guide.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/python-virtual-environment-guide.html#article",
+      "headline": "Python Virtual Environments Without the Mess",
+      "description": "How Python environments actually work, when to use venv, uv, Poetry, pipx or conda, and how to make a project reproducible on someone else machine.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/python-virtual-environment-guide.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "Python virtual environment, venv tutorial, uv package manager, Poetry vs pip, pipx CLI tools, conda vs pip, requirements.txt lockfile, pyproject.toml",
+      "articleSection": "Developer tooling",
+      "proficiencyLevel": "Beginner",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Python developers"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/python-virtual-environment-guide.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a Python virtual environment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A directory containing a link to a Python interpreter, its own site-packages folder and activation scripts that put it first on your PATH. Activating one adjusts PATH for that shell so installs and imports resolve to that environment rather than to the system Python."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use venv, Poetry or uv?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "venv and pip are enough for small projects and require nothing extra. uv is the best default for new projects: it creates environments, resolves and locks dependencies, and can install Python versions, all considerably faster. Poetry suits libraries you publish and teams that want one opinionated workflow. All three are fine if you commit a lockfile."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need conda?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if you need non-Python binary dependencies such as specific compiled toolchains or a pinned CUDA runtime. Wheels have made plain pip viable for most scientific stacks. If nothing in your project needs a compiler, conda adds resolution time and channel conflicts without solving a problem you have."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does pip install work but the import still fail?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The install and the import used different interpreters. Check which environment is active, run python -m pip install rather than bare pip so the install targets the interpreter you are running, and confirm your editor has selected the same interpreter as your terminal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I commit the virtual environment to Git?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Environments are built artefacts, contain absolute paths and platform-specific binaries, and are not portable between machines. Add .venv to .gitignore and commit the lockfile instead, which is what allows the environment to be rebuilt identically."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/python-virtual-environment-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Python Virtual Environments Without the Mess",
+          "item": "https://lkowalskil.github.io/python-virtual-environment-guide.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—11 · DEVELOPER SETUP · 10 MIN READ</p>
+                <h1 class="guide-title">Python environments, explained once so they stop biting.</h1>
+                <p class="guide-deck">Every Python problem that starts with &ldquo;it works on my machine&rdquo; is an environment problem. This is what a virtual environment actually is, which of the five popular tools solves which problem, and the small set of habits that make a project rebuild identically somewhere else.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Tool-agnostic</strong>
+                        <p>The habits matter more than the tool. Any of these works if you follow the last section.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>VENV · UV · POETRY</li>
+                    <li>PIPX FOR CLI TOOLS</li>
+                    <li>WHEN CONDA IS RIGHT</li>
+                    <li>SIX REPRODUCIBILITY HABITS</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#model">How it works</a>
+                        <a href="#venv">venv, the baseline</a>
+                        <a href="#tools">The tool landscape</a>
+                        <a href="#versions">Python versions</a>
+                        <a href="#conda">When to use conda</a>
+                        <a href="#reproducible">Reproducibility</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="model" class="article-section">
+                    <p class="guide-label">01 · THE MODEL</p>
+                    <h2>A virtual environment is a directory and a path trick.</h2>
+                    <p class="lede">There is no magic here, and knowing the mechanism makes the failures obvious instead of mysterious.</p>
+                    <p>A virtual environment is a directory containing a link to a Python interpreter, its own <code>site-packages</code> folder, and scripts that put its <code>bin</code> or <code>Scripts</code> directory first on your PATH. Activating it means adjusting PATH for that shell. Nothing more.</p>
+                    <p>Which explains the classic failures:</p>
+                    <ul>
+                      <li><strong>&ldquo;I installed it but Python cannot import it&rdquo;</strong> — the install went to a different environment than the interpreter you ran.</li>
+                      <li><strong>&ldquo;It works in the terminal but not in the editor&rdquo;</strong> — the editor selected a different interpreter.</li>
+                      <li><strong>&ldquo;It broke after I installed something unrelated&rdquo;</strong> — a shared global environment where one package upgraded another package&rsquo;s dependency.</li>
+                      <li><strong>&ldquo;sudo pip install fixed it&rdquo;</strong> — it did not. It modified the system Python that your operating system depends on.</li>
+                    </ul>
+                    <div class="note note-warn">
+                      <p><strong>Never install into the system Python.</strong> On Linux and macOS, package managers and OS tooling depend on it. Modern Python even refuses by default, and the correct response to that error is to make an environment, not to override the protection.</p>
+                    </div>
+                </section>
+
+                <section id="venv" class="article-section">
+                    <p class="guide-label">02 · THE BASELINE</p>
+                    <h2>venv ships with Python and is enough for many projects.</h2>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · VENV ON WINDOWS</div>
+                      <pre><code># Create an environment in the project directory
+py -3.12 -m venv .venv
+
+# Activate it for this shell
+.\.venv\Scripts\Activate.ps1
+
+# Install into it, then record what you installed
+pip install requests
+pip freeze &gt; requirements.txt
+
+deactivate</code></pre>
+                    </div>
+                    <div class="cmd">
+                      <div class="cmd-head">BASH · THE SAME THING ON LINUX OR MACOS</div>
+                      <pre><code>python3 -m venv .venv
+source .venv/bin/activate
+pip install requests
+pip freeze &gt; requirements.txt
+deactivate</code></pre>
+                    </div>
+                    <h3>Conventions that prevent most confusion</h3>
+                    <ul>
+                      <li><strong>Name it <code>.venv</code>, inside the project.</strong> Editors detect that name automatically, and it keeps the environment next to what it belongs to.</li>
+                      <li><strong>Add it to <code>.gitignore</code>.</strong> Environments are built artefacts, not source. They are also not portable between machines.</li>
+                      <li><strong>Use <code>python -m pip</code> rather than bare <code>pip</code></strong> when in doubt. It guarantees the install goes to the interpreter you think it does.</li>
+                      <li><strong>Select the interpreter in your editor</strong> explicitly, and check the status bar rather than assuming.</li>
+                    </ul>
+                    <p><strong>Where venv stops being enough:</strong> <code>requirements.txt</code> from <code>pip freeze</code> records what you happened to have, not what you asked for. It mixes direct dependencies with transitive ones, does not capture hashes, and does not distinguish development tools from runtime requirements. That is the gap the next section fills.</p>
+                </section>
+
+                <section id="tools" class="article-section">
+                    <p class="guide-label">03 · THE TOOLS</p>
+                    <h2>Five tools, five different problems.</h2>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Tool</th><th>Solves</th><th>Use it when</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>venv + pip</td><td>Isolation</td><td>Small projects, scripts, and anywhere you want zero extra tooling</td></tr>
+                          <tr><td>uv</td><td>Isolation, resolution, locking, Python version installs — quickly</td><td>Most new projects. It replaces several tools and is dramatically faster.</td></tr>
+                          <tr><td>Poetry</td><td>Dependency management and packaging with a lockfile</td><td>Libraries you publish, and teams that want one opinionated workflow</td></tr>
+                          <tr><td>pipx</td><td>Installing command line applications in isolation</td><td>Anything you run rather than import: linters, formatters, generators</td></tr>
+                          <tr><td>conda / mamba</td><td>Non-Python binary dependencies and scientific stacks</td><td>Data and scientific work where compiled libraries are the hard part</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <h3>A default worth adopting</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">SHELL · UV, END TO END</div>
+                      <pre><code># Start a project with a pyproject.toml
+uv init my-project
+cd my-project
+
+# Add dependencies; the lockfile updates automatically
+uv add requests
+uv add --dev pytest ruff
+
+# Run inside the environment without activating it
+uv run pytest
+
+# Reproduce the exact environment elsewhere
+uv sync</code></pre>
+                    </div>
+                    <p>The important part is not the speed, it is <code>uv.lock</code>: an exact, hashed resolution of every package that <code>uv sync</code> reproduces on another machine. That is the difference between a project that rebuilds and one that merely usually rebuilds.</p>
+                    <h3>pipx for tools, always</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">SHELL · COMMAND LINE TOOLS</div>
+                      <pre><code>pipx install ruff
+pipx install httpie
+pipx list
+
+# Or run something once without installing it
+pipx run cowsay hello</code></pre>
+                    </div>
+                    <p>Each tool gets its own environment and a shim on PATH, so installing two applications with conflicting dependencies stops being a problem. If you have ever broken a linter by installing an unrelated CLI, this is the fix.</p>
+                </section>
+
+                <section id="versions" class="article-section">
+                    <p class="guide-label">04 · INTERPRETERS</p>
+                    <h2>The version of Python is part of the environment.</h2>
+                    <p class="lede">An environment pins packages. It does not pin the interpreter that created it, which is the second half of reproducibility.</p>
+                    <ul>
+                      <li><strong>Windows: use the <code>py</code> launcher.</strong> <code>py -3.12 -m venv .venv</code> selects the interpreter explicitly rather than relying on PATH order.</li>
+                      <li><strong>uv can install interpreters</strong> — <code>uv python install 3.12</code> — which removes the need for a separate version manager entirely.</li>
+                      <li><strong>pyenv and mise</strong> manage multiple interpreters on Unix-like systems; pyenv-win exists but is rougher than the alternatives.</li>
+                      <li><strong>Commit a <code>.python-version</code> file</strong> so the next person, and CI, resolve the same interpreter.</li>
+                      <li><strong>Declare <code>requires-python</code> in <code>pyproject.toml</code></strong> so resolution fails loudly rather than installing something incompatible.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>Do not delete the system Python to install a newer one.</strong> On Linux, package management depends on it. Install additional versions alongside and select them per project — the same principle as Node version managers, for the same reason.</p>
+                    </div>
+                </section>
+
+                <section id="conda" class="article-section">
+                    <p class="guide-label">05 · THE SCIENTIFIC CASE</p>
+                    <h2>conda solves a different problem, and mixing is where it hurts.</h2>
+                    <p class="lede">conda manages non-Python binaries — compilers, CUDA runtimes, linear algebra libraries — which is exactly the part pip historically could not handle.</p>
+                    <p>Wheels have narrowed that gap considerably, so plain pip now works for many scientific stacks. conda still wins when you need specific compiled toolchains, a pinned CUDA runtime, or a stack that is genuinely painful to build from source.</p>
+                    <ul>
+                      <li><strong>Use mamba, or conda&rsquo;s modern solver.</strong> The classic solver is slow enough to change how you work.</li>
+                      <li><strong>Prefer conda-forge</strong> and be consistent about channels. Mixing channels is where unexplainable conflicts come from.</li>
+                      <li><strong>Do not mix pip and conda casually.</strong> If you must, install everything available through conda first, then pip for the remainder, and never install a package with both.</li>
+                      <li><strong>Export properly.</strong> <code>conda env export --from-history</code> records what you asked for, not the entire resolved graph including platform-specific builds.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>If nothing in your project needs a compiled toolchain, you do not need conda.</strong> Many people carry it for years out of habit from one tutorial, and pay for it in resolution time and channel conflicts.</p>
+                    </div>
+                </section>
+
+                <section id="reproducible" class="article-section">
+                    <p class="guide-label">06 · REPRODUCIBILITY</p>
+                    <h2>Six habits that make the environment rebuildable.</h2>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">HABIT—01</span>
+                        <strong>Commit the lockfile</strong>
+                        <p>uv.lock, poetry.lock or a compiled requirements file with hashes. Without it, &ldquo;install the dependencies&rdquo; is a different operation every week.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">HABIT—02</span>
+                        <strong>Separate direct from transitive</strong>
+                        <p>Declare what you actually import in pyproject.toml. Let the lockfile hold the rest.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">HABIT—03</span>
+                        <strong>Split dev dependencies</strong>
+                        <p>Test and lint tools do not belong in a production install. Every modern tool supports a dev group.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">HABIT—04</span>
+                        <strong>Pin the interpreter</strong>
+                        <p>.python-version plus requires-python. An environment built on a different Python is a different environment.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">HABIT—05</span>
+                        <strong>Rebuild from scratch periodically</strong>
+                        <p>Delete .venv and reinstall from the lockfile. It is the only way to find the dependency you installed manually and never declared.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">HABIT—06</span>
+                        <strong>Write down the setup</strong>
+                        <p>Three lines in the README beat any tooling. Someone, including future you, will arrive without context.</p>
+                      </div>
+                    </div>
+                    <div class="note note-good">
+                      <p><strong>The test that matters:</strong> clone the repository into a new directory on a machine that has never seen it, run your documented setup command, and run the test suite. If that fails, the environment is not reproducible regardless of which tool produced it.</p>
+                    </div>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>Python environments, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>What is a Python virtual environment?</strong>
+                            <p>A directory containing a link to a Python interpreter, its own site-packages folder and activation scripts that put it first on your PATH. Activating one adjusts PATH for that shell so installs and imports resolve to that environment rather than to the system Python.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Should I use venv, Poetry or uv?</strong>
+                            <p>venv and pip are enough for small projects and require nothing extra. uv is the best default for new projects: it creates environments, resolves and locks dependencies, and can install Python versions, all considerably faster. Poetry suits libraries you publish and teams that want one opinionated workflow. All three are fine if you commit a lockfile.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Do I need conda?</strong>
+                            <p>Only if you need non-Python binary dependencies such as specific compiled toolchains or a pinned CUDA runtime. Wheels have made plain pip viable for most scientific stacks. If nothing in your project needs a compiler, conda adds resolution time and channel conflicts without solving a problem you have.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Why does pip install work but the import still fail?</strong>
+                            <p>The install and the import used different interpreters. Check which environment is active, run python -m pip install rather than bare pip so the install targets the interpreter you are running, and confirm your editor has selected the same interpreter as your terminal.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Should I commit the virtual environment to Git?</strong>
+                            <p>No. Environments are built artefacts, contain absolute paths and platform-specific binaries, and are not portable between machines. Add .venv to .gitignore and commit the lockfile instead, which is what allows the environment to be rebuilt identically.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="run-local-llm-offline-guide.html"><strong>Run a language model locally and offline</strong><span aria-hidden="true">→</span></a>
+                        <a href="install-nodejs-windows-nvm.html"><strong>Install Node.js the way that survives version changes</strong><span aria-hidden="true">→</span></a>
+                        <a href="docker-desktop-alternatives-windows.html"><strong>Docker Desktop alternatives on Windows</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>Small tools that do one job properly. Same philosophy, different platform.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

@@ -529,3 +529,161 @@
   letter-spacing: -0.011em;
   margin-bottom: 6px;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   Workshop layer — components used by the non-product guides:
+   command blocks, comparison tables, note variants and the
+   language switcher on translated pages.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Inline links inside article prose ── */
+.article-section p a,
+.article-section li a,
+.article-section td a,
+.article-section .note a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.2s var(--ease);
+}
+
+.article-section p a:hover,
+.article-section li a:hover,
+.article-section td a:hover,
+.article-section .note a:hover { color: var(--ink); }
+
+/* ── Inline code ── */
+.article-section code {
+  font: 500 0.88em 'JetBrains Mono', monospace;
+  background: rgba(16, 19, 24, 0.055);
+  border: 1px solid var(--hairline-soft);
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+/* ── Command and configuration blocks ── */
+.cmd {
+  margin-top: 28px;
+  background: var(--ink);
+  color: #dfe2e8;
+  border: 1px solid var(--ink);
+}
+
+.cmd-head {
+  padding: 13px 22px;
+  border-bottom: 1px solid rgba(241, 242, 244, 0.16);
+  color: var(--accent-light);
+  font: 500 11px 'JetBrains Mono', monospace;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.cmd pre {
+  margin: 0;
+  padding: 22px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cmd code {
+  display: block;
+  background: none;
+  border: none;
+  padding: 0;
+  white-space: pre;
+  color: inherit;
+  font: 500 13.5px/1.7 'JetBrains Mono', monospace;
+  tab-size: 2;
+}
+
+/* ── Comparison tables ── */
+.table-wrap {
+  margin-top: 28px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ink);
+  background: var(--white);
+}
+
+.spec-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+}
+
+.spec-table th {
+  padding: 15px 18px;
+  text-align: left;
+  vertical-align: bottom;
+  background: var(--panel-muted);
+  border-bottom: 1px solid var(--ink);
+  color: var(--ink);
+  font: 500 11px 'JetBrains Mono', monospace;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.spec-table td {
+  padding: 15px 18px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--hairline-soft);
+  color: #414853;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.spec-table tr:last-child td { border-bottom: none; }
+.spec-table td:first-child { color: var(--ink); font-weight: 600; }
+.spec-table td strong { color: var(--ink); }
+
+/* ── Note variants ── */
+.note-warn { border-left-color: var(--dev); }
+.note-good { border-left-color: var(--live); }
+
+/* ── Language switcher on translated guides ── */
+.guide-langs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 34px;
+}
+
+.guide-langs-label {
+  color: var(--accent);
+  font: 500 11px 'JetBrains Mono', monospace;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+.guide-langs a,
+.guide-langs span[aria-current] {
+  padding: 8px 14px;
+  border: 1px solid var(--hairline);
+  font: 500 12px 'JetBrains Mono', monospace;
+  color: var(--muted);
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.guide-langs a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--white);
+}
+
+.guide-langs span[aria-current] {
+  color: var(--ink);
+  border-color: var(--ink);
+  background: var(--white);
+}
+
+@media (max-width: 620px) {
+  .cmd pre { padding: 18px; }
+  .cmd code { font-size: 12.5px; }
+  .spec-table th,
+  .spec-table td { padding: 13px 14px; }
+  .guide-langs { margin-top: 28px; }
+}

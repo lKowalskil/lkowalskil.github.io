@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Hardware requirements by model size, how quantisation works, which local runner to choose, and how to verify a local model is genuinely running without a network.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>How to Run an LLM Locally and Fully Offline · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="How to Run an LLM Locally, Fully Offline">
+    <meta property="og:description" content="Hardware requirements by model size, how quantisation works, which local runner to choose, and how to verify a local model is genuinely running without a network.">
+    <meta property="og:url" content="https://lkowalskil.github.io/run-local-llm-offline-guide.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Run an LLM Locally, Fully Offline">
+    <meta name="twitter:description" content="Local LLMs without the hand-waving: VRAM tables, quantisation, runners, and an offline verification step.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/run-local-llm-offline-guide.html">
+    <link rel="alternate" hreflang="en" href="https://lkowalskil.github.io/run-local-llm-offline-guide.html">
+    <link rel="alternate" hreflang="ru" href="https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html">
+    <link rel="alternate" hreflang="es" href="https://lkowalskil.github.io/run-local-llm-offline-guide-es.html">
+    <link rel="alternate" hreflang="x-default" href="https://lkowalskil.github.io/run-local-llm-offline-guide.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/run-local-llm-offline-guide.html#article",
+      "headline": "How to Run an LLM Locally, Fully Offline",
+      "description": "Hardware requirements by model size, how quantisation works, which local runner to choose, and how to verify a local model is genuinely running without a network.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/run-local-llm-offline-guide.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "run LLM locally, offline AI model, Ollama setup, LM Studio, llama.cpp, GGUF quantisation, VRAM requirements local model, private AI assistant",
+      "articleSection": "Local AI",
+      "proficiencyLevel": "Intermediate",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Developers and privacy-conscious users"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/run-local-llm-offline-guide.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What hardware do I need to run an LLM locally?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a 7B to 8B model at 4-bit quantisation, about 4.5 GB of VRAM, so an 8 GB graphics card is comfortable. CPU-only inference works with around 16 GB of system RAM but generates below reading speed. Unified-memory machines such as Apple Silicon do unusually well because the memory is shared and generous."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a local LLM as good as a hosted one?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, not at the sizes that fit on consumer hardware. Expect a capable assistant for summarising, drafting, extraction and routine code work, and expect it to fall behind the largest hosted models on hard reasoning, long-horizon coding and obscure knowledge. The reason to run locally is privacy, offline availability and cost, not raw capability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does quantisation cost in quality?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "16-bit to 8-bit is nearly free. 8-bit to 4-bit costs a small, usually acceptable amount for roughly half the memory, which is why most people run 4-bit. Below 4-bit, degradation becomes obvious, starting with instruction-following. As a rule, a larger model at 4-bit beats a smaller model at 8-bit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which tool should I use to run models locally?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ollama if you want a command line and a local API that other tools can call. LM Studio if you want a desktop application with a model browser and chat built in. llama.cpp directly if you want full control over quantisation and offload. All of them run the same model files, so the choice is about workflow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I know my local model is really offline?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Download the models while connected, then disconnect the network entirely and run a substantial prompt. Watch GPU or CPU utilisation climb as it generates. Afterwards, block outbound network access for the runner in the firewall and check that your chat front-end is not configured to fall back to a hosted provider."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/run-local-llm-offline-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How to Run an LLM Locally, Fully Offline",
+          "item": "https://lkowalskil.github.io/run-local-llm-offline-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://lkowalskil.github.io/run-local-llm-offline-guide.html#howto",
+      "name": "Run a local language model offline",
+      "description": "Install a local model runner, download a quantised model sized to your hardware, and verify that it runs without a network connection.",
+      "inLanguage": "en",
+      "totalTime": "PT30M",
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "Ollama or LM Studio"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "A GPU with 8 GB of VRAM or 16 GB of system RAM"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Check your memory budget",
+          "text": "Determine your GPU VRAM, or system RAM if running on CPU, and pick a model size that fits with room for context.",
+          "url": "https://lkowalskil.github.io/run-local-llm-offline-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Install a runner",
+          "text": "Install Ollama for a command line and API workflow, or LM Studio for a graphical one.",
+          "url": "https://lkowalskil.github.io/run-local-llm-offline-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Pull a quantised model",
+          "text": "Download a model at a 4-bit or 5-bit quantisation appropriate to your memory budget.",
+          "url": "https://lkowalskil.github.io/run-local-llm-offline-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Run a first prompt",
+          "text": "Start a chat session and confirm the model responds at a usable speed.",
+          "url": "https://lkowalskil.github.io/run-local-llm-offline-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Tune context and offload",
+          "text": "Adjust the context window and the number of layers offloaded to the GPU until speed and memory use are balanced.",
+          "url": "https://lkowalskil.github.io/run-local-llm-offline-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Verify it is offline",
+          "text": "Disconnect the network and repeat a prompt to confirm no external service is involved.",
+          "url": "https://lkowalskil.github.io/run-local-llm-offline-guide.html#install"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—08 · LOCAL AI · 12 MIN READ</p>
+                <h1 class="guide-title">Run a language model on your own machine, with the network unplugged.</h1>
+                <p class="guide-deck">Local models are genuinely useful now, and the guides about them are mostly hardware fantasy. This is the honest version: what fits in your VRAM, what quantisation actually costs you, which runner to pick for which job, and how to confirm the thing is really running offline rather than quietly calling an API.</p>
+                <div class="guide-langs">
+                    <span class="guide-langs-label">READ THIS GUIDE IN</span>
+                        <span aria-current="page">English</span>
+                        <a href="run-local-llm-offline-guide-ru.html" hreflang="ru" lang="ru">Русский</a>
+                        <a href="run-local-llm-offline-guide-es.html" hreflang="es" lang="es">Español</a>
+                </div>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Offline, verified</strong>
+                        <p>The last section is a check that the model runs with the network physically disconnected.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>VRAM TABLE BY MODEL SIZE</li>
+                    <li>QUANTISATION EXPLAINED</li>
+                    <li>OLLAMA · LM STUDIO · LLAMA.CPP</li>
+                    <li>OFFLINE VERIFICATION STEP</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#why">Why run it locally</a>
+                        <a href="#hardware">What your hardware runs</a>
+                        <a href="#runners">Pick a runner</a>
+                        <a href="#install">Install and first run</a>
+                        <a href="#tuning">Tuning for speed</a>
+                        <a href="#offline">Verify it is offline</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="why" class="article-section">
+                    <p class="guide-label">01 · THE CASE</p>
+                    <h2>Three good reasons, and the limits nobody mentions.</h2>
+                    <p class="lede">A local model is worse than a frontier hosted model at almost every task. It is also the only option when the data cannot leave the machine — and that trade is worth understanding precisely rather than emotionally.</p>
+                    <h3>What local genuinely gives you</h3>
+                    <ul>
+                      <li><strong>The data does not leave.</strong> No terms of service, no retention policy, no question about training. For client material, medical notes, legal drafts or anything under an NDA, this is the whole argument.</li>
+                      <li><strong>It works with no connection.</strong> On a plane, in a lab, on a site with no signal, or during an outage.</li>
+                      <li><strong>No per-token cost and no rate limit.</strong> Bulk classification, batch summarisation and repeated experiments become free after the electricity.</li>
+                      <li><strong>It cannot be deprecated underneath you.</strong> The model you saved works the same in two years. Hosted models change behaviour without notice.</li>
+                    </ul>
+                    <h3>What it does not give you</h3>
+                    <ul>
+                      <li><strong>Frontier reasoning.</strong> A model that fits in consumer VRAM is not competitive with the largest hosted models on hard reasoning, long-horizon coding or obscure knowledge. Expect a capable assistant, not a replacement.</li>
+                      <li><strong>Speed on long context.</strong> Processing a large document is where consumer hardware feels slowest, and it is exactly what people want local models for.</li>
+                      <li><strong>Fewer confident errors.</strong> Smaller models hallucinate more, not less. Local does not mean careful.</li>
+                      <li><strong>A free lunch on RAM.</strong> Whatever the model occupies is memory your other work does not get.</li>
+                    </ul>
+                </section>
+
+                <section id="hardware" class="article-section">
+                    <p class="guide-label">02 · THE BUDGET</p>
+                    <h2>Memory decides everything. Here is the arithmetic.</h2>
+                    <p class="lede">Model size in billions of parameters, multiplied by the bytes per parameter your quantisation uses, plus room for the context window. That is the entire calculation.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Model size</th><th>At 4-bit</th><th>At 8-bit</th><th>Realistic on</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>3B</td><td>about 2 GB</td><td>about 3.5 GB</td><td>Any modern GPU, or CPU only</td></tr>
+                          <tr><td>7B to 8B</td><td>about 4.5 GB</td><td>about 8.5 GB</td><td>8 GB VRAM comfortably; 16 GB RAM on CPU</td></tr>
+                          <tr><td>13B to 14B</td><td>about 8 GB</td><td>about 15 GB</td><td>12 GB VRAM; slow but usable on CPU</td></tr>
+                          <tr><td>30B to 34B</td><td>about 19 GB</td><td>about 36 GB</td><td>24 GB VRAM, or a unified-memory laptop</td></tr>
+                          <tr><td>70B</td><td>about 40 GB</td><td>about 75 GB</td><td>Two large GPUs, or 64 GB of unified memory, slowly</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Add headroom on top of every figure.</strong> The key-value cache for the context window grows with how much text you feed in, and a long context on a large model can consume several more gigabytes. A model that just fits with an empty context will fail halfway through a long document.</p>
+                    <h3>Quantisation, in one paragraph</h3>
+                    <p>Weights are stored at reduced precision so the model fits in less memory. Going from 16-bit to 8-bit is nearly free in quality. 8-bit to 4-bit is the sweet spot most people run: a small, usually acceptable quality loss for roughly half the memory. Below 4-bit, degradation becomes obvious — instruction-following slips first, then coherence on long outputs. <strong>A larger model at 4-bit generally beats a smaller model at 8-bit</strong>, which is the single most useful heuristic in this whole area.</p>
+                    <div class="note">
+                      <p><strong>GPU or CPU?</strong> A GPU is roughly an order of magnitude faster for generation. CPU inference is entirely usable for 3B to 8B models if you can accept reading speed rather than instant answers. Apple Silicon and other unified-memory designs are unusually good here, because the memory is shared and generous.</p>
+                    </div>
+                </section>
+
+                <section id="runners" class="article-section">
+                    <p class="guide-label">03 · THE TOOLS</p>
+                    <h2>Four ways to run the same model files.</h2>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Tool</th><th>Shape</th><th>Best for</th><th>Trade-off</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Ollama</td><td>Command line plus a local HTTP API</td><td>Developers. One command to pull and run, and an API other tools can target.</td><td>Less granular control than raw llama.cpp</td></tr>
+                          <tr><td>LM Studio</td><td>Desktop application</td><td>Trying models, comparing them, and non-technical use. Model browser and chat built in.</td><td>Graphical workflow, heavier install</td></tr>
+                          <tr><td>llama.cpp</td><td>The underlying engine</td><td>Maximum control over quantisation, offload and sampling. Runs anywhere.</td><td>You assemble the workflow yourself</td></tr>
+                          <tr><td>Jan / GPT4All</td><td>Desktop applications</td><td>A private assistant for someone who does not want a terminal</td><td>Fewer knobs, slower to get new model formats</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p>All four run the same quantised model files, so the choice is about workflow rather than capability. A common arrangement is Ollama as the engine with a separate chat interface pointed at its API, which keeps the model server and the interface independent.</p>
+                </section>
+
+                <section id="install" class="article-section">
+                    <p class="guide-label">04 · THE WALKTHROUGH</p>
+                    <h2>From nothing to a working model in about ten minutes.</h2>
+                    <div class="cmd">
+                      <div class="cmd-head">SHELL · OLLAMA, FIRST RUN</div>
+                      <pre><code># Pull a model sized to your hardware and start chatting
+ollama run llama3.1:8b
+
+# List what you have downloaded, and how much space it uses
+ollama list
+
+# Remove one you no longer want
+ollama rm llama3.1:8b
+
+# Serve the local API for other tools to use
+ollama serve</code></pre>
+                    </div>
+                    <p>The API listens on localhost, which is what editor plugins, note apps and scripts connect to. Nothing leaves the machine.</p>
+                    <div class="cmd">
+                      <div class="cmd-head">SHELL · CALL THE LOCAL API</div>
+                      <pre><code>curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.1:8b",
+  "prompt": "Summarise this in three bullet points: ...",
+  "stream": false
+}'</code></pre>
+                    </div>
+                    <h3>Choosing a first model</h3>
+                    <ul>
+                      <li><strong>General assistant, 8 GB VRAM</strong> — a current 7B to 8B instruction-tuned model at 4-bit. This is the default answer and it is a good one.</li>
+                      <li><strong>Code</strong> — a code-specialised model of the same size. Noticeably better at completion and refactoring than a general model of equal size.</li>
+                      <li><strong>Small and fast</strong> — a 3B model for classification, extraction, tagging and other structured work where you do not need conversation.</li>
+                      <li><strong>Best quality you can fit</strong> — go up in parameters before you go up in precision. Larger at 4-bit beats smaller at 8-bit.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>Check the licence before you build on it.</strong> Open-weight is not the same as open-source, and several popular families restrict commercial use or impose conditions on derived models. This matters the moment a hobby project becomes a product.</p>
+                    </div>
+                </section>
+
+                <section id="tuning" class="article-section">
+                    <p class="guide-label">05 · TUNING</p>
+                    <h2>Four settings that decide whether it feels usable.</h2>
+                    <ul>
+                      <li><strong>GPU layer offload.</strong> The most important setting on a machine where the model does not fully fit. Push as many layers onto the GPU as VRAM allows; the remainder runs on CPU. Going one layer too far causes an out-of-memory failure, so step down until it is stable.</li>
+                      <li><strong>Context window.</strong> Larger contexts cost memory and slow down generation. Set it to what you actually need — 4K for chat, more only when you are genuinely feeding in documents.</li>
+                      <li><strong>Batch size for prompt processing.</strong> Affects how quickly a long prompt is ingested, separately from how fast tokens come out. If pasting a large document feels slow but replies are fine, this is the setting.</li>
+                      <li><strong>Quantisation level.</strong> If it does not fit, drop from 5-bit to 4-bit before you drop to a smaller model. Below 4-bit, prefer a smaller model instead.</li>
+                    </ul>
+                    <h3>Speed expectations</h3>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Setup</th><th>7B to 8B at 4-bit</th><th>Feels like</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Modern discrete GPU, fully offloaded</td><td>Fast, well above reading speed</td><td>Comparable to a hosted chat interface</td></tr>
+                          <tr><td>Older or smaller GPU, partial offload</td><td>Around reading speed</td><td>Usable for conversation, tedious for long output</td></tr>
+                          <tr><td>CPU only, modern multi-core</td><td>Below reading speed</td><td>Fine for background and batch work, not for chat</td></tr>
+                          <tr><td>Unified memory laptop</td><td>Comfortably above reading speed</td><td>The best experience per watt available today</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>If generation is far slower than the table suggests</strong>, the model is almost certainly spilling out of VRAM into system memory. Check the layer offload before blaming the hardware — this one misconfiguration accounts for most disappointing first attempts.</p>
+                </section>
+
+                <section id="offline" class="article-section">
+                    <p class="guide-label">06 · THE VERIFICATION</p>
+                    <h2>Prove the model runs without a network.</h2>
+                    <p class="lede">This is the step that separates a genuinely local setup from a local interface in front of a remote API. Do it once, deliberately.</p>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">STEP—01</span>
+                        <strong>Download everything first</strong>
+                        <p>Pull every model you intend to use while connected. Model files are the only thing that genuinely needs the network.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—02</span>
+                        <strong>Disconnect properly</strong>
+                        <p>Turn off Wi-Fi and unplug the cable. Airplane mode is fine. Do not rely on a firewall rule for the test itself.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—03</span>
+                        <strong>Run a real prompt</strong>
+                        <p>Not a one-word test. Ask for something long enough that a silent fallback to a remote service would fail visibly.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—04</span>
+                        <strong>Watch the resource meters</strong>
+                        <p>GPU or CPU utilisation should climb while it generates. If nothing moves locally, something else is answering.</p>
+                      </div>
+                    </div>
+                    <h3>Keeping it offline afterwards</h3>
+                    <ul>
+                      <li><strong>Block outbound network access for the runner</strong> in Windows Firewall once your models are downloaded. Update deliberately rather than automatically.</li>
+                      <li><strong>Turn off telemetry and update checks</strong> in whichever tool you chose. Most have a switch; a few need a configuration file.</li>
+                      <li><strong>Keep the model files backed up.</strong> They are large but not infinite, and a model that gets withdrawn or relicensed is unrecoverable if you did not keep a copy. The <a href="local-backup-3-2-1-guide.html">backup guide</a> covers where they should live.</li>
+                      <li><strong>Be careful with chat interfaces.</strong> Many desktop front-ends support both local and hosted providers, and switching is one dropdown away. Check which provider is selected before pasting anything sensitive.</li>
+                    </ul>
+                    <div class="note note-good">
+                      <p><strong>The privacy claim is only as good as the weakest component.</strong> A local model behind a front-end that syncs your conversation history to a cloud account is not a private setup. Verify each piece separately.</p>
+                    </div>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>Local models, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>What hardware do I need to run an LLM locally?</strong>
+                            <p>For a 7B to 8B model at 4-bit quantisation, about 4.5 GB of VRAM, so an 8 GB graphics card is comfortable. CPU-only inference works with around 16 GB of system RAM but generates below reading speed. Unified-memory machines such as Apple Silicon do unusually well because the memory is shared and generous.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Is a local LLM as good as a hosted one?</strong>
+                            <p>No, not at the sizes that fit on consumer hardware. Expect a capable assistant for summarising, drafting, extraction and routine code work, and expect it to fall behind the largest hosted models on hard reasoning, long-horizon coding and obscure knowledge. The reason to run locally is privacy, offline availability and cost, not raw capability.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>What does quantisation cost in quality?</strong>
+                            <p>16-bit to 8-bit is nearly free. 8-bit to 4-bit costs a small, usually acceptable amount for roughly half the memory, which is why most people run 4-bit. Below 4-bit, degradation becomes obvious, starting with instruction-following. As a rule, a larger model at 4-bit beats a smaller model at 8-bit.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Which tool should I use to run models locally?</strong>
+                            <p>Ollama if you want a command line and a local API that other tools can call. LM Studio if you want a desktop application with a model browser and chat built in. llama.cpp directly if you want full control over quantisation and offload. All of them run the same model files, so the choice is about workflow.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>How do I know my local model is really offline?</strong>
+                            <p>Download the models while connected, then disconnect the network entirely and run a substantial prompt. Watch GPU or CPU utilisation climb as it generates. Afterwards, block outbound network access for the runner in the firewall and check that your chat front-end is not configured to fall back to a hosted provider.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="wsl2-setup-windows-guide.html"><strong>Set up WSL2 properly on Windows</strong><span aria-hidden="true">→</span></a>
+                        <a href="local-backup-3-2-1-guide.html"><strong>A 3-2-1 backup you will actually run</strong><span aria-hidden="true">→</span></a>
+                        <a href="python-virtual-environment-guide.html"><strong>Python environments without the mess</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>The same idea on a phone: the app works with the network off, and nothing you write is uploaded.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

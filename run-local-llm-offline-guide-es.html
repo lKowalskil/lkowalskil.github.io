@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Requisitos de memoria por tamaño de modelo, qué cuesta realmente la cuantización, qué motor elegir y cómo verificar que funciona sin red.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>Cómo ejecutar un LLM en local y sin conexión · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:title" content="Cómo ejecutar un LLM en local y totalmente sin conexión">
+    <meta property="og:description" content="Requisitos de memoria por tamaño de modelo, qué cuesta realmente la cuantización, qué motor elegir y cómo verificar que funciona sin red.">
+    <meta property="og:url" content="https://lkowalskil.github.io/run-local-llm-offline-guide-es.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — apps offline para Android">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cómo ejecutar un LLM en local y totalmente sin conexión">
+    <meta name="twitter:description" content="Modelos locales sin humo: tablas de VRAM, cuantización, motores y una verificación real de que funciona sin conexión.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — apps offline para Android">
+    <link rel="canonical" href="https://lkowalskil.github.io/run-local-llm-offline-guide-es.html">
+    <link rel="alternate" hreflang="en" href="https://lkowalskil.github.io/run-local-llm-offline-guide.html">
+    <link rel="alternate" hreflang="ru" href="https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html">
+    <link rel="alternate" hreflang="es" href="https://lkowalskil.github.io/run-local-llm-offline-guide-es.html">
+    <link rel="alternate" hreflang="x-default" href="https://lkowalskil.github.io/run-local-llm-offline-guide.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/run-local-llm-offline-guide-es.html#article",
+      "headline": "Cómo ejecutar un LLM en local y totalmente sin conexión",
+      "description": "Requisitos de memoria por tamaño de modelo, qué cuesta realmente la cuantización, qué motor elegir y cómo verificar que funciona sin red.",
+      "inLanguage": "es",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/run-local-llm-offline-guide-es.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "ejecutar LLM local, IA sin conexión, Ollama, LM Studio, llama.cpp, cuantización GGUF, requisitos VRAM, asistente IA privado",
+      "articleSection": "IA local",
+      "proficiencyLevel": "Intermediate",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Desarrolladores y personas preocupadas por la privacidad"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/run-local-llm-offline-guide-es.html#faq",
+      "inLanguage": "es",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué hardware necesito para ejecutar un LLM en local?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Para un modelo de 7B a 8B con cuantización de 4 bits, unos 4,5 GB de memoria de vídeo, de modo que una tarjeta de 8 GB va holgada. Solo con CPU funciona con unos 16 GB de RAM del sistema, aunque genera por debajo de la velocidad de lectura. Los equipos de memoria unificada rinden especialmente bien porque la memoria es compartida y amplia."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Un LLM local es tan bueno como uno alojado?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No en los tamaños que caben en hardware de consumo. Espera un asistente competente para resumir, redactar, extraer datos y trabajo rutinario de código, y espera que quede por detrás en razonamiento difícil y conocimiento poco común. La razón para ejecutarlo en local es la privacidad, la disponibilidad sin conexión y el coste."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué cuesta la cuantización en calidad?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De 16 a 8 bits es casi gratis. De 8 a 4 bits cuesta una pérdida pequeña y normalmente aceptable a cambio de aproximadamente la mitad de memoria, por eso casi todo el mundo usa 4 bits. Por debajo de 4 bits la degradación es evidente, empezando por el seguimiento de instrucciones. Como regla, un modelo mayor a 4 bits supera a uno menor a 8 bits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué herramienta uso para ejecutar modelos en local?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ollama si quieres línea de comandos y una API local que otras herramientas puedan llamar. LM Studio si prefieres una aplicación de escritorio con catálogo de modelos y chat integrado. llama.cpp directamente si quieres control total sobre la cuantización y la descarga de capas. Las tres ejecutan los mismos archivos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo sé que mi modelo local funciona realmente sin conexión?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Descarga los modelos con conexión, desconecta la red por completo y lanza una petición sustancial. Observa cómo sube el uso de GPU o CPU mientras genera. Después bloquea la salida a red del motor en el cortafuegos y comprueba que tu interfaz de chat no esté configurada para recurrir a un proveedor alojado."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/run-local-llm-offline-guide-es.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guías",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Cómo ejecutar un LLM en local y totalmente sin conexión",
+          "item": "https://lkowalskil.github.io/run-local-llm-offline-guide-es.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Ir a la guía</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← TODAS LAS GUÍAS</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guías</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Ver las apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—08 · IA LOCAL · 12 MIN DE LECTURA</p>
+                <h1 class="guide-title">Un modelo de lenguaje en tu equipo, con la red desconectada.</h1>
+                <p class="guide-deck">Los modelos locales ya son realmente útiles, y la mayoría de las guías sobre ellos siguen siendo fantasía sobre hardware. Esta es la versión honesta: qué cabe en tu memoria de vídeo, qué te cuesta la cuantización, qué motor elegir según la tarea y cómo confirmar que todo funciona sin conexión en lugar de llamar en silencio a una API.</p>
+                <div class="guide-langs">
+                    <span class="guide-langs-label">LEER ESTA GUÍA EN</span>
+                        <a href="run-local-llm-offline-guide.html" hreflang="en" lang="en">English</a>
+                        <a href="run-local-llm-offline-guide-ru.html" hreflang="ru" lang="ru">Русский</a>
+                        <span aria-current="page">Español</span>
+                </div>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Resumen de la guía">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Marca del estudio Nyxelium" decoding="async">
+                    <div>
+                        <span class="guide-label">NOTA DEL TALLER</span>
+                        <strong>Sin conexión, verificado</strong>
+                        <p>La última sección comprueba que el modelo funciona con la red físicamente desconectada.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>TABLA DE VRAM POR MODELO</li>
+                    <li>CUANTIZACIÓN EXPLICADA</li>
+                    <li>OLLAMA · LM STUDIO</li>
+                    <li>VERIFICACIÓN SIN CONEXIÓN</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="En esta página">
+                <div class="article-rail-inner">
+                    <p class="guide-label">EN ESTA PÁGINA</p>
+                    <nav>
+                        <a href="#why">Por qué en local</a>
+                        <a href="#hardware">Qué mueve tu equipo</a>
+                        <a href="#runners">Elegir motor</a>
+                        <a href="#install">Instalación</a>
+                        <a href="#tuning">Ajuste de velocidad</a>
+                        <a href="#offline">Verificar sin conexión</a>
+                        <a href="#answers">Respuestas rápidas</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="why" class="article-section">
+                    <p class="guide-label">01 · EL ARGUMENTO</p>
+                    <h2>Tres buenas razones y los límites que nadie menciona.</h2>
+                    <p class="lede">Un modelo local es peor que un modelo alojado de primera línea en casi cualquier tarea. También es la única opción cuando los datos no pueden salir del equipo, y conviene entender ese intercambio con precisión.</p>
+                    <h3>Lo que sí te da lo local</h3>
+                    <ul>
+                      <li><strong>Los datos no salen.</strong> Sin términos de servicio, sin política de retención, sin dudas sobre entrenamiento. Para material de clientes, notas médicas, borradores legales o cualquier cosa bajo acuerdo de confidencialidad, ese es todo el argumento.</li>
+                      <li><strong>Funciona sin conexión.</strong> En un avión, en un laboratorio, en una obra sin cobertura o durante una caída del proveedor.</li>
+                      <li><strong>Sin coste por token ni límites de uso.</strong> Clasificación masiva, resúmenes por lotes y experimentos repetidos salen gratis después de la electricidad.</li>
+                      <li><strong>No lo pueden retirar bajo tus pies.</strong> El modelo que guardaste se comporta igual dentro de dos años. Los modelos alojados cambian sin avisar.</li>
+                    </ul>
+                    <h3>Lo que no te da</h3>
+                    <ul>
+                      <li><strong>Razonamiento de frontera.</strong> Un modelo que cabe en memoria de vídeo de consumo no compite con los mayores modelos alojados en razonamiento difícil ni en conocimiento poco común.</li>
+                      <li><strong>Velocidad con contexto largo.</strong> Procesar un documento grande es justo donde el hardware de consumo se nota más lento.</li>
+                      <li><strong>Menos errores con aplomo.</strong> Los modelos pequeños alucinan más, no menos. Local no significa cuidadoso.</li>
+                      <li><strong>Memoria gratis.</strong> Lo que ocupa el modelo es memoria que no tiene el resto de tu trabajo.</li>
+                    </ul>
+                </section>
+
+                <section id="hardware" class="article-section">
+                    <p class="guide-label">02 · EL PRESUPUESTO</p>
+                    <h2>La memoria lo decide todo. Esta es la aritmética.</h2>
+                    <p class="lede">Tamaño del modelo en miles de millones de parámetros, multiplicado por los bytes por parámetro de tu cuantización, más espacio para la ventana de contexto. Ese es todo el cálculo.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Tamaño</th><th>A 4 bits</th><th>A 8 bits</th><th>Realista en</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>3B</td><td>unos 2 GB</td><td>unos 3,5 GB</td><td>Cualquier GPU moderna, o solo CPU</td></tr>
+                          <tr><td>7B a 8B</td><td>unos 4,5 GB</td><td>unos 8,5 GB</td><td>8 GB de VRAM con holgura; 16 GB de RAM en CPU</td></tr>
+                          <tr><td>13B a 14B</td><td>unos 8 GB</td><td>unos 15 GB</td><td>12 GB de VRAM; lento pero usable en CPU</td></tr>
+                          <tr><td>30B a 34B</td><td>unos 19 GB</td><td>unos 36 GB</td><td>24 GB de VRAM, o un portátil de memoria unificada</td></tr>
+                          <tr><td>70B</td><td>unos 40 GB</td><td>unos 75 GB</td><td>Dos GPU grandes, o 64 GB de memoria unificada, despacio</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Añade margen sobre cada cifra.</strong> La caché de claves y valores crece con el texto que introduces, y un contexto largo en un modelo grande consume varios gigabytes más. Un modelo que apenas cabe con el contexto vacío fallará a mitad de un documento largo.</p>
+                    <h3>La cuantización en un párrafo</h3>
+                    <p>Los pesos se almacenan con menor precisión para que el modelo ocupe menos. Pasar de 16 a 8 bits es casi gratis en calidad. De 8 a 4 bits es el punto dulce que usa casi todo el mundo: una pérdida pequeña y normalmente aceptable a cambio de aproximadamente la mitad de memoria. Por debajo de 4 bits la degradación se vuelve evidente, empezando por el seguimiento de instrucciones. <strong>Un modelo más grande a 4 bits suele superar a uno más pequeño a 8 bits</strong>, y esa es la regla más útil de todo el tema.</p>
+                    <div class="note">
+                      <p><strong>¿GPU o CPU?</strong> La GPU es alrededor de un orden de magnitud más rápida generando. La inferencia en CPU es perfectamente usable para modelos de 3B a 8B si aceptas velocidad de lectura. Los equipos de memoria unificada rinden especialmente bien.</p>
+                    </div>
+                </section>
+
+                <section id="runners" class="article-section">
+                    <p class="guide-label">03 · LAS HERRAMIENTAS</p>
+                    <h2>Cuatro formas de ejecutar los mismos archivos.</h2>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Herramienta</th><th>Formato</th><th>Ideal para</th><th>Contrapartida</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Ollama</td><td>Línea de comandos más API HTTP local</td><td>Desarrolladores. Un comando para descargar y ejecutar, y una API para otras herramientas.</td><td>Menos control fino que llama.cpp directo</td></tr>
+                          <tr><td>LM Studio</td><td>Aplicación de escritorio</td><td>Probar y comparar modelos, y uso no técnico. Catálogo y chat incluidos.</td><td>Flujo gráfico, instalación más pesada</td></tr>
+                          <tr><td>llama.cpp</td><td>El motor que hay debajo</td><td>Control total sobre cuantización, descarga de capas y muestreo.</td><td>El flujo de trabajo lo montas tú</td></tr>
+                          <tr><td>Jan / GPT4All</td><td>Aplicaciones de escritorio</td><td>Un asistente privado para quien no quiere terminal</td><td>Menos ajustes, formatos nuevos más tarde</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p>Las cuatro ejecutan los mismos archivos cuantizados, así que la elección va de flujo de trabajo, no de capacidad. Un montaje habitual es Ollama como motor y una interfaz de chat aparte apuntando a su API.</p>
+                </section>
+
+                <section id="install" class="article-section">
+                    <p class="guide-label">04 · PASO A PASO</p>
+                    <h2>De cero a un modelo funcionando en unos diez minutos.</h2>
+                    <div class="cmd">
+                      <div class="cmd-head">SHELL · OLLAMA, PRIMERA EJECUCIÓN</div>
+                      <pre><code># Descarga un modelo acorde a tu hardware y empieza a chatear
+ollama run llama3.1:8b
+
+# Ver qué has descargado y cuánto ocupa
+ollama list
+
+# Eliminar lo que ya no quieres
+ollama rm llama3.1:8b
+
+# Servir la API local para otras herramientas
+ollama serve</code></pre>
+                    </div>
+                    <p>La API escucha en localhost, que es adonde se conectan los complementos del editor, las aplicaciones de notas y tus scripts. Nada sale del equipo.</p>
+                    <div class="cmd">
+                      <div class="cmd-head">SHELL · LLAMAR A LA API LOCAL</div>
+                      <pre><code>curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.1:8b",
+  "prompt": "Resume esto en tres puntos: ...",
+  "stream": false
+}'</code></pre>
+                    </div>
+                    <h3>Qué modelo elegir primero</h3>
+                    <ul>
+                      <li><strong>Asistente general con 8 GB de VRAM</strong> — un modelo instruido actual de 7B a 8B a 4 bits. Es la respuesta por defecto y es buena.</li>
+                      <li><strong>Código</strong> — un modelo especializado del mismo tamaño. Claramente mejor completando y refactorizando que uno general equivalente.</li>
+                      <li><strong>Pequeño y rápido</strong> — un modelo de 3B para clasificación, extracción y etiquetado, donde no necesitas conversación.</li>
+                      <li><strong>La mejor calidad que quepa</strong> — sube en parámetros antes que en precisión.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>Revisa la licencia antes de construir sobre el modelo.</strong> Pesos abiertos no es lo mismo que código abierto: varias familias populares restringen el uso comercial o imponen condiciones a los modelos derivados.</p>
+                    </div>
+                </section>
+
+                <section id="tuning" class="article-section">
+                    <p class="guide-label">05 · AJUSTES</p>
+                    <h2>Cuatro parámetros que deciden si resulta usable.</h2>
+                    <ul>
+                      <li><strong>Capas descargadas a la GPU.</strong> El ajuste más importante cuando el modelo no cabe entero. Envía a la GPU tantas capas como permita la VRAM; el resto lo calcula la CPU. Una capa de más provoca un fallo por falta de memoria.</li>
+                      <li><strong>Ventana de contexto.</strong> Más contexto cuesta memoria y ralentiza la generación. Ponla en lo que realmente necesites: 4K para conversar, más solo cuando de verdad introduces documentos.</li>
+                      <li><strong>Tamaño de lote al procesar el prompt.</strong> Afecta a la rapidez con la que se ingiere una entrada larga, aparte de la velocidad de salida.</li>
+                      <li><strong>Nivel de cuantización.</strong> Si no cabe, baja de 5 a 4 bits antes de cambiar a un modelo más pequeño.</li>
+                    </ul>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Configuración</th><th>7B a 8B a 4 bits</th><th>Se siente como</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>GPU dedicada moderna, todo descargado</td><td>Rápido, muy por encima de la velocidad de lectura</td><td>Comparable a un chat alojado</td></tr>
+                          <tr><td>GPU antigua o pequeña, descarga parcial</td><td>En torno a la velocidad de lectura</td><td>Válido para conversar, tedioso para respuestas largas</td></tr>
+                          <tr><td>Solo CPU, multinúcleo moderno</td><td>Por debajo de la velocidad de lectura</td><td>Bien para tareas de fondo y por lotes</td></tr>
+                          <tr><td>Portátil de memoria unificada</td><td>Cómodamente por encima de la lectura</td><td>La mejor experiencia por vatio disponible hoy</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Si la generación va mucho más lenta que la tabla</strong>, es casi seguro que el modelo se está desbordando de la VRAM a la memoria del sistema. Revisa la descarga de capas antes de culpar al hardware.</p>
+                </section>
+
+                <section id="offline" class="article-section">
+                    <p class="guide-label">06 · VERIFICACIÓN</p>
+                    <h2>Demuestra que el modelo funciona sin red.</h2>
+                    <p class="lede">Este es el paso que separa una instalación realmente local de una interfaz local delante de una API remota. Hazlo una vez, a conciencia.</p>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">PASO—01</span>
+                        <strong>Descárgalo todo antes</strong>
+                        <p>Baja todos los modelos que vayas a usar mientras tengas conexión. Los archivos del modelo son lo único que necesita red de verdad.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">PASO—02</span>
+                        <strong>Desconéctate de verdad</strong>
+                        <p>Apaga el Wi-Fi y desenchufa el cable. El modo avión vale. No te fíes de una regla de cortafuegos para la prueba.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">PASO—03</span>
+                        <strong>Lanza una petición real</strong>
+                        <p>No una prueba de una palabra. Pide algo lo bastante largo como para que una vuelta silenciosa a un servicio remoto falle de forma visible.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">PASO—04</span>
+                        <strong>Mira los medidores</strong>
+                        <p>El uso de GPU o CPU debe subir mientras genera. Si no se mueve nada en local, está respondiendo otro.</p>
+                      </div>
+                    </div>
+                    <h3>Mantenerlo sin conexión después</h3>
+                    <ul>
+                      <li><strong>Bloquea la salida a red del motor</strong> en el cortafuegos una vez descargados los modelos. Actualiza de forma deliberada.</li>
+                      <li><strong>Desactiva telemetría y comprobación de actualizaciones</strong> en la herramienta que hayas elegido.</li>
+                      <li><strong>Guarda copia de los archivos del modelo.</strong> Son grandes pero no infinitos, y un modelo retirado o relicenciado no se recupera sin copia.</li>
+                      <li><strong>Cuidado con las interfaces de chat.</strong> Muchas admiten proveedores locales y alojados, y cambiar es un desplegable. Comprueba cuál está seleccionado antes de pegar algo sensible.</li>
+                    </ul>
+                    <div class="note note-good">
+                      <p><strong>La promesa de privacidad vale lo que su eslabón más débil.</strong> Un modelo local detrás de una interfaz que sincroniza tu historial con una cuenta en la nube no es una instalación privada. Verifica cada pieza por separado.</p>
+                    </div>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · RESPUESTAS RÁPIDAS</p>
+                    <h2>Modelos locales, en breve.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>¿Qué hardware necesito para ejecutar un LLM en local?</strong>
+                            <p>Para un modelo de 7B a 8B con cuantización de 4 bits, unos 4,5 GB de memoria de vídeo, de modo que una tarjeta de 8 GB va holgada. Solo con CPU funciona con unos 16 GB de RAM del sistema, aunque genera por debajo de la velocidad de lectura. Los equipos de memoria unificada rinden especialmente bien porque la memoria es compartida y amplia.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>¿Un LLM local es tan bueno como uno alojado?</strong>
+                            <p>No en los tamaños que caben en hardware de consumo. Espera un asistente competente para resumir, redactar, extraer datos y trabajo rutinario de código, y espera que quede por detrás en razonamiento difícil y conocimiento poco común. La razón para ejecutarlo en local es la privacidad, la disponibilidad sin conexión y el coste.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>¿Qué cuesta la cuantización en calidad?</strong>
+                            <p>De 16 a 8 bits es casi gratis. De 8 a 4 bits cuesta una pérdida pequeña y normalmente aceptable a cambio de aproximadamente la mitad de memoria, por eso casi todo el mundo usa 4 bits. Por debajo de 4 bits la degradación es evidente, empezando por el seguimiento de instrucciones. Como regla, un modelo mayor a 4 bits supera a uno menor a 8 bits.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>¿Qué herramienta uso para ejecutar modelos en local?</strong>
+                            <p>Ollama si quieres línea de comandos y una API local que otras herramientas puedan llamar. LM Studio si prefieres una aplicación de escritorio con catálogo de modelos y chat integrado. llama.cpp directamente si quieres control total sobre la cuantización y la descarga de capas. Las tres ejecutan los mismos archivos.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>¿Cómo sé que mi modelo local funciona realmente sin conexión?</strong>
+                            <p>Descarga los modelos con conexión, desconecta la red por completo y lanza una petición sustancial. Observa cómo sube el uso de GPU o CPU mientras genera. Después bloquea la salida a red del motor en el cortafuegos y comprueba que tu interfaz de chat no esté configurada para recurrir a un proveedor alojado.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Guías relacionadas">
+                    <span class="guide-label">SEGUIR LEYENDO</span>
+                    <div class="related-guide-grid">
+                        <a href="wsl2-setup-windows-guide.html"><strong>Configurar WSL2 en Windows (EN)</strong><span aria-hidden="true">→</span></a>
+                        <a href="local-backup-3-2-1-guide.html"><strong>Una copia de seguridad 3-2-1 (EN)</strong><span aria-hidden="true">→</span></a>
+                        <a href="python-virtual-environment-guide.html"><strong>Entornos de Python sin líos (EN)</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">DESDE EL ESTUDIO</span>
+                        <strong>Nyxelium — apps offline para Android</strong>
+                        <p>La misma idea en el móvil: la app funciona con la red apagada y nada de lo que escribes se sube.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">Ver las apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">TODAS LAS GUÍAS</a>
+                <a href="index.html">INICIO</a>
+                <a href="about.html">SOBRE EL ESTUDIO</a>
+            </div>
+            <span>REVISADO · SEPTIEMBRE DE 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

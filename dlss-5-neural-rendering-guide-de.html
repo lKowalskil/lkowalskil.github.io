@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Der sichere Weg zur geleakten DLSS-5-Version mit RHI und ReShade: die echten Bildratenkosten, die Anti-Cheat-Regel und vier Alternativen, die meist die bessere Wahl sind.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>DLSS 5 Neural Rendering installieren: Anleitung · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:title" content="DLSS 5 Neural Rendering installieren: die saubere Anleitung">
+    <meta property="og:description" content="Der sichere Weg zur geleakten DLSS-5-Version mit RHI und ReShade: die echten Bildratenkosten, die Anti-Cheat-Regel und vier Alternativen, die meist die bessere Wahl sind.">
+    <meta property="og:url" content="https://lkowalskil.github.io/dlss-5-neural-rendering-guide-de.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — Offline-Apps für Android">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DLSS 5 Neural Rendering installieren: die saubere Anleitung">
+    <meta name="twitter:description" content="DLSS 5 ohne dubiose Ein-Klick-Installer, mit ehrlichen Zahlen zur Performance.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — Offline-Apps für Android">
+    <link rel="canonical" href="https://lkowalskil.github.io/dlss-5-neural-rendering-guide-de.html">
+    <link rel="alternate" hreflang="en" href="https://lkowalskil.github.io/dlss-5-neural-rendering-guide.html">
+    <link rel="alternate" hreflang="ru" href="https://lkowalskil.github.io/dlss-5-neural-rendering-guide-ru.html">
+    <link rel="alternate" hreflang="de" href="https://lkowalskil.github.io/dlss-5-neural-rendering-guide-de.html">
+    <link rel="alternate" hreflang="x-default" href="https://lkowalskil.github.io/dlss-5-neural-rendering-guide.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/dlss-5-neural-rendering-guide-de.html#article",
+      "headline": "DLSS 5 Neural Rendering installieren: die saubere Anleitung",
+      "description": "Der sichere Weg zur geleakten DLSS-5-Version mit RHI und ReShade: die echten Bildratenkosten, die Anti-Cheat-Regel und vier Alternativen, die meist die bessere Wahl sind.",
+      "inLanguage": "de",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/dlss-5-neural-rendering-guide-de.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "DLSS 5, DLSS 5 Mod, Neural Rendering, RHI ReShade HDR Installer, RenoDX, DLSS 5 installieren, ReShade Add-on, RTX 50",
+      "articleSection": "Grafikkarten und Upscaling",
+      "proficiencyLevel": "Expert",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "PC-Spieler mit NVIDIA-RTX-Grafikkarte"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/dlss-5-neural-rendering-guide-de.html#faq",
+      "inLanguage": "de",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Ist der DLSS-5-Mod sicher?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Das Verfahren ist umkehrbar, das Risiko liegt im Download. Nutzen Sie den quelloffenen RHI-Installer von seiner GitHub-Releases-Seite statt einer Ein-Klick-Datei aus Discord oder Telegram, prüfen Sie jede DLL selbst gegen eine veröffentlichte SHA-256-Prüfsumme und installieren Sie ausschließlich in Einzelspielertitel. ReShade mit Add-on-Unterstützung hängt sich in das Grafikgerät ein und kann Anti-Cheat auslösen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Funktioniert DLSS 5 auf der RTX-40-Serie?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Offiziell nein. NVIDIA hat DLSS 5 für alle Desktop- und Notebook-GPUs der GeForce RTX 50 Series sowie GeForce NOW angekündigt, ohne Unterstützung für RTX 40 oder ältere Karten. Community-Mods wurden auf anderer Hardware mit gemischten Ergebnissen betrieben, das ist jedoch nicht unterstützt und kostet auf älteren Karten mehr Leistung, nicht weniger."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann ich für den DLSS-5-Mod gesperrt werden?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In einem Online-Spiel mit Anti-Cheat ist das ein realistisches Ergebnis. RHI warnt selbst, dass ReShade mit Add-on-Unterstützung Anti-Cheat auslösen kann, und empfiehlt die Deinstallation vor dem Mehrspielermodus. Behandeln Sie das als reine Einzelspieler-Modifikation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Verbessert DLSS 5 die Leistung wie DLSS 4?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein, und das ist der entscheidende Unterschied. Super Resolution und Frame Generation waren Performance-Funktionen. Neural Rendering ist eine Bildfunktion, die Bilder kostet: Frühe Tests zeigen etwa die halbe Bildrate, etwa 71 auf 35 fps auf einer RTX 5070 Ti in 4K in Control. Die finale Fassung dürfte deutlich schneller sein."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ich nutze bereits DLSS 4. Lohnt sich Neural Rendering?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Für die meisten noch nicht. Das aktuelle Transformer-Modell in Spiele zu zwingen, die ein älteres Preset ausliefern, ist kostenlos, läuft auf jeder RTX-Karte ab der 20er-Serie und bringt meist mehr sichtbare Verbesserung bei einem Bruchteil der Kosten. Warten Sie mit Neural Rendering auf die offizielle Integration."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/dlss-5-neural-rendering-guide-de.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "DLSS 5 Neural Rendering installieren: die saubere Anleitung",
+          "item": "https://lkowalskil.github.io/dlss-5-neural-rendering-guide-de.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Zum Guide springen</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALLE GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Apps ansehen <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—01 · GPU · 12 MIN LESEZEIT</p>
+                <h1 class="guide-title">DLSS 5, ohne fremde Ein-Klick-Installer auszuführen.</h1>
+                <p class="guide-deck">Eine Vorabversion der DLSS-5-Laufzeit kursiert seit Tagen, meist verpackt in Installer, die niemand ausführen sollte. Hier steht der nachvollziehbare Weg, die Anti-Cheat-Regel, die vorab entscheidet, ob sich das überhaupt lohnt, und die Bildratenkosten, die in keiner Überschrift auftauchen.</p>
+                <div class="guide-langs">
+                    <span class="guide-langs-label">DIESEN GUIDE LESEN AUF</span>
+                        <a href="dlss-5-neural-rendering-guide.html" hreflang="en" lang="en">English</a>
+                        <a href="dlss-5-neural-rendering-guide-ru.html" hreflang="ru" lang="ru">Русский</a>
+                        <span aria-current="page">Deutsch</span>
+                </div>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Kurzfassung">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium Studio-Zeichen" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP-NOTIZ</span>
+                        <strong>Experimenteller Mod</strong>
+                        <p>Eine Vorabbibliothek in Spielen, für die sie nie gedacht war. Umkehrbar, aber nur für Einzelspieler.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>RELEASE · 3. SEPTEMBER 2026</li>
+                    <li>WEG · RHI + RENODX</li>
+                    <li>KOSTEN · BIS -50% FPS</li>
+                    <li>NUR EINZELSPIELER</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="Auf dieser Seite">
+                <div class="article-rail-inner">
+                    <p class="guide-label">AUF DIESER SEITE</p>
+                    <nav>
+                        <a href="#what-it-is">Was DLSS 5 ändert</a>
+                        <a href="#risks">Zuerst lesen</a>
+                        <a href="#install">Installation mit RHI</a>
+                        <a href="#tuning">Im Spiel einstellen</a>
+                        <a href="#performance">Die Bildratenkosten</a>
+                        <a href="#alternatives">Bessere Alternativen</a>
+                        <a href="#sources">Quellen</a>
+                        <a href="#answers">Kurz gefasst</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="what-it-is" class="article-section">
+                    <p class="guide-label">01 · DIE TECHNIK</p>
+                    <h2>DLSS 5 ist kein weiterer Upscaler. Es übermalt das Bild.</h2>
+                    <p class="lede">Jede bisherige DLSS-Version beantwortete eine Frage: Wie rendern wir weniger Pixel und rekonstruieren den Rest? DLSS 5 beantwortet eine andere — wie fügen wir Details hinzu, die das Spiel nie hatte?</p>
+                    <p>NVIDIA nennt es <strong>3D-guided Neural Rendering</strong>. Ein Modell erhält das gerenderte Bild zusammen mit den dreidimensionalen Informationen der Engine und synthetisiert Materialien, Haut, Haare, Stoffe und Lichtverhalten neu. DLSS 4 rekonstruierte, was der Renderer beabsichtigte. DLSS 5 erfindet plausible Details, die der Renderer nie hatte.</p>
+                    <p><strong>Daraus folgt das Entscheidende: Es ist die erste DLSS-Funktion, die Bilder kostet, statt welche zu liefern.</strong> Super Resolution, Ray Reconstruction und Frame Generation waren Performance-Funktionen mit Nebenwirkung auf die Bildqualität. Neural Rendering ist eine Bildqualitätsfunktion mit einer Rechnung für die Performance — und die Rechnung ist hoch.</p>
+                    <h3>Was offiziell ist und was nicht</h3>
+                    <p>NVIDIA bringt DLSS 5 am <strong>3. September 2026</strong>, zuerst in NBA 2K27, für alle Desktop- und Notebook-GPUs der GeForce RTX 50 Series sowie für GeForce NOW. Für RTX 40 und älter wurde keine offizielle Unterstützung angekündigt.</p>
+                    <p>Was diese Woche installiert wird, ist etwas anderes. Die Laufzeitbibliothek fand sich in einem Early-Access-Build von NBA 2K27, ein RenoDX-Entwickler brachte sie in Control zum Laufen, und binnen Tagen wurde sie über ReShade-Add-ons in ein Dutzend weitere Spiele injiziert. Es funktioniert in dem Sinne, dass Bilder entstehen. Es bleibt eine Vorabbibliothek außerhalb der Integration, für die sie geschrieben wurde.</p>
+                    <div class="note">
+                      <p><strong>Stellen Sie Ihre Erwartungen darauf ein.</strong> Szenen, die dem Modell liegen, sehen deutlich besser aus als das Original. Szenen, die es nicht tun, machen aus einer handgestalteten Figur ein Plastikporträt. Eine spielspezifische Abstimmung gibt es nicht, weil ein Mod nie vorgesehen war.</p>
+                    </div>
+                </section>
+
+                <section id="risks" class="article-section">
+                    <p class="guide-label">02 · VOR DER INSTALLATION</p>
+                    <h2>Vier Fakten, die vorab entscheiden.</h2>
+                    <p class="lede">Das sind keine Gründe, nicht zu experimentieren. Es sind Gründe, auf dem richtigen Rechner, im richtigen Spiel und aus der richtigen Quelle zu experimentieren.</p>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">RISIKO—01</span>
+                        <strong>Anti-Cheat</strong>
+                        <p>ReShade mit Add-on-Unterstützung hängt sich in das Grafikgerät ein. RHI warnt selbst unmissverständlich: nur Einzelspieler, vor dem Mehrspieler deinstallieren.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">RISIKO—02</span>
+                        <strong>Eine unsignierte DLL</strong>
+                        <p>Sie legen eine unsignierte Bibliothek neben die Spieldatei, die Direct3D abfängt. Nur aus einer Quelle beziehen, die eine Prüfsumme veröffentlicht.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">RISIKO—03</span>
+                        <strong>Der Ein-Klick-Installer</strong>
+                        <p>Die Nutzlast ist klein und leicht neu zu verpacken. Genau die „1 CLICK DLSS 5“-Builds aus Discord und Telegram sind hier die eigentliche Gefahr.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">RISIKO—04</span>
+                        <strong>Die Bildratenrechnung</strong>
+                        <p>Erste Messungen liegen bei etwa der Hälfte der Bildrate. Wer bei 50 fps startet, landet bei 25. Planen Sie das vorher ein.</p>
+                      </div>
+                    </div>
+                    <div class="note note-warn">
+                      <p><strong>Hat das Spiel ein Anti-Cheat, hören Sie hier auf.</strong> Kompetitive Shooter, Live-Service-Titel und alles mit EAC, BattlEye oder einem Kernel-Treiber sind das Risiko nicht wert. Keine Bildverbesserung überlebt einen gesperrten Account.</p>
+                    </div>
+                </section>
+
+                <section id="install" class="article-section">
+                    <p class="guide-label">03 · DER SAUBERE WEG</p>
+                    <h2>Den offenen Installer nutzen, nicht ein neu gepacktes Binärpaket.</h2>
+                    <p class="lede">RHI — der ReShade HDR Installer von RankFTW — ist ein quelloffener Manager für genau diese Art Grafik-Mods und damit das einzige Glied der Kette, das Sie selbst prüfen können.</p>
+                    <p>Er erkennt Spiele aus acht Stores (Steam, GOG, Epic, EA App, Ubisoft Connect, Xbox und Game Pass, Battle.net, Rockstar) und verwaltet rund zehn Komponenten: ReShade selbst, RenoDX, OptiScaler, DXVK, Display Commander, ReLimiter, RE Framework, Luma Framework sowie den unabhängigen Tausch von DLSS- und Streamline-DLLs. Voraussetzung sind Windows 10 oder 11 (x64) und die .NET 8 Desktop Runtime.</p>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">SCHRITT—01</span>
+                        <strong>Von der Quelle laden</strong>
+                        <p>Nur von der <a href="https://github.com/RankFTW/RHI" target="_blank" rel="noopener">Releases-Seite von RankFTW/RHI</a> auf GitHub. Kein Spiegel, kein Re-Upload, kein weitergeleiteter Link.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">SCHRITT—02</span>
+                        <strong>Manuell, pro Spiel</strong>
+                        <p>Beim ersten Start die Variante wählen, die ReShade nur für ausgewählte Spiele installiert. Keine Sammelinstallation über die ganze Bibliothek.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">SCHRITT—03</span>
+                        <strong>ReShade installieren</strong>
+                        <p>Einzelspielertitel links wählen, dann ReShade installieren. Die Add-on-Version ist Pflicht; die einfache Version lädt RenoDX gar nicht.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">SCHRITT—04</span>
+                        <strong>RenoDX DLSS 5 hinzufügen</strong>
+                        <p><em>Add-ons</em> öffnen, <em>Select</em> wählen, <em>RenoDX DLSS 5</em> auswählen. Dieses Add-on blendet Neural Rendering im Overlay ein.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">SCHRITT—05</span>
+                        <strong>DLL bereitstellen</strong>
+                        <p><em>Neural Rendering</em> öffnen und <em>Deploy DLL</em> wählen. RHI legt die Laufzeit und die Streamline-Bibliotheken für Ihre GPU-Generation neben die Spieldatei.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">SCHRITT—06</span>
+                        <strong>Overlay öffnen</strong>
+                        <p>Spiel starten und <strong>Pos1</strong> drücken (auf englischen Layouts <strong>Home</strong>). Neural Rendering erscheint unter Add-ons.</p>
+                      </div>
+                    </div>
+                    <h3>Manuell geladene Dateien selbst prüfen</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · BIBLIOTHEK PRÜFEN</div>
+                      <pre><code># Hash der geladenen Datei berechnen
+Get-FileHash .\nvngx_dlssnr.dll -Algorithm SHA256
+
+# Mit dem veröffentlichten Wert vergleichen, bevor Sie irgendetwas kopieren.
+# Weicht ein Zeichen ab, löschen Sie die Datei.</code></pre>
+                    </div>
+                    <div class="note">
+                      <p><strong>Halten Sie den Deinstallationsweg kurz.</strong> RHI merkt sich pro Spiel, was geschrieben wurde. Ein halb entferntes ReShade ist der übliche Grund dafür, dass ein Spiel drei Patches später abstürzt.</p>
+                    </div>
+                </section>
+
+                <section id="tuning" class="article-section">
+                    <p class="guide-label">04 · IM OVERLAY</p>
+                    <h2>Was Sie ändern, sobald das Overlay offen ist.</h2>
+                    <p class="lede">Die Standardeinstellung ist nicht die, die Sie wollen. Neural Rendering scheitert laut statt subtil, und der Intensitätsregler trennt „bessere Materialien“ von „alle sehen aus wie Schaufensterpuppen“.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Preset</th><th>Wirkung</th><th>Wann</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Default</td><td>Breite Detailrekonstruktion über Materialien, Haut und Haare.</td><td>Erster Blick, um zu sehen, ob ein Spiel überhaupt reagiert.</td></tr>
+                          <tr><td>Natural</td><td>Zurückhaltend, näher an der Bildsprache des Spiels.</td><td>Fast immer. Bei stilisierten Spielen ausschließlich.</td></tr>
+                          <tr><td>Cinematic</td><td>Stärkere Neubeleuchtung und Materialantwort; am sichtbarsten und am künstlichsten.</td><td>Screenshots und Fotomodus, selten zum Spielen.</td></tr>
+                          <tr><td>Intensität</td><td>Wie weit sich das Modell vom Ausgangsbild entfernen darf.</td><td>Senken, bis Gesichter nicht mehr retuschiert wirken.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <h3>Beurteilen Sie Gesichter und Haare, nicht Laub</h3>
+                    <p>Laub und Gestein schmeicheln jedem Detailmodell. Der Fehler zeigt sich an Figuren: Poren, die in keiner Textur standen, Haarsträhnen, die an der Silhouette erfunden wurden, und Haut, die retuschiert aussieht. Laden Sie eine Zwischensequenz, schalten Sie das Add-on um und beobachten Sie ein einziges Gesicht.</p>
+                    <h3>Sauber entfernen</h3>
+                    <ul>
+                      <li>Über RHI deinstallieren, spielbezogen, nicht per Hand.</li>
+                      <li>Ordner danach auf Reste prüfen: <code>dxgi.dll</code>, <code>d3d12.dll</code>, <code>ReShade.ini</code>, <code>reshade-shaders</code>.</li>
+                      <li>Dateiprüfung des Stores ausführen, wenn der Launcher Integrität prüft.</li>
+                      <li>Vor jeder Mehrspielersitzung entfernen, auch wenn Sie den Einzelspielermodus desselben Spiels genutzt haben.</li>
+                    </ul>
+                </section>
+
+                <section id="performance" class="article-section">
+                    <p class="guide-label">05 · DIE RECHNUNG</p>
+                    <h2>Rechnen Sie mit etwa der halben Bildrate.</h2>
+                    <p class="lede">Frühe Community-Messungen einer injizierten Vorabversion. Sie sind über Grafikkarten hinweg konsistent genug, um damit zu planen.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>GPU</th><th>Szenario</th><th>Vorher</th><th>Nachher</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>RTX 5070 Ti</td><td>Control, 4K</td><td>71 fps</td><td>35 fps</td></tr>
+                          <tr><td>RTX 5090</td><td>4K-Demonstration</td><td>91 fps</td><td>50 fps</td></tr>
+                          <tr><td>RTX 5070</td><td>Cyberpunk 2077, 1440p, Raster</td><td>138 fps</td><td>68 fps</td></tr>
+                          <tr><td>RTX 5070</td><td>Cyberpunk 2077, 1440p, RT Ultra</td><td>111 fps</td><td>55 fps</td></tr>
+                          <tr><td>RTX 5070</td><td>Cyberpunk 2077, 1440p, Path Tracing</td><td>71 fps</td><td>45 fps</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Die letzte Zeile ist die interessante.</strong> Prozentual verliert der Path-Tracing-Fall am wenigsten, weil das Bild ohnehin teuer war. Je günstiger Ihr Bild, desto größer fällt der neuronale Durchlauf ins Gewicht — genau umgekehrt zu allen bisherigen DLSS-Funktionen.</p>
+                    <div class="note">
+                      <p><strong>Das ist keine Prognose für die finale Fassung.</strong> Die Zahlen stammen aus einer unoptimierten Injektion ohne Kontrolle über die interne Auflösung. NVIDIA gibt an, der interne Build sei in sechs Monaten rund fünfmal schneller geworden.</p>
+                    </div>
+                    <h3>Trotzdem spielbar machen</h3>
+                    <ul>
+                      <li><strong>Zuerst die interne Auflösung senken.</strong> Neural Rendering mit DLSS Super Resolution auf Balanced oder Performance kombinieren.</li>
+                      <li><strong>Bildrate begrenzen.</strong> Stabile 40 fps lesen sich besser als ein Schwanken zwischen 35 und 55.</li>
+                      <li><strong>Abschalten, was der neuronale Durchlauf doppelt macht:</strong> starkes Nachschärfen, Filmkorn, chromatische Aberration.</li>
+                      <li><strong>Frame Generation zunächst weglassen.</strong> Erzeugte Bilder auf halbierter Basis erhöhen die Latenz stärker als die Flüssigkeit.</li>
+                    </ul>
+                </section>
+
+                <section id="alternatives" class="article-section">
+                    <p class="guide-label">06 · ALTERNATIVEN</p>
+                    <h2>Vier Optionen, die den Abend besser nutzen.</h2>
+                    <h3>1. Auf die offizielle Version warten</h3>
+                    <p>DLSS 5 erscheint am 3. September 2026 für RTX-50-Karten, beginnend mit NBA 2K27. Offiziell bedeutet signierte Bibliotheken, kein Anti-Cheat-Risiko und eine Integration, die interne Auflösungen wählen kann, wie es ein Mod nicht vermag.</p>
+                    <h3>2. Das neueste DLSS-Modell in ältere Spiele zwingen</h3>
+                    <p>Die wertvollste Änderung, die die meisten nie vorgenommen haben. Das Transformer-Modell für Super Resolution läuft auf <strong>jeder RTX-Karte ab der 20er-Serie</strong>, während hunderte veröffentlichte Spiele weiterhin ein Jahre altes Preset aufrufen. Das Überschreiben in der NVIDIA-App oder ein DLL-Tausch pro Spiel mit DLSS Swapper ändert das — kostenlos, signiert und umkehrbar.</p>
+                    <h3>3. OptiScaler, wenn Sie keine NVIDIA-Karte haben</h3>
+                    <p>Bietet ein Spiel nur einen Upscaler an und ist es der falsche, übersetzt OptiScaler zwischen DLSS-, FSR- und XeSS-Eingaben. RHI verwaltet auch das.</p>
+                    <h3>4. ReShade allein oder RenoDX ohne das neuronale Add-on</h3>
+                    <p>Tone Mapping, echtes HDR für Spiele ohne HDR und maßvolles Schärfen sind deterministisch, umkehrbar und nahezu kostenlos. Für die meisten älteren Spiele macht genau das den größten Unterschied.</p>
+                    <div class="note note-good">
+                      <p><strong>Wenn Sie nur eine Sache tun:</strong> Prüfen Sie, welches DLSS-Preset Ihr Lieblingsspiel verwendet, und stellen Sie es auf das aktuelle Modell um. Fünf Minuten, läuft auf sechs Jahre alten Karten, keine unsignierte DLL nötig.</p>
+                    </div>
+                </section>
+
+                <section id="sources" class="article-section">
+                    <p class="guide-label">07 · QUELLEN</p>
+                    <h2>Woher diese Angaben stammen.</h2>
+                    <p>Diese Seite beschreibt einen schnelllebigen Community-Mod und ein noch unveröffentlichtes Produkt. Beides ändert sich — prüfen Sie vor der Installation und vertrauen Sie der Primärquelle mehr als jeder Anleitung, auch dieser.</p>
+                    <ul>
+                      <li><a href="https://github.com/RankFTW/RHI" target="_blank" rel="noopener">RankFTW/RHI auf GitHub</a> — Installer, Komponentenliste, Voraussetzungen und der Einzelspieler-Hinweis.</li>
+                      <li><a href="https://www.tomshardware.com/pc-components/gpus/nvidias-controversial-dlss-5-will-launch-september-3-with-nba2k27-available-on-all-rtx-50-series-gpus" target="_blank" rel="noopener">Tom’s Hardware</a> — Starttermin 3. September 2026, NBA 2K27 und RTX 50 Series.</li>
+                      <li><a href="https://www.tomshardware.com/pc-components/gpus/modders-get-leaked-dlss-5-running-in-control-early-blackwell-test-drops-rtx-5070-ti-from-71-to-35-fps-at-4k" target="_blank" rel="noopener">Tom’s Hardware</a> — der Control-Test mit 71 auf 35 fps auf einer RTX 5070 Ti in 4K.</li>
+                      <li><a href="https://videocardz.com/newz/nvidia-dlss-5-gets-5x-faster-in-six-months-launches-september-3-on-all-rtx-50-gpus" target="_blank" rel="noopener">VideoCardz</a> — NVIDIAs Angabe zur fünffachen Beschleunigung des internen Builds.</li>
+                    </ul>
+                    <p>Diese Seite steht in keiner Verbindung zu NVIDIA, RankFTW oder RenoDX. Es gibt hier keine Affiliate-Links und keine gesponserten Inhalte.</p>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">08 · KURZE ANTWORTEN</p>
+                    <h2>DLSS 5 Neural Rendering, kurz gefasst.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>Ist der DLSS-5-Mod sicher?</strong>
+                            <p>Das Verfahren ist umkehrbar, das Risiko liegt im Download. Nutzen Sie den quelloffenen RHI-Installer von seiner GitHub-Releases-Seite statt einer Ein-Klick-Datei aus Discord oder Telegram, prüfen Sie jede DLL selbst gegen eine veröffentlichte SHA-256-Prüfsumme und installieren Sie ausschließlich in Einzelspielertitel. ReShade mit Add-on-Unterstützung hängt sich in das Grafikgerät ein und kann Anti-Cheat auslösen.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Funktioniert DLSS 5 auf der RTX-40-Serie?</strong>
+                            <p>Offiziell nein. NVIDIA hat DLSS 5 für alle Desktop- und Notebook-GPUs der GeForce RTX 50 Series sowie GeForce NOW angekündigt, ohne Unterstützung für RTX 40 oder ältere Karten. Community-Mods wurden auf anderer Hardware mit gemischten Ergebnissen betrieben, das ist jedoch nicht unterstützt und kostet auf älteren Karten mehr Leistung, nicht weniger.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Kann ich für den DLSS-5-Mod gesperrt werden?</strong>
+                            <p>In einem Online-Spiel mit Anti-Cheat ist das ein realistisches Ergebnis. RHI warnt selbst, dass ReShade mit Add-on-Unterstützung Anti-Cheat auslösen kann, und empfiehlt die Deinstallation vor dem Mehrspielermodus. Behandeln Sie das als reine Einzelspieler-Modifikation.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Verbessert DLSS 5 die Leistung wie DLSS 4?</strong>
+                            <p>Nein, und das ist der entscheidende Unterschied. Super Resolution und Frame Generation waren Performance-Funktionen. Neural Rendering ist eine Bildfunktion, die Bilder kostet: Frühe Tests zeigen etwa die halbe Bildrate, etwa 71 auf 35 fps auf einer RTX 5070 Ti in 4K in Control. Die finale Fassung dürfte deutlich schneller sein.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Ich nutze bereits DLSS 4. Lohnt sich Neural Rendering?</strong>
+                            <p>Für die meisten noch nicht. Das aktuelle Transformer-Modell in Spiele zu zwingen, die ein älteres Preset ausliefern, ist kostenlos, läuft auf jeder RTX-Karte ab der 20er-Serie und bringt meist mehr sichtbare Verbesserung bei einem Bruchteil der Kosten. Warten Sie mit Neural Rendering auf die offizielle Integration.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Verwandte Guides">
+                    <span class="guide-label">WEITERLESEN</span>
+                    <div class="related-guide-grid">
+                        <a href="dlss-vs-fsr-vs-xess-upscaling.html"><strong>DLSS vs FSR vs XeSS (EN)</strong><span aria-hidden="true">→</span></a>
+                        <a href="reduce-input-lag-pc-gaming.html"><strong>Eingabeverzögerung reduzieren (EN)</strong><span aria-hidden="true">→</span></a>
+                        <a href="clean-gpu-driver-install-windows.html"><strong>GPU-Treiber sauber installieren (EN)</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">AUS DEM STUDIO</span>
+                        <strong>Nyxelium — Offline-Apps für Android</strong>
+                        <p>Anderer Bildschirm, dieselbe Regel wie in diesem Guide: Software soll lokal, umkehrbar und leicht entfernbar sein.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">Apps ansehen →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALLE GUIDES</a>
+                <a href="index.html">STUDIO</a>
+                <a href="about.html">ÜBER</a>
+            </div>
+            <span>ZULETZT GEPRÜFT · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

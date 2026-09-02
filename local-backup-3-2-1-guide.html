@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="What 3-2-1 means in practice, the four failure modes a backup must survive, a concrete Windows setup with real tools, and the restore test everyone skips.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>A 3-2-1 Backup Plan You Will Actually Run · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="A 3-2-1 Backup Plan You Will Actually Run">
+    <meta property="og:description" content="What 3-2-1 means in practice, the four failure modes a backup must survive, a concrete Windows setup with real tools, and the restore test everyone skips.">
+    <meta property="og:url" content="https://lkowalskil.github.io/local-backup-3-2-1-guide.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A 3-2-1 Backup Plan You Will Actually Run">
+    <meta name="twitter:description" content="Backups that survive ransomware and human error, not just a dead drive — with a concrete setup.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/local-backup-3-2-1-guide.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/local-backup-3-2-1-guide.html#article",
+      "headline": "A 3-2-1 Backup Plan You Will Actually Run",
+      "description": "What 3-2-1 means in practice, the four failure modes a backup must survive, a concrete Windows setup with real tools, and the restore test everyone skips.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/local-backup-3-2-1-guide.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "3-2-1 backup rule, Windows backup strategy, ransomware resistant backup, restic kopia duplicati, offsite backup encryption, restore test, versioned backup",
+      "articleSection": "Data and backup",
+      "proficiencyLevel": "Beginner",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Anyone responsible for their own files"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/local-backup-3-2-1-guide.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does the 3-2-1 backup rule mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Three copies of your data, on two different media or devices, with one copy off site. The modern extension adds one copy that is offline or immutable, so ransomware cannot reach it, and zero errors on restore, meaning you have actually tested that the backup can be read back."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is cloud sync the same as a backup?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Synchronisation propagates changes, including deletions and ransomware encryption, to every connected device within seconds. It provides availability, not recovery. It only counts as a backup to the extent you use its version history, and you should check how far back that history reaches before relying on it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I back up?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Match the interval to how much work you are willing to redo. Daily automated backups suit most people, with an off-site copy updated weekly. What matters more than frequency is that the job is automated, that failures are visible, and that retention is long enough to recover a mistake you notice weeks later."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will my backup survive ransomware?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if at least one copy is offline or immutable. Ransomware encrypts everything it can reach, including permanently connected external drives and mapped network shares. Unplug the backup drive between runs, or use storage with object lock, and keep versioned snapshots so you can roll back to a point before the infection."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I test a backup?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Restore a real file from several months ago to a new location and open it. Once a year, restore to a different machine using only your written notes, verify the encryption passphrase works there, and time how long a full recovery takes. That number, not the backup software status page, tells you whether your plan is adequate."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/local-backup-3-2-1-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "A 3-2-1 Backup Plan You Will Actually Run",
+          "item": "https://lkowalskil.github.io/local-backup-3-2-1-guide.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—07 · DATA &amp; BACKUP · 10 MIN READ</p>
+                <h1 class="guide-title">A backup plan that survives the ways data actually disappears.</h1>
+                <p class="guide-deck">Most people have a copy of their files somewhere and call it a backup. Then the failure arrives as accidental deletion synced to every device, or as ransomware that encrypts the external drive too. This is what 3-2-1 means once you take those cases seriously, and a setup you can finish this evening.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Finish it tonight</strong>
+                        <p>One local versioned target, one encrypted offsite copy, one restore test. That is the whole plan.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>3-2-1-1-0 EXPLAINED</li>
+                    <li>FOUR FAILURE MODES</li>
+                    <li>WORKING RESTIC EXAMPLES</li>
+                    <li>RESTORE TEST INCLUDED</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#rule">What 3-2-1 means</a>
+                        <a href="#scope">Decide what matters</a>
+                        <a href="#failures">Four failure modes</a>
+                        <a href="#setup">A concrete setup</a>
+                        <a href="#encryption">Encryption and keys</a>
+                        <a href="#restore">Test the restore</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="rule" class="article-section">
+                    <p class="guide-label">01 · THE RULE</p>
+                    <h2>Three copies, two media, one off site — and two extra digits.</h2>
+                    <p class="lede">The classic rule is a memory aid for surviving correlated failures. The modern extension exists because ransomware made two of the original assumptions optimistic.</p>
+                    <ul>
+                      <li><strong>3 copies</strong> of the data — the live one plus two backups.</li>
+                      <li><strong>2 different media or devices</strong>, so a single controller, drive model or enclosure cannot take out everything.</li>
+                      <li><strong>1 copy off site</strong>, because fire, theft and flood do not respect a shelf.</li>
+                      <li><strong>1 copy offline or immutable</strong> — disconnected, append-only or write-protected. This is the anti-ransomware digit.</li>
+                      <li><strong>0 errors on restore</strong>, verified by an actual test rather than a green tick in a status window.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>Synchronisation is not backup.</strong> A cloud sync folder faithfully propagates deletion and encryption to every device within seconds. It is excellent availability and it is not a backup, unless you are deliberately using its version history — and you have checked how far back that history goes.</p>
+                    </div>
+                </section>
+
+                <section id="scope" class="article-section">
+                    <p class="guide-label">02 · SCOPE</p>
+                    <h2>Back up what you cannot recreate. Skip the rest.</h2>
+                    <p class="lede">Backing up everything is how backups become slow, expensive and eventually abandoned. Sort your data by whether the internet can replace it.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Category</th><th>Examples</th><th>Priority</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Irreplaceable</td><td>Photos, video, documents, scans, letters, financial records, creative project files</td><td>Every copy, every rule, no exceptions</td></tr>
+                          <tr><td>Expensive to rebuild</td><td>Configuration, dotfiles, password vault export, licence keys, signing keys, VM images</td><td>Back up. Small, and a nightmare to reconstruct.</td></tr>
+                          <tr><td>Reproducible with effort</td><td>Code with a remote, edited exports, downloaded datasets</td><td>Local copy is usually enough</td></tr>
+                          <tr><td>Freely replaceable</td><td>Installers, games, cached media, node_modules and build output</td><td>Exclude. This is what makes backups too big to run.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <h3>The items people forget until it is too late</h3>
+                    <ul>
+                      <li><strong>Password manager recovery material</strong> — the emergency kit or export, stored somewhere that does not require the password manager to reach.</li>
+                      <li><strong>Two-factor recovery codes</strong> — printed. If they live only on the phone you lost, the backup does not help you.</li>
+                      <li><strong>Android and iOS keystores or signing certificates</strong> — losing an app signing key means you cannot update your own published app.</li>
+                      <li><strong>Browser profile bookmarks and extension configuration</strong> — small, and irritating to rebuild.</li>
+                      <li><strong>The list of installed software</strong> — a package manager export takes seconds and saves an entire afternoon.</li>
+                    </ul>
+                </section>
+
+                <section id="failures" class="article-section">
+                    <p class="guide-label">03 · THREAT MODEL</p>
+                    <h2>A backup that only survives dead hardware is half a backup.</h2>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">MODE—01</span>
+                        <strong>Hardware failure</strong>
+                        <p>A drive dies. Any second copy solves this, which is why it is the only case most setups actually cover.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">MODE—02</span>
+                        <strong>Human error</strong>
+                        <p>You delete or overwrite something and notice three weeks later. Only <em>versioned</em> backups with enough retention survive this.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">MODE—03</span>
+                        <strong>Malicious encryption</strong>
+                        <p>Ransomware encrypts everything reachable, including the always-connected external drive and mapped network shares. Only offline or immutable copies survive.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">MODE—04</span>
+                        <strong>Location loss</strong>
+                        <p>Fire, flood, theft. Only the off-site copy survives, which is the digit people skip because it feels unlikely right up until it is not.</p>
+                      </div>
+                    </div>
+                    <p><strong>Check your current setup against all four.</strong> An external drive that stays plugged in covers exactly one of them. That is the most common backup arrangement in the world, and it is the one ransomware was designed to defeat.</p>
+                </section>
+
+                <section id="setup" class="article-section">
+                    <p class="guide-label">04 · THE BUILD</p>
+                    <h2>One local target, one off site, both versioned.</h2>
+                    <p class="lede">This is a specific arrangement rather than a survey. Substitute tools freely — the shape is what matters.</p>
+                    <h3>Layer 1 — versioned local backup</h3>
+                    <ul>
+                      <li><strong>An external drive that is not always connected.</strong> Plug it in for the run, unplug it afterwards. That single habit converts the drive from a ransomware target into an offline copy.</li>
+                      <li><strong>A deduplicating, versioned backup tool</strong> such as Restic, Kopia, Duplicati or a vendor agent. Deduplication is what makes daily snapshots affordable; versioning is what saves you from mode 02.</li>
+                      <li><strong>Keep a sensible retention window:</strong> daily for a fortnight, weekly for a couple of months, monthly for a year. Cheap, and it covers the mistake you have not noticed yet.</li>
+                    </ul>
+                    <div class="cmd">
+                      <div class="cmd-head">EXAMPLE · RESTIC, LOCAL REPOSITORY</div>
+                      <pre><code># Once: create an encrypted repository on the external drive
+restic init --repo E:\backups\home
+
+# Each run: snapshot the folders that matter, skipping the noise
+restic -r E:\backups\home backup C:\Users\you\Documents --exclude "**/node_modules"
+restic -r E:\backups\home backup C:\Users\you\Pictures   --exclude "**/*.tmp"
+
+# Prune to a retention policy
+restic -r E:\backups\home forget --keep-daily 14 --keep-weekly 8 --keep-monthly 12 --prune
+
+# Verify the repository can actually be read back
+restic -r E:\backups\home check --read-data-subset=5%</code></pre>
+                    </div>
+                    <h3>Layer 2 — encrypted off site</h3>
+                    <ul>
+                      <li><strong>Cloud object storage</strong> with the same backup tool, so the data is encrypted before it leaves the machine. This is the practical way to get an off-site copy without trusting the provider with plaintext.</li>
+                      <li><strong>Or a drive at another address</strong> — a relative&rsquo;s house, an office drawer. Rotate it monthly. Unglamorous, free, and it works.</li>
+                      <li><strong>Enable object lock or immutability if the provider offers it.</strong> This is what makes the off-site copy resistant to an attacker who has your credentials.</li>
+                    </ul>
+                    <h3>Layer 3 — the boring habits</h3>
+                    <ul>
+                      <li><strong>Automate the local run</strong> with a scheduled task, and make failures visible. A silent backup that stopped three months ago is worse than none, because you stopped worrying.</li>
+                      <li><strong>Export your installed-software list</strong> during the same run.</li>
+                      <li><strong>Keep one full system image</strong> if reinstalling Windows and its applications would cost you a working day.</li>
+                    </ul>
+                </section>
+
+                <section id="encryption" class="article-section">
+                    <p class="guide-label">05 · KEYS</p>
+                    <h2>Encrypt the copies. Then solve the key problem.</h2>
+                    <p class="lede">Any backup that leaves your home should be encrypted before it goes. That immediately creates a second problem: a key you cannot lose and cannot leave lying next to the data.</p>
+                    <ul>
+                      <li><strong>Encrypt client side.</strong> Tools like Restic and Kopia encrypt before upload, so the storage provider holds ciphertext. Provider-side encryption protects against the wrong threat.</li>
+                      <li><strong>Use a long passphrase, stored in your password manager</strong>, and make sure the password manager itself is recoverable without the backup.</li>
+                      <li><strong>Write the recovery material down.</strong> On paper, somewhere physical. A repository key that exists only inside the encrypted vault it protects is a circular dependency you will discover at the worst moment.</li>
+                      <li><strong>Encrypt the external drive too</strong> — BitLocker on Windows, or the backup tool&rsquo;s own encryption. A stolen backup drive is a data breach with your name on it.</li>
+                      <li><strong>Test the passphrase from a different machine</strong>, at least once, before you rely on it.</li>
+                    </ul>
+                    <div class="note note-warn">
+                      <p><strong>The most common total loss is not a dead drive.</strong> It is an encrypted backup whose passphrase was only in the head of someone who was sure they would remember it. Write it down.</p>
+                    </div>
+                </section>
+
+                <section id="restore" class="article-section">
+                    <p class="guide-label">06 · THE TEST</p>
+                    <h2>A backup you have never restored is a hypothesis.</h2>
+                    <p class="lede">Restore testing is the step everyone skips, and it is the only step that proves any of the others worked.</p>
+                    <h3>Quarterly, in fifteen minutes</h3>
+                    <ul>
+                      <li>Pick a random file from six months ago and restore it <strong>to a new location</strong>. Open it. Confirm it is intact and is the version you expected.</li>
+                      <li>Restore a whole folder and compare file counts and sizes against the source.</li>
+                      <li>Do it from the off-site copy at least once a year, not just the convenient local one.</li>
+                      <li>Time it. &ldquo;How long until I am working again&rdquo; is the number that determines whether your plan is adequate, and most people have never measured it.</li>
+                    </ul>
+                    <h3>Yearly, in an hour</h3>
+                    <ul>
+                      <li>Restore to a different machine, or a virtual machine, using only what you have written down. No help from the running system.</li>
+                      <li>Verify the encryption passphrase works from that clean environment.</li>
+                      <li>Check that the tool itself is still available and still supports your repository format.</li>
+                      <li>Re-read your own notes and fix whatever you have to remember rather than read.</li>
+                    </ul>
+                    <div class="note note-good">
+                      <p><strong>If you do exactly one thing after reading this:</strong> restore a single file from your existing backup right now. A surprising share of people discover at that moment that they do not have one.</p>
+                    </div>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>Backups, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>What does the 3-2-1 backup rule mean?</strong>
+                            <p>Three copies of your data, on two different media or devices, with one copy off site. The modern extension adds one copy that is offline or immutable, so ransomware cannot reach it, and zero errors on restore, meaning you have actually tested that the backup can be read back.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Is cloud sync the same as a backup?</strong>
+                            <p>No. Synchronisation propagates changes, including deletions and ransomware encryption, to every connected device within seconds. It provides availability, not recovery. It only counts as a backup to the extent you use its version history, and you should check how far back that history reaches before relying on it.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>How often should I back up?</strong>
+                            <p>Match the interval to how much work you are willing to redo. Daily automated backups suit most people, with an off-site copy updated weekly. What matters more than frequency is that the job is automated, that failures are visible, and that retention is long enough to recover a mistake you notice weeks later.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Will my backup survive ransomware?</strong>
+                            <p>Only if at least one copy is offline or immutable. Ransomware encrypts everything it can reach, including permanently connected external drives and mapped network shares. Unplug the backup drive between runs, or use storage with object lock, and keep versioned snapshots so you can roll back to a point before the infection.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>How do I test a backup?</strong>
+                            <p>Restore a real file from several months ago to a new location and open it. Once a year, restore to a different machine using only your written notes, verify the encryption passphrase works there, and time how long a full recovery takes. That number, not the backup software status page, tells you whether your plan is adequate.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="windows-11-debloat-safe-guide.html"><strong>Debloat Windows 11 without breaking it</strong><span aria-hidden="true">→</span></a>
+                        <a href="android-backup-without-cloud.html"><strong>Back up an Android phone without the cloud</strong><span aria-hidden="true">→</span></a>
+                        <a href="git-ssh-keys-github-guide.html"><strong>SSH keys and signed commits for GitHub</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>Every app stores its data on the device and exports it in a plain format, so your copy is genuinely yours.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

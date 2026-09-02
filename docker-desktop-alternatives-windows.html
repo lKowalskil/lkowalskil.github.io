@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="What Docker Desktop actually provides, four ways to replace it on Windows, a walkthrough for running the engine inside WSL2, and the migration details that bite.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>Docker Desktop Alternatives on Windows · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Docker Desktop Alternatives on Windows and WSL2">
+    <meta property="og:description" content="What Docker Desktop actually provides, four ways to replace it on Windows, a walkthrough for running the engine inside WSL2, and the migration details that bite.">
+    <meta property="og:url" content="https://lkowalskil.github.io/docker-desktop-alternatives-windows.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Docker Desktop Alternatives on Windows and WSL2">
+    <meta name="twitter:description" content="Podman, Rancher Desktop or the plain engine in WSL2 — what you gain, and what you have to set up yourself.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/docker-desktop-alternatives-windows.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/docker-desktop-alternatives-windows.html#article",
+      "headline": "Docker Desktop Alternatives on Windows and WSL2",
+      "description": "What Docker Desktop actually provides, four ways to replace it on Windows, a walkthrough for running the engine inside WSL2, and the migration details that bite.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/docker-desktop-alternatives-windows.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "Docker Desktop alternative Windows, Podman Desktop, Rancher Desktop, Docker engine WSL2, rootless containers, docker compose alternative, containerd nerdctl",
+      "articleSection": "Developer tooling",
+      "proficiencyLevel": "Intermediate",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Developers running containers on Windows"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/docker-desktop-alternatives-windows.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do I need a licence for Docker Desktop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Docker Desktop is free for personal use, education and small businesses, and requires a paid subscription for commercial use in organisations above a published size and revenue threshold. Those thresholds have changed more than once, so check the current terms directly rather than relying on any summary."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the closest alternative to Docker Desktop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Podman Desktop. It provides a graphical interface, a Docker-compatible command line and a socket compatibility layer for tools that call the Docker API. The main differences come from being rootless: binding ports below 1024, volume file ownership, and a few Compose edge cases."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I just install Docker inside WSL2?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, and it is the lightest option. Install the engine and the Compose plugin inside a WSL2 distribution, add your user to the docker group, and start the service. You lose the graphical interface and automatic updates, and you configure startup and port access yourself."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will my docker-compose files work with Podman?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mostly. Podman supports Compose files through podman compose or a Docker-compatible socket, but networking behaviour and dependency ordering have edge cases that differ. Run your full stack on the new engine before switching a team, rather than testing a single container."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I move my volumes to a new container engine?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You export and re-import the data rather than moving the volume. Run a temporary container that mounts the volume, write its contents to an archive on the host, then restore it into a new volume on the new engine. Named volumes are not portable between engines directly."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/docker-desktop-alternatives-windows.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Docker Desktop Alternatives on Windows and WSL2",
+          "item": "https://lkowalskil.github.io/docker-desktop-alternatives-windows.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—14 · CONTAINERS · 9 MIN READ</p>
+                <h1 class="guide-title">Containers on Windows, without Docker Desktop.</h1>
+                <p class="guide-deck">People leave Docker Desktop for three reasons: licence terms at larger companies, resource use, or a preference for fewer background services. All three have good answers. This covers what you actually lose, the four replacements worth considering, and the migration details that surprise people on day two.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Check the licence</strong>
+                        <p>Docker Desktop requires a paid subscription above a company size and revenue threshold. Verify the current terms yourself.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>PODMAN · RANCHER · WSL2</li>
+                    <li>ENGINE-IN-WSL2 WALKTHROUGH</li>
+                    <li>MIGRATION CHECKLIST</li>
+                    <li>WHEN TO STAY PUT</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#what-you-lose">What Desktop provides</a>
+                        <a href="#options">The four options</a>
+                        <a href="#wsl-engine">Engine inside WSL2</a>
+                        <a href="#podman">Podman on Windows</a>
+                        <a href="#migration">Migration checklist</a>
+                        <a href="#staying">When to stay</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="what-you-lose" class="article-section">
+                    <p class="guide-label">01 · THE BASELINE</p>
+                    <h2>Know what you are replacing before you replace it.</h2>
+                    <p class="lede">Docker Desktop is not just the engine. It is a bundle, and the parts you never think about are the ones you have to reproduce.</p>
+                    <ul>
+                      <li><strong>A managed Linux VM</strong> — on Windows, a WSL2 distribution that hosts the daemon and is kept updated for you.</li>
+                      <li><strong>The engine and CLI</strong>, plus Docker Compose and BuildKit.</li>
+                      <li><strong>Filesystem and port integration</strong> — bind mounts from Windows paths, and published ports reachable on localhost.</li>
+                      <li><strong>A graphical interface</strong> for containers, images, volumes and logs.</li>
+                      <li><strong>Credential helpers</strong> for registry authentication, wired into the Windows credential store.</li>
+                      <li><strong>Optional Kubernetes</strong>, one checkbox away.</li>
+                      <li><strong>Automatic updates</strong> of all of the above.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>Licensing, in one line:</strong> Docker Desktop requires a paid subscription for commercial use in organisations above a published size and revenue threshold, and is free for personal use, education and small businesses. The thresholds have changed more than once — check the current terms rather than a summary in any guide.</p>
+                    </div>
+                </section>
+
+                <section id="options" class="article-section">
+                    <p class="guide-label">02 · THE FIELD</p>
+                    <h2>Four replacements, sorted by how much you want to configure.</h2>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Option</th><th>What it is</th><th>Best for</th><th>Trade-off</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Podman Desktop</td>
+                            <td>Daemonless, rootless container engine with a graphical interface</td>
+                            <td>The closest drop-in replacement, with a real GUI and a Docker-compatible CLI</td>
+                            <td>Rootless has genuine differences: low ports, some volume behaviour, a few compose edge cases</td>
+                          </tr>
+                          <tr>
+                            <td>Rancher Desktop</td>
+                            <td>Open-source desktop app over containerd or the Docker engine, with Kubernetes built in</td>
+                            <td>Anyone who wants local Kubernetes without extra setup</td>
+                            <td>Heavier than the alternatives; Kubernetes is the point rather than an extra</td>
+                          </tr>
+                          <tr>
+                            <td>Docker engine in WSL2</td>
+                            <td>The engine installed directly inside a Linux distribution</td>
+                            <td>Developers already living in WSL2 who want the lightest possible setup</td>
+                            <td>No GUI, and you wire up startup, port access and Windows path mounts yourself</td>
+                          </tr>
+                          <tr>
+                            <td>containerd with nerdctl</td>
+                            <td>The underlying runtime plus a Docker-compatible CLI</td>
+                            <td>Matching a production Kubernetes runtime exactly</td>
+                            <td>The least hand-holding of the four</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>For most people the choice is between the first and the third:</strong> Podman Desktop if you want something that feels like what you had, or the plain engine in WSL2 if you want the smallest number of moving parts and already work in a Linux shell all day.</p>
+                </section>
+
+                <section id="wsl-engine" class="article-section">
+                    <p class="guide-label">03 · THE LEAN ROUTE</p>
+                    <h2>Install the Docker engine directly in a WSL2 distribution.</h2>
+                    <p class="lede">No desktop application, no background service on Windows, and the engine runs where your code already lives. Around ten minutes to set up.</p>
+                    <div class="cmd">
+                      <div class="cmd-head">BASH · INSIDE A WSL2 UBUNTU DISTRIBUTION</div>
+                      <pre><code># Install the engine and the compose plugin from Docker's repository
+curl -fsSL https://get.docker.com | sh
+
+# Run docker without sudo
+sudo usermod -aG docker $USER
+
+# Start it, and have it start with the distribution
+sudo service docker start
+echo 'sudo service docker start' &gt;&gt; ~/.bashrc
+
+# Verify
+docker run --rm hello-world
+docker compose version</code></pre>
+                    </div>
+                    <h3>Details that matter afterwards</h3>
+                    <ul>
+                      <li><strong>Enable systemd</strong> in <code>/etc/wsl.conf</code> if you want the daemon managed properly rather than started from your shell profile. Restart with <code>wsl --shutdown</code> afterwards.</li>
+                      <li><strong>Keep project files in the Linux filesystem.</strong> Bind-mounting from <code>/mnt/c</code> is slow for the same reason every other cross-boundary operation is slow.</li>
+                      <li><strong>Published ports</strong> are reachable from Windows on localhost with mirrored networking enabled, which the <a href="wsl2-setup-windows-guide.html">WSL2 guide</a> covers.</li>
+                      <li><strong>Your editor still works.</strong> VS Code connected to WSL sees the daemon exactly as a Linux machine would.</li>
+                    </ul>
+                </section>
+
+                <section id="podman" class="article-section">
+                    <p class="guide-label">04 · THE DROP-IN</p>
+                    <h2>Podman, if you want the graphical experience back.</h2>
+                    <p class="lede">Podman is daemonless and rootless by default, which is a security improvement and the source of every difference you will notice.</p>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · PODMAN</div>
+                      <pre><code>winget install RedHat.Podman
+# Or install Podman Desktop for the graphical interface
+
+# Create and start the backing Linux machine
+podman machine init
+podman machine start
+
+podman run --rm hello-world
+
+# The Docker-compatible alias, if you want muscle memory to keep working
+Set-Alias docker podman</code></pre>
+                    </div>
+                    <h3>The four differences that catch people</h3>
+                    <ul>
+                      <li><strong>Ports below 1024.</strong> Rootless containers cannot bind them directly. Publish to a high port and map it, or use the documented privileged-port configuration.</li>
+                      <li><strong>File ownership in volumes.</strong> User namespace mapping means a file written in a container may not have the UID you expect on the host. The <code>:U</code> and <code>:Z</code> volume options exist for exactly this.</li>
+                      <li><strong>Compose.</strong> Podman supports Compose files through <code>podman compose</code> or a socket-compatible mode, but a few edge cases in networking and dependency ordering behave differently. Test the whole stack before switching a team.</li>
+                      <li><strong>Pods are first class.</strong> Podman can group containers into a pod that shares a network namespace, which is closer to Kubernetes semantics and genuinely useful once you know it exists.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>A Docker socket compatibility layer exists</strong> for tools that talk to the Docker API directly, such as Testcontainers or some IDE integrations. Enable it before concluding that a tool is incompatible.</p>
+                    </div>
+                </section>
+
+                <section id="migration" class="article-section">
+                    <p class="guide-label">05 · MIGRATION</p>
+                    <h2>Seven things to check before you uninstall.</h2>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">CHECK—01</span>
+                        <strong>Save your volumes</strong>
+                        <p>Named volumes do not migrate between engines. Export any database data you care about before removing anything.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">CHECK—02</span>
+                        <strong>Registry credentials</strong>
+                        <p>Private registry logins live in the Desktop credential helper. Have the credentials to hand before you lose access to it.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">CHECK—03</span>
+                        <strong>Compose files</strong>
+                        <p>Run the whole stack on the new engine before committing. Networking and dependency ordering are where differences show.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">CHECK—04</span>
+                        <strong>Tools that call the socket</strong>
+                        <p>Testcontainers, IDE integrations and some CI runners talk to the Docker API directly. Point them at the compatibility socket.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">CHECK—05</span>
+                        <strong>Multi-architecture builds</strong>
+                        <p>If you build ARM images on x86, verify the emulation setup exists on the new engine before you need it.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">CHECK—06</span>
+                        <strong>Kubernetes</strong>
+                        <p>If you used the Desktop checkbox, decide on a replacement: Rancher Desktop, kind, k3d or minikube.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">CHECK—07</span>
+                        <strong>Uninstall properly</strong>
+                        <p>Remove Desktop through Windows Apps, then clean up its WSL distributions so they stop consuming disk.</p>
+                      </div>
+                    </div>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · REMOVE THE LEFTOVER DISTRIBUTIONS</div>
+                      <pre><code>wsl -l -v
+wsl --unregister docker-desktop
+wsl --unregister docker-desktop-data</code></pre>
+                    </div>
+                    <div class="note note-warn">
+                      <p><strong>Unregistering deletes everything in that distribution.</strong> Any volume you have not exported is gone. Do the export first, and confirm you can read it back.</p>
+                    </div>
+                </section>
+
+                <section id="staying" class="article-section">
+                    <p class="guide-label">06 · THE HONEST CASE</p>
+                    <h2>Three situations where Docker Desktop is still the right answer.</h2>
+                    <ul>
+                      <li><strong>A team where not everyone is a container specialist.</strong> The graphical interface, the automatic updates and the single supported path are worth real money in support time. Replacing it means someone owns the setup documentation.</li>
+                      <li><strong>Personal use, where it is free.</strong> If you are under the licensing threshold, the licence argument does not apply to you at all, and the alternatives are a preference rather than a requirement.</li>
+                      <li><strong>A workflow that depends on the ecosystem.</strong> Extensions, Docker Scout, and tight integration with tooling that expects Desktop specifically.</li>
+                    </ul>
+                    <p><strong>The resource argument is weaker than it used to be.</strong> Modern Desktop releases idle far more cheaply than the versions that gave it a reputation, and a properly configured <code>.wslconfig</code> caps its memory the same way it caps everything else in WSL. Measure your own machine before switching on that basis alone.</p>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>Containers without Docker Desktop, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>Do I need a licence for Docker Desktop?</strong>
+                            <p>Docker Desktop is free for personal use, education and small businesses, and requires a paid subscription for commercial use in organisations above a published size and revenue threshold. Those thresholds have changed more than once, so check the current terms directly rather than relying on any summary.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>What is the closest alternative to Docker Desktop?</strong>
+                            <p>Podman Desktop. It provides a graphical interface, a Docker-compatible command line and a socket compatibility layer for tools that call the Docker API. The main differences come from being rootless: binding ports below 1024, volume file ownership, and a few Compose edge cases.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Can I just install Docker inside WSL2?</strong>
+                            <p>Yes, and it is the lightest option. Install the engine and the Compose plugin inside a WSL2 distribution, add your user to the docker group, and start the service. You lose the graphical interface and automatic updates, and you configure startup and port access yourself.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Will my docker-compose files work with Podman?</strong>
+                            <p>Mostly. Podman supports Compose files through podman compose or a Docker-compatible socket, but networking behaviour and dependency ordering have edge cases that differ. Run your full stack on the new engine before switching a team, rather than testing a single container.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>How do I move my volumes to a new container engine?</strong>
+                            <p>You export and re-import the data rather than moving the volume. Run a temporary container that mounts the volume, write its contents to an archive on the host, then restore it into a new volume on the new engine. Named volumes are not portable between engines directly.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="wsl2-setup-windows-guide.html"><strong>Set up WSL2 properly on Windows</strong><span aria-hidden="true">→</span></a>
+                        <a href="python-virtual-environment-guide.html"><strong>Python environments without the mess</strong><span aria-hidden="true">→</span></a>
+                        <a href="deploy-static-site-github-pages.html"><strong>Deploy a static site on GitHub Pages</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>A preference for fewer background services runs through everything here, including the apps.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

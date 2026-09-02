@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="The three GitHub Pages deployment models, custom domains and HTTPS, the SEO baseline every static site needs, and when to move to another host instead.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>Deploy a Static Site on GitHub Pages Properly · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Deploy a Static Site on GitHub Pages, Properly">
+    <meta property="og:description" content="The three GitHub Pages deployment models, custom domains and HTTPS, the SEO baseline every static site needs, and when to move to another host instead.">
+    <meta property="og:url" content="https://lkowalskil.github.io/deploy-static-site-github-pages.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deploy a Static Site on GitHub Pages, Properly">
+    <meta name="twitter:description" content="GitHub Pages from first push to custom domain, with the SEO baseline most static sites skip.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/deploy-static-site-github-pages.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/deploy-static-site-github-pages.html#article",
+      "headline": "Deploy a Static Site on GitHub Pages, Properly",
+      "description": "The three GitHub Pages deployment models, custom domains and HTTPS, the SEO baseline every static site needs, and when to move to another host instead.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/deploy-static-site-github-pages.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "GitHub Pages deploy, custom domain GitHub Pages, GitHub Actions Pages workflow, static site SEO, canonical URL sitemap robots, Cloudflare Pages alternative",
+      "articleSection": "Shipping",
+      "proficiencyLevel": "Beginner",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Developers publishing a personal or project site"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/deploy-static-site-github-pages.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is GitHub Pages free for a custom domain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Custom domains and automatic HTTPS certificates are included at no cost for public repositories. You pay only for the domain registration itself. Private repositories can publish Pages sites on paid plans, but the site is still publicly visible unless you use a plan with access control."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my custom domain showing a 404?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually one of three things: DNS has not propagated yet, the CNAME file is missing from the published output because a build step deleted it, or the domain was set in settings before the DNS records existed. Check the domain resolves with nslookup first, then confirm the CNAME file is present in the deployed branch."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I run a backend on GitHub Pages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Pages serves static files only, with no server-side execution, no database and no ability to set response headers. Client-side JavaScript calling an external API works fine. If you need form handling, authentication or server logic, use a host with edge functions such as Cloudflare Pages or Netlify."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need GitHub Actions to deploy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if your site needs a build step. If the repository already contains finished HTML, publish directly from a branch or a docs folder and nothing can fail to build. Use an Actions workflow when a static site generator or bundler has to run first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my GitHub Pages site not appearing in Google?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most commonly it lacks the basics: unique titles and descriptions, an absolute canonical link on every page, an XML sitemap declared in robots.txt, and internal links so pages are not orphaned. Also verify the property in Google Search Console and confirm the canonical host matches the one you actually serve."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/deploy-static-site-github-pages.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Deploy a Static Site on GitHub Pages, Properly",
+          "item": "https://lkowalskil.github.io/deploy-static-site-github-pages.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://lkowalskil.github.io/deploy-static-site-github-pages.html#howto",
+      "name": "Deploy a static site to GitHub Pages with a custom domain",
+      "description": "Publish a static site from a GitHub repository, attach a custom domain, and enable HTTPS.",
+      "inLanguage": "en",
+      "totalTime": "PT60M",
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "A GitHub repository"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "A domain name with DNS access"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Create the repository",
+          "text": "Create a repository containing your static files, with an index.html at the root of the published directory.",
+          "url": "https://lkowalskil.github.io/deploy-static-site-github-pages.html#models"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Choose a deployment source",
+          "text": "In repository settings, publish from a branch, from a docs folder, or from a GitHub Actions workflow.",
+          "url": "https://lkowalskil.github.io/deploy-static-site-github-pages.html#models"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Verify the default URL",
+          "text": "Confirm the site loads on the github.io address before adding a domain.",
+          "url": "https://lkowalskil.github.io/deploy-static-site-github-pages.html#models"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Point DNS at GitHub",
+          "text": "Add the GitHub Pages A records for an apex domain, or a CNAME record for a subdomain.",
+          "url": "https://lkowalskil.github.io/deploy-static-site-github-pages.html#models"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Set the custom domain",
+          "text": "Enter the domain in the Pages settings so the CNAME file is written to the repository.",
+          "url": "https://lkowalskil.github.io/deploy-static-site-github-pages.html#models"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Enforce HTTPS",
+          "text": "Wait for the certificate to be issued, then enable Enforce HTTPS.",
+          "url": "https://lkowalskil.github.io/deploy-static-site-github-pages.html#models"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—13 · SHIPPING · 10 MIN READ</p>
+                <h1 class="guide-title">A static site on GitHub Pages, set up like you mean to keep it.</h1>
+                <p class="guide-deck">Pushing HTML to a repository is five minutes. Getting a custom domain with working HTTPS, a build that deploys itself, and the metadata that decides whether search engines index any of it takes an afternoon — once. This is that afternoon, in order.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Free, and durable</strong>
+                        <p>No server, no runtime, no dependency that expires. The failure modes are all in configuration.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>THREE DEPLOY MODELS</li>
+                    <li>CUSTOM DOMAIN + HTTPS</li>
+                    <li>NINE-POINT SEO BASELINE</li>
+                    <li>WHEN TO MOVE HOST</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#what">What Pages is</a>
+                        <a href="#models">Three deploy models</a>
+                        <a href="#domain">Custom domain</a>
+                        <a href="#seo">The SEO baseline</a>
+                        <a href="#performance">Performance</a>
+                        <a href="#alternatives">When to move</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="what" class="article-section">
+                    <p class="guide-label">01 · THE PLATFORM</p>
+                    <h2>Static files, served fast, with no server behind them.</h2>
+                    <p class="lede">GitHub Pages serves files from a repository over a CDN. There is no runtime, which is a limitation and the entire reason it stays up without maintenance.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Works</th><th>Does not work</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>HTML, CSS, JavaScript, images, fonts, downloads</td><td>Server-side code of any kind</td></tr>
+                          <tr><td>Static site generators, built before deployment</td><td>Databases, sessions, server-side authentication</td></tr>
+                          <tr><td>Client-side applications calling external APIs</td><td>Form handling without a third-party endpoint</td></tr>
+                          <tr><td>Custom domains with automatic HTTPS</td><td>Custom response headers or redirect rules</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>That last row is the one that catches people.</strong> You cannot set cache-control, security headers or server-side redirects on Pages. If you need a content security policy, it goes in a meta tag; if you need redirects, they are HTML pages with a meta refresh and a canonical link. Both work; neither is as clean as a host that lets you write configuration.</p>
+                    <p>Practical limits worth knowing: repositories are expected to stay under roughly a gigabyte, published sites under about the same, with a soft bandwidth allowance and a build limit per hour. A normal documentation or portfolio site is nowhere near any of them.</p>
+                </section>
+
+                <section id="models" class="article-section">
+                    <p class="guide-label">02 · DEPLOYMENT</p>
+                    <h2>Branch, folder, or workflow. Pick by what builds your site.</h2>
+                    <h3>1. Publish from a branch</h3>
+                    <p>The simplest model: the repository contains the finished HTML, and Pages serves the branch root. Nothing builds, so nothing can fail to build. This is the right choice for hand-written sites and the reason plenty of small sites have run untouched for years.</p>
+                    <h3>2. Publish from a /docs folder</h3>
+                    <p>The same idea, with the site in a subdirectory so it can live beside source code in one repository. Useful for a project that ships documentation alongside its code.</p>
+                    <h3>3. Publish from a GitHub Actions workflow</h3>
+                    <p>Required for anything that needs a build step — a static site generator, a bundler, a template engine. The workflow builds and uploads an artefact, and Pages deploys it.</p>
+                    <div class="cmd">
+                      <div class="cmd-head">.GITHUB/WORKFLOWS/DEPLOY.YML</div>
+                      <pre><code>name: Deploy to Pages
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/deploy-pages@v4</code></pre>
+                    </div>
+                    <div class="note">
+                      <p><strong>Do not add a build step you do not need.</strong> A workflow is another dependency that can break on a Tuesday because an action deprecated a version. If your site is HTML and CSS, publish the branch directly and keep the moving parts at zero.</p>
+                    </div>
+                </section>
+
+                <section id="domain" class="article-section">
+                    <p class="guide-label">03 · DOMAIN AND HTTPS</p>
+                    <h2>DNS records, the CNAME file, and the certificate.</h2>
+                    <p class="lede">Two things have to agree: your DNS points at GitHub, and GitHub knows which domain to answer for. Getting one without the other is the usual reason a domain shows a 404 for a day.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Domain shape</th><th>Record type</th><th>Points to</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Apex, example.com</td><td>Four A records (and AAAA for IPv6)</td><td>The GitHub Pages IP addresses listed in the current documentation</td></tr>
+                          <tr><td>Subdomain, www.example.com</td><td>CNAME</td><td>yourusername.github.io</td></tr>
+                          <tr><td>Apex on a provider with flattening</td><td>ALIAS or ANAME</td><td>yourusername.github.io</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <h3>The order that avoids a broken day</h3>
+                    <ul>
+                      <li><strong>Add the DNS records first</strong> and wait for propagation. Check with <code>nslookup example.com</code> before touching GitHub.</li>
+                      <li><strong>Then set the custom domain</strong> in the repository Pages settings. GitHub writes a <code>CNAME</code> file into the repository — leave it there, and do not let a build step overwrite it.</li>
+                      <li><strong>Wait for the certificate.</strong> It can take up to a day. Do not enable Enforce HTTPS until GitHub reports the certificate is issued, or you will lock the site behind a protocol it cannot serve yet.</li>
+                      <li><strong>Pick one canonical host</strong> — apex or www — and make sure the other redirects to it. GitHub handles this once both are configured, and your canonical tags must match your choice.</li>
+                    </ul>
+                    <div class="note note-warn">
+                      <p><strong>If a build step wipes the CNAME file, the domain silently detaches.</strong> Generators that clean the output directory are the usual culprit. Either commit the file into the source that gets copied, or configure the generator to emit it.</p>
+                    </div>
+                </section>
+
+                <section id="seo" class="article-section">
+                    <p class="guide-label">04 · BEING FOUND</p>
+                    <h2>Nine things every static site needs before it can rank.</h2>
+                    <p class="lede">A static site has no framework doing this for you. Each item is a line of HTML or a small file, and skipping them is why a perfectly good site gets no traffic.</p>
+                    <ul>
+                      <li><strong>A unique title and meta description per page.</strong> Roughly 50 to 60 characters for the title, 120 to 160 for the description. Duplicates across pages actively hurt.</li>
+                      <li><strong>A canonical link on every page</strong>, absolute, matching the host you chose. This is what prevents the apex, the www and the github.io address being treated as three sites.</li>
+                      <li><strong>An XML sitemap</strong>, listing exactly your indexable pages and nothing else, referenced from robots.txt.</li>
+                      <li><strong>A robots.txt</strong> that allows crawling and declares the sitemap by absolute URL.</li>
+                      <li><strong>Open Graph and Twitter card tags</strong> with an absolute image URL. This is what decides whether a shared link looks like a page or like a bare string.</li>
+                      <li><strong>Structured data</strong> in JSON-LD. Article, FAQPage and BreadcrumbList are the three that most content sites can genuinely justify.</li>
+                      <li><strong>Exactly one h1 per page</strong>, describing that page rather than the site.</li>
+                      <li><strong>A real 404 page</strong> — Pages serves <code>404.html</code> from the root automatically.</li>
+                      <li><strong>Internal links.</strong> An orphan page that nothing links to is a page search engines will find last and value least.</li>
+                    </ul>
+                    <div class="cmd">
+                      <div class="cmd-head">HEAD · THE MINIMUM PER PAGE</div>
+                      <pre><code>&lt;title&gt;Page title, distinct from every other page&lt;/title&gt;
+&lt;meta name="description" content="One sentence that would make someone click."&gt;
+&lt;link rel="canonical" href="https://example.com/page.html"&gt;
+&lt;meta property="og:title" content="Page title"&gt;
+&lt;meta property="og:description" content="Same sentence, roughly."&gt;
+&lt;meta property="og:url" content="https://example.com/page.html"&gt;
+&lt;meta property="og:image" content="https://example.com/card.png"&gt;
+&lt;meta name="twitter:card" content="summary_large_image"&gt;</code></pre>
+                    </div>
+                    <div class="note note-good">
+                      <p><strong>Automate the check.</strong> A short script that verifies every page has a unique title, a correct canonical, a sitemap entry and no broken internal links catches the mistakes that are invisible in a browser. This site runs exactly that on every change, and it has caught more problems than any manual review.</p>
+                    </div>
+                </section>
+
+                <section id="performance" class="article-section">
+                    <p class="guide-label">05 · PERFORMANCE</p>
+                    <h2>What you can control when you cannot set headers.</h2>
+                    <p class="lede">You do not control caching or compression on Pages, so performance work happens entirely in the documents themselves.</p>
+                    <ul>
+                      <li><strong>Serve modern image formats.</strong> WebP or AVIF, with dimensions on every image element so the layout does not shift while they load.</li>
+                      <li><strong>Set width and height on every image.</strong> The cheapest fix for layout shift there is, and it costs two attributes.</li>
+                      <li><strong>Lazy-load anything below the fold</strong> with <code>loading="lazy"</code>, and leave above-the-fold images eager.</li>
+                      <li><strong>Preconnect to font hosts</strong>, use <code>display=swap</code>, and load only the weights you actually use. Fonts are usually the largest render-blocking cost on a simple site.</li>
+                      <li><strong>Inline small CSS, defer all JavaScript.</strong> On a static site, most scripts have no reason to block rendering.</li>
+                      <li><strong>Avoid third-party embeds.</strong> One analytics script and one embedded video can outweigh your entire page.</li>
+                      <li><strong>Measure on a throttled connection.</strong> Lighthouse on a fast desktop connection tells you almost nothing about the visitor on mobile data.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>Put a content security policy in a meta tag.</strong> Since you cannot send headers, <code>http-equiv="Content-Security-Policy"</code> is the available route. Restricting <code>default-src</code>, <code>object-src</code> and <code>base-uri</code> costs nothing on a static site and closes a real class of injection.</p>
+                    </div>
+                </section>
+
+                <section id="alternatives" class="article-section">
+                    <p class="guide-label">06 · ALTERNATIVES</p>
+                    <h2>Three hosts that solve what Pages cannot.</h2>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Host</th><th>Gives you</th><th>Move when</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Cloudflare Pages</td><td>Custom headers and redirects, edge functions, generous bandwidth, preview deployments</td><td>You need real headers, redirect rules or a small amount of server-side logic</td></tr>
+                          <tr><td>Netlify</td><td>Redirects, form handling, functions, split testing</td><td>You want form submissions without building a backend</td></tr>
+                          <tr><td>Vercel</td><td>Framework-native builds, edge rendering, image optimisation</td><td>The site stops being static and becomes an application</td></tr>
+                          <tr><td>A small VPS</td><td>Everything, and the responsibility for it</td><td>You need a database or long-running processes</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Do not move for performance.</strong> Pages is behind a CDN and is fast. Move when you need behaviour it structurally cannot provide — headers, redirects, or code executing on request. For a documentation site, a portfolio or a static content site, the absence of moving parts is the feature.</p>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>GitHub Pages, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>Is GitHub Pages free for a custom domain?</strong>
+                            <p>Yes. Custom domains and automatic HTTPS certificates are included at no cost for public repositories. You pay only for the domain registration itself. Private repositories can publish Pages sites on paid plans, but the site is still publicly visible unless you use a plan with access control.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Why is my custom domain showing a 404?</strong>
+                            <p>Usually one of three things: DNS has not propagated yet, the CNAME file is missing from the published output because a build step deleted it, or the domain was set in settings before the DNS records existed. Check the domain resolves with nslookup first, then confirm the CNAME file is present in the deployed branch.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Can I run a backend on GitHub Pages?</strong>
+                            <p>No. Pages serves static files only, with no server-side execution, no database and no ability to set response headers. Client-side JavaScript calling an external API works fine. If you need form handling, authentication or server logic, use a host with edge functions such as Cloudflare Pages or Netlify.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Do I need GitHub Actions to deploy?</strong>
+                            <p>Only if your site needs a build step. If the repository already contains finished HTML, publish directly from a branch or a docs folder and nothing can fail to build. Use an Actions workflow when a static site generator or bundler has to run first.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Why is my GitHub Pages site not appearing in Google?</strong>
+                            <p>Most commonly it lacks the basics: unique titles and descriptions, an absolute canonical link on every page, an XML sitemap declared in robots.txt, and internal links so pages are not orphaned. Also verify the property in Google Search Console and confirm the canonical host matches the one you actually serve.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="git-ssh-keys-github-guide.html"><strong>SSH keys and signed commits for GitHub</strong><span aria-hidden="true">→</span></a>
+                        <a href="install-nodejs-windows-nvm.html"><strong>Install Node.js the way that survives version changes</strong><span aria-hidden="true">→</span></a>
+                        <a href="docker-desktop-alternatives-windows.html"><strong>Docker Desktop alternatives on Windows</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>This site is a GitHub Pages repository with no build step and an automated metadata check on every change.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

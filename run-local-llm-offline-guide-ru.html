@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Требования к железу по размеру модели, что реально стоит квантование, какой запускатор выбрать и как убедиться, что модель работает без сети.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>Как запустить LLM локально и полностью офлайн · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:title" content="Как запустить LLM локально и полностью офлайн">
+    <meta property="og:description" content="Требования к железу по размеру модели, что реально стоит квантование, какой запускатор выбрать и как убедиться, что модель работает без сети.">
+    <meta property="og:url" content="https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — офлайн-приложения для Android">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Как запустить LLM локально и полностью офлайн">
+    <meta name="twitter:description" content="Локальные модели без фантазий: таблицы по VRAM, квантование, запускаторы и проверка офлайна.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — офлайн-приложения для Android">
+    <link rel="canonical" href="https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html">
+    <link rel="alternate" hreflang="en" href="https://lkowalskil.github.io/run-local-llm-offline-guide.html">
+    <link rel="alternate" hreflang="ru" href="https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html">
+    <link rel="alternate" hreflang="es" href="https://lkowalskil.github.io/run-local-llm-offline-guide-es.html">
+    <link rel="alternate" hreflang="x-default" href="https://lkowalskil.github.io/run-local-llm-offline-guide.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html#article",
+      "headline": "Как запустить LLM локально и полностью офлайн",
+      "description": "Требования к железу по размеру модели, что реально стоит квантование, какой запускатор выбрать и как убедиться, что модель работает без сети.",
+      "inLanguage": "ru",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "локальная LLM, запустить модель офлайн, Ollama, LM Studio, llama.cpp, GGUF квантование, требования VRAM, приватный ИИ",
+      "articleSection": "Локальный ИИ",
+      "proficiencyLevel": "Intermediate",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Разработчики и люди, которым важна приватность"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html#faq",
+      "inLanguage": "ru",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Какое железо нужно, чтобы запустить LLM локально?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Для модели 7B–8B в 4-битном квантовании нужно около 4,5 ГБ видеопамяти, то есть комфортно на видеокарте с 8 ГБ. Только на процессоре работает при примерно 16 ГБ оперативной памяти, но генерация будет медленнее скорости чтения. Машины с единой памятью показывают себя необычно хорошо."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Локальная модель так же хороша, как облачная?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Нет, не в тех размерах, которые влезают в потребительское железо. Ждите способного помощника для суммаризации, черновиков, извлечения данных и рутинной работы с кодом, и отставания на сложных рассуждениях и редких знаниях. Причина запускать локально — приватность, работа без сети и стоимость, а не сила модели."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Чего стоит квантование по качеству?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Переход с 16 бит на 8 почти бесплатен. С 8 на 4 стоит небольшой, обычно приемлемой потери за примерно вдвое меньший объём, поэтому большинство работает в 4 битах. Ниже 4 бит деградация очевидна, начиная со следования инструкциям. Правило: более крупная модель в 4 битах лучше меньшей в 8."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какой инструмент выбрать для локального запуска?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ollama, если нужна командная строка и локальный API для других инструментов. LM Studio, если нужно настольное приложение с каталогом моделей и встроенным чатом. llama.cpp напрямую, если нужен полный контроль над квантованием и выгрузкой слоёв. Все работают с одними и теми же файлами моделей."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как убедиться, что модель действительно работает офлайн?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Скачайте модели, пока есть сеть, затем полностью отключите её и задайте объёмный запрос. Смотрите, как растёт загрузка видеокарты или процессора во время генерации. После этого заблокируйте исходящий трафик запускатора в брандмауэре и проверьте, что чат-интерфейс не переключается на облачного провайдера."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Руководства",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Как запустить LLM локально и полностью офлайн",
+          "item": "https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Перейти к руководству</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ВСЕ РУКОВОДСТВА</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Приложения</a>
+            <a href="guides.html">Руководства</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Смотреть приложения <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—08 · ЛОКАЛЬНЫЙ ИИ · 12 МИН ЧТЕНИЯ</p>
+                <h1 class="guide-title">Языковая модель на своей машине, с выдернутым сетевым кабелем.</h1>
+                <p class="guide-deck">Локальные модели стали по-настоящему полезными, а руководства о них по большей части остались фантазиями о железе. Здесь честная версия: что влезет в вашу видеопамять, чего стоит квантование, какой запускатор брать под какую задачу и как убедиться, что всё действительно работает офлайн, а не тихо ходит в чужой API.</p>
+                <div class="guide-langs">
+                    <span class="guide-langs-label">ЯЗЫК РУКОВОДСТВА</span>
+                        <a href="run-local-llm-offline-guide.html" hreflang="en" lang="en">English</a>
+                        <span aria-current="page">Русский</span>
+                        <a href="run-local-llm-offline-guide-es.html" hreflang="es" lang="es">Español</a>
+                </div>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Кратко о руководстве">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Знак студии Nyxelium" decoding="async">
+                    <div>
+                        <span class="guide-label">ЗАМЕТКА МАСТЕРСКОЙ</span>
+                        <strong>Офлайн, с проверкой</strong>
+                        <p>Последний раздел — проверка того, что модель работает при физически отключённой сети.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>ТАБЛИЦА ПАМЯТИ ПО РАЗМЕРАМ</li>
+                    <li>КВАНТОВАНИЕ ОБЪЯСНЕНО</li>
+                    <li>OLLAMA · LM STUDIO</li>
+                    <li>ПРОВЕРКА ОФЛАЙНА</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="Содержание">
+                <div class="article-rail-inner">
+                    <p class="guide-label">НА ЭТОЙ СТРАНИЦЕ</p>
+                    <nav>
+                        <a href="#why">Зачем локально</a>
+                        <a href="#hardware">Что потянет железо</a>
+                        <a href="#runners">Выбор запускатора</a>
+                        <a href="#install">Установка и первый запуск</a>
+                        <a href="#tuning">Настройка скорости</a>
+                        <a href="#offline">Проверка офлайна</a>
+                        <a href="#answers">Коротко</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="why" class="article-section">
+                    <p class="guide-label">01 · АРГУМЕНТЫ</p>
+                    <h2>Три веских причины и ограничения, о которых молчат.</h2>
+                    <p class="lede">Локальная модель хуже топовой облачной почти в любой задаче. И это единственный вариант, когда данные не должны покидать машину — этот размен стоит понимать точно, а не эмоционально.</p>
+                    <h3>Что локальный запуск действительно даёт</h3>
+                    <ul>
+                      <li><strong>Данные не уходят.</strong> Никаких условий использования, политик хранения и вопросов про обучение. Для клиентских материалов, медицинских записей, юридических черновиков и всего под NDA это и есть весь аргумент.</li>
+                      <li><strong>Работает без соединения.</strong> В самолёте, в лаборатории, на объекте без связи или во время аварии у провайдера.</li>
+                      <li><strong>Нет платы за токены и лимитов.</strong> Массовая классификация, пакетная суммаризация и повторяющиеся эксперименты становятся бесплатными после электричества.</li>
+                      <li><strong>Модель не устареет под вами.</strong> Сохранённая модель через два года ведёт себя так же. Облачные меняют поведение без предупреждения.</li>
+                    </ul>
+                    <h3>Чего он не даёт</h3>
+                    <ul>
+                      <li><strong>Топового уровня рассуждений.</strong> Модель, влезающая в потребительскую видеопамять, не конкурирует с крупнейшими облачными на сложных задачах и редких знаниях. Ждите способного помощника, а не замену.</li>
+                      <li><strong>Скорости на длинном контексте.</strong> Обработка большого документа — как раз то, где потребительское железо ощущается медленнее всего.</li>
+                      <li><strong>Меньше уверенных ошибок.</strong> Маленькие модели галлюцинируют больше, а не меньше. «Локально» не значит «аккуратно».</li>
+                      <li><strong>Бесплатной памяти.</strong> Всё, что занимает модель, не достаётся остальной работе.</li>
+                    </ul>
+                </section>
+
+                <section id="hardware" class="article-section">
+                    <p class="guide-label">02 · БЮДЖЕТ ПАМЯТИ</p>
+                    <h2>Всё решает память. Вот арифметика.</h2>
+                    <p class="lede">Размер модели в миллиардах параметров, умноженный на число байт на параметр при вашем квантовании, плюс место под контекст. Это весь расчёт.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Размер модели</th><th>4 бита</th><th>8 бит</th><th>Реалистично на</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>3B</td><td>около 2 ГБ</td><td>около 3,5 ГБ</td><td>Любая современная видеокарта или процессор</td></tr>
+                          <tr><td>7B–8B</td><td>около 4,5 ГБ</td><td>около 8,5 ГБ</td><td>8 ГБ видеопамяти комфортно; 16 ГБ ОЗУ на процессоре</td></tr>
+                          <tr><td>13B–14B</td><td>около 8 ГБ</td><td>около 15 ГБ</td><td>12 ГБ видеопамяти; на процессоре медленно, но работает</td></tr>
+                          <tr><td>30B–34B</td><td>около 19 ГБ</td><td>около 36 ГБ</td><td>24 ГБ видеопамяти или ноутбук с единой памятью</td></tr>
+                          <tr><td>70B</td><td>около 40 ГБ</td><td>около 75 ГБ</td><td>Две крупные видеокарты или 64 ГБ единой памяти, медленно</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>К каждой цифре добавляйте запас.</strong> Кэш ключей и значений растёт вместе с объёмом поданного текста, и длинный контекст на большой модели съедает ещё несколько гигабайт. Модель, которая едва влезла с пустым контекстом, упадёт на середине длинного документа.</p>
+                    <h3>Квантование в одном абзаце</h3>
+                    <p>Веса хранятся с пониженной точностью, чтобы модель занимала меньше. Переход с 16 бит на 8 почти бесплатен по качеству. С 8 на 4 — та самая золотая середина: небольшая, обычно приемлемая потеря за примерно вдвое меньший объём. Ниже 4 бит деградация становится очевидной: первым страдает следование инструкциям, затем связность длинных ответов. <strong>Более крупная модель в 4 битах обычно лучше меньшей в 8</strong> — это самое полезное правило во всей теме.</p>
+                    <div class="note">
+                      <p><strong>Видеокарта или процессор?</strong> Видеокарта примерно на порядок быстрее при генерации. Процессорный вывод вполне пригоден для моделей 3B–8B, если устраивает скорость чтения. Машины с единой памятью здесь необычно хороши.</p>
+                    </div>
+                </section>
+
+                <section id="runners" class="article-section">
+                    <p class="guide-label">03 · ИНСТРУМЕНТЫ</p>
+                    <h2>Четыре способа запустить одни и те же файлы модели.</h2>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Инструмент</th><th>Формат</th><th>Кому подходит</th><th>Компромисс</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Ollama</td><td>Командная строка плюс локальный HTTP API</td><td>Разработчикам. Одна команда, чтобы скачать и запустить, и API для других инструментов.</td><td>Меньше тонкого контроля, чем у llama.cpp напрямую</td></tr>
+                          <tr><td>LM Studio</td><td>Настольное приложение</td><td>Тем, кто пробует и сравнивает модели, и нетехническим пользователям.</td><td>Графический процесс работы, более тяжёлая установка</td></tr>
+                          <tr><td>llama.cpp</td><td>Движок под всем остальным</td><td>Максимальный контроль над квантованием, выгрузкой слоёв и сэмплированием.</td><td>Рабочий процесс собираете сами</td></tr>
+                          <tr><td>Jan / GPT4All</td><td>Настольные приложения</td><td>Приватный ассистент для тех, кто не хочет терминал</td><td>Меньше настроек, новые форматы появляются позже</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p>Все четыре работают с одними и теми же квантованными файлами, так что выбор — про рабочий процесс, а не про возможности. Частая схема: Ollama как движок и отдельный чат-интерфейс, направленный на его API.</p>
+                </section>
+
+                <section id="install" class="article-section">
+                    <p class="guide-label">04 · ПОШАГОВО</p>
+                    <h2>От нуля до работающей модели примерно за десять минут.</h2>
+                    <div class="cmd">
+                      <div class="cmd-head">SHELL · OLLAMA, ПЕРВЫЙ ЗАПУСК</div>
+                      <pre><code># Скачать модель под ваше железо и начать диалог
+ollama run llama3.1:8b
+
+# Посмотреть, что скачано и сколько занимает
+ollama list
+
+# Удалить ненужное
+ollama rm llama3.1:8b
+
+# Поднять локальный API для других инструментов
+ollama serve</code></pre>
+                    </div>
+                    <p>API слушает localhost — именно к нему подключаются плагины редакторов, приложения для заметок и скрипты. Наружу ничего не уходит.</p>
+                    <div class="cmd">
+                      <div class="cmd-head">SHELL · ВЫЗОВ ЛОКАЛЬНОГО API</div>
+                      <pre><code>curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.1:8b",
+  "prompt": "Сократи до трёх пунктов: ...",
+  "stream": false
+}'</code></pre>
+                    </div>
+                    <h3>Какую модель взять первой</h3>
+                    <ul>
+                      <li><strong>Общий помощник, 8 ГБ видеопамяти</strong> — современная инструктивная модель 7B–8B в 4 битах. Ответ по умолчанию, и он хороший.</li>
+                      <li><strong>Код</strong> — специализированная модель того же размера. Заметно лучше в дополнении и рефакторинге, чем общая модель того же объёма.</li>
+                      <li><strong>Маленькая и быстрая</strong> — 3B для классификации, извлечения данных и разметки, где диалог не нужен.</li>
+                      <li><strong>Максимум качества</strong> — сначала растите число параметров, потом точность.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>Проверьте лицензию, прежде чем строить на модели продукт.</strong> Открытые веса — не то же самое, что открытый исходный код: несколько популярных семейств ограничивают коммерческое использование или ставят условия на производные модели.</p>
+                    </div>
+                </section>
+
+                <section id="tuning" class="article-section">
+                    <p class="guide-label">05 · НАСТРОЙКА</p>
+                    <h2>Четыре параметра, от которых зависит, будет ли это удобно.</h2>
+                    <ul>
+                      <li><strong>Выгрузка слоёв на видеокарту.</strong> Самый важный параметр, когда модель не влезает целиком. Отдавайте видеокарте столько слоёв, сколько позволяет память; остальное считает процессор. Один лишний слой — и получите ошибку нехватки памяти.</li>
+                      <li><strong>Размер контекста.</strong> Больший контекст стоит памяти и замедляет генерацию. Ставьте столько, сколько реально нужно: 4K для диалога, больше — только когда действительно подаёте документы.</li>
+                      <li><strong>Размер батча при обработке промпта.</strong> Влияет на скорость поглощения длинного запроса отдельно от скорости выдачи. Если вставка большого документа тормозит, а ответы идут нормально — это оно.</li>
+                      <li><strong>Уровень квантования.</strong> Не влезает — сначала снижайте с 5 бит до 4, и только потом берите модель поменьше.</li>
+                    </ul>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Конфигурация</th><th>7B–8B в 4 битах</th><th>Ощущается как</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Современная дискретная видеокарта, все слои выгружены</td><td>Быстро, заметно выше скорости чтения</td><td>Сопоставимо с облачным чатом</td></tr>
+                          <tr><td>Старая или слабая видеокарта, частичная выгрузка</td><td>Примерно скорость чтения</td><td>Годится для диалога, утомительно для длинных ответов</td></tr>
+                          <tr><td>Только процессор, современный многоядерный</td><td>Ниже скорости чтения</td><td>Нормально для фоновых и пакетных задач</td></tr>
+                          <tr><td>Ноутбук с единой памятью</td><td>Уверенно выше скорости чтения</td><td>Лучший опыт на ватт из доступных сегодня</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Если генерация сильно медленнее таблицы</strong>, модель почти наверняка вылезает из видеопамяти в системную. Проверьте выгрузку слоёв, прежде чем винить железо, — именно эта ошибка объясняет большинство разочарований с первого раза.</p>
+                </section>
+
+                <section id="offline" class="article-section">
+                    <p class="guide-label">06 · ПРОВЕРКА</p>
+                    <h2>Докажите, что модель работает без сети.</h2>
+                    <p class="lede">Это шаг, который отделяет действительно локальную установку от локального интерфейса перед удалённым API. Сделайте его один раз и осознанно.</p>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">ШАГ—01</span>
+                        <strong>Сначала всё скачайте</strong>
+                        <p>Загрузите все модели, пока есть сеть. Файлы моделей — единственное, что действительно требует соединения.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">ШАГ—02</span>
+                        <strong>Отключитесь по-настоящему</strong>
+                        <p>Выключите Wi-Fi и выньте кабель. Режим полёта подойдёт. Не полагайтесь на правило файрвола для самой проверки.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">ШАГ—03</span>
+                        <strong>Задайте реальный запрос</strong>
+                        <p>Не одно слово. Попросите достаточно длинный ответ, чтобы тихий переход на облако провалился заметно.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">ШАГ—04</span>
+                        <strong>Смотрите на загрузку</strong>
+                        <p>Загрузка видеокарты или процессора должна расти во время генерации. Если локально ничего не шевелится — отвечает кто-то другой.</p>
+                      </div>
+                    </div>
+                    <h3>Как удержать офлайн дальше</h3>
+                    <ul>
+                      <li><strong>Заблокируйте исходящий трафик</strong> для запускатора в брандмауэре Windows после того, как модели скачаны. Обновляйтесь осознанно.</li>
+                      <li><strong>Отключите телеметрию и проверку обновлений</strong> в выбранном инструменте.</li>
+                      <li><strong>Держите файлы моделей в резервной копии.</strong> Они большие, но не бесконечные, а отозванная или перелицензированная модель без копии не восстанавливается.</li>
+                      <li><strong>Осторожнее с чат-интерфейсами.</strong> Многие настольные оболочки поддерживают и локальных, и облачных провайдеров, а переключение — один выпадающий список. Проверьте, что выбрано, прежде чем вставлять что-то чувствительное.</li>
+                    </ul>
+                    <div class="note note-good">
+                      <p><strong>Заявление о приватности не крепче самого слабого звена.</strong> Локальная модель за интерфейсом, который синхронизирует историю переписки в облачный аккаунт, — это не приватная установка. Проверяйте каждый компонент отдельно.</p>
+                    </div>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · КОРОТКИЕ ОТВЕТЫ</p>
+                    <h2>Локальные модели — коротко.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>Какое железо нужно, чтобы запустить LLM локально?</strong>
+                            <p>Для модели 7B–8B в 4-битном квантовании нужно около 4,5 ГБ видеопамяти, то есть комфортно на видеокарте с 8 ГБ. Только на процессоре работает при примерно 16 ГБ оперативной памяти, но генерация будет медленнее скорости чтения. Машины с единой памятью показывают себя необычно хорошо.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Локальная модель так же хороша, как облачная?</strong>
+                            <p>Нет, не в тех размерах, которые влезают в потребительское железо. Ждите способного помощника для суммаризации, черновиков, извлечения данных и рутинной работы с кодом, и отставания на сложных рассуждениях и редких знаниях. Причина запускать локально — приватность, работа без сети и стоимость, а не сила модели.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Чего стоит квантование по качеству?</strong>
+                            <p>Переход с 16 бит на 8 почти бесплатен. С 8 на 4 стоит небольшой, обычно приемлемой потери за примерно вдвое меньший объём, поэтому большинство работает в 4 битах. Ниже 4 бит деградация очевидна, начиная со следования инструкциям. Правило: более крупная модель в 4 битах лучше меньшей в 8.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Какой инструмент выбрать для локального запуска?</strong>
+                            <p>Ollama, если нужна командная строка и локальный API для других инструментов. LM Studio, если нужно настольное приложение с каталогом моделей и встроенным чатом. llama.cpp напрямую, если нужен полный контроль над квантованием и выгрузкой слоёв. Все работают с одними и теми же файлами моделей.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Как убедиться, что модель действительно работает офлайн?</strong>
+                            <p>Скачайте модели, пока есть сеть, затем полностью отключите её и задайте объёмный запрос. Смотрите, как растёт загрузка видеокарты или процессора во время генерации. После этого заблокируйте исходящий трафик запускатора в брандмауэре и проверьте, что чат-интерфейс не переключается на облачного провайдера.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Похожие руководства">
+                    <span class="guide-label">ЧИТАТЬ ДАЛЬШЕ</span>
+                    <div class="related-guide-grid">
+                        <a href="dlss-5-neural-rendering-guide-ru.html"><strong>DLSS 5 Neural Rendering: честная версия</strong><span aria-hidden="true">→</span></a>
+                        <a href="local-backup-3-2-1-guide.html"><strong>Резервное копирование по правилу 3-2-1 (EN)</strong><span aria-hidden="true">→</span></a>
+                        <a href="wsl2-setup-windows-guide.html"><strong>Настройка WSL2 на Windows (EN)</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">ОТ СТУДИИ</span>
+                        <strong>Nyxelium — офлайн-приложения для Android</strong>
+                        <p>Та же идея на телефоне: приложение работает с выключенной сетью, и написанное вами никуда не загружается.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">Посмотреть приложения →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ВСЕ РУКОВОДСТВА</a>
+                <a href="index.html">ГЛАВНАЯ</a>
+                <a href="about.html">О СТУДИИ</a>
+            </div>
+            <span>ПРОВЕРЕНО · СЕНТЯБРЬ 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

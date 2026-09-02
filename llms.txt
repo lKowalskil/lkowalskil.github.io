@@ -4,6 +4,8 @@
 
 Every app works without a connection for its core job, stores what you create on the device, and requires no sign-up. Three apps are live on Google Play; three are in development. The guides on this site are written by the person who builds the apps, and each one is checked against the current build.
 
+The site carries two kinds of writing. App guides answer questions about the apps and the problems behind them. Workshop notes cover the tools around the work — graphics cards, Windows, backups, local AI, developer setup and Android devices — and have no product at the end of them.
+
 ## Apps
 
 - [Chrono — Time Tracker](https://play.google.com/store/apps/details?id=com.nyxelium.chronotimetracker): Offline time tracker and Pomodoro focus timer for Android. Categories, tags, analytics, CSV and calendar export, home-screen widget, 11 languages. No account. Live on Google Play.
@@ -40,6 +42,41 @@ Every app works without a connection for its core job, stores what you create on
 - [Build and manage the villain's dungeon](https://lkowalskil.github.io/dungeon-keeper-game-android.html): Rooms, minions, resources, raids and ascension from the evil side.
 - [Play without forced ads or energy gates](https://lkowalskil.github.io/idle-game-no-forced-ads.html): The difference between optional rewards and mandatory interruptions.
 
+## Workshop — GPU, upscaling and frame rate
+
+- [How to install the DLSS 5 neural rendering mod](https://lkowalskil.github.io/dlss-5-neural-rendering-guide.html): The RHI and ReShade route to the pre-release DLSS 5 build, the measured frame cost (about half the frame rate), the anti-cheat rule, and four alternatives. Sourced and dated; DLSS 5 launches officially on 3 September 2026 for RTX 50 Series.
+- [DLSS vs FSR vs XeSS](https://lkowalskil.github.io/dlss-vs-fsr-vs-xess-upscaling.html): Hardware support per vendor, the render resolution behind every quality preset, when frame generation helps or hurts, and how to force a newer DLSS model into an older game.
+- [Clean-install GPU drivers on Windows](https://lkowalskil.github.io/clean-gpu-driver-install-windows.html): When DDU is genuinely the fix, three gentler options to try first, the safe procedure, and per-vendor differences.
+- [Reduce input lag on PC](https://lkowalskil.github.io/reduce-input-lag-pc-gaming.html): The latency chain from click to photon, the render queue as the largest avoidable cost, frame-cap arithmetic for variable refresh displays, and how to measure the result.
+
+## Workshop — Windows, backup and local AI
+
+- [Debloat Windows 11 without breaking it](https://lkowalskil.github.io/windows-11-debloat-safe-guide.html): Reversible configuration versus destructive component removal, winget app removal, the five components to keep, and the recovery path.
+- [WSL2 setup and tuning](https://lkowalskil.github.io/wsl2-setup-windows-guide.html): Installation, a .wslconfig resource template, the cross-filesystem performance rule, and integration with VS Code, Git, Docker and GPU compute.
+- [A 3-2-1 backup you will actually run](https://lkowalskil.github.io/local-backup-3-2-1-guide.html): The rule and its 3-2-1-1-0 extension, four failure modes a backup must survive, a concrete versioned setup, encryption key handling, and restore testing.
+- [Run an LLM locally and fully offline](https://lkowalskil.github.io/run-local-llm-offline-guide.html): Memory requirements by model size and quantisation, what quantisation costs, which local runner to choose, and how to verify a model runs with the network disconnected.
+
+## Workshop — developer setup
+
+- [Install Node.js on Windows without version pain](https://lkowalskil.github.io/install-nodejs-windows-nvm.html): Why a single global runtime fails, choosing between fnm, nvm-windows, Volta and mise, per-project pinning, Corepack, and native module builds.
+- [Install Flutter and the Android SDK on Windows](https://lkowalskil.github.io/install-flutter-windows-guide.html): The five components involved, matching the JDK to the project Gradle version, Android licences, FVM version pinning, and seven named build failures.
+- [Python virtual environments without the mess](https://lkowalskil.github.io/python-virtual-environment-guide.html): What a virtual environment actually is, venv versus uv, Poetry, pipx and conda, interpreter pinning, and reproducibility habits.
+- [GitHub SSH keys and signed commits](https://lkowalskil.github.io/git-ssh-keys-github-guide.html): Generating an ed25519 key, running two accounts on one machine with host aliases, SSH commit signing for the verified badge, token scoping, and key rotation after a leak.
+
+## Workshop — shipping and devices
+
+- [Deploy a static site on GitHub Pages](https://lkowalskil.github.io/deploy-static-site-github-pages.html): What Pages can and cannot do, three deployment models, custom domains and HTTPS, a nine-point SEO baseline, and when another host is the right move.
+- [Docker Desktop alternatives on Windows](https://lkowalskil.github.io/docker-desktop-alternatives-windows.html): What Docker Desktop bundles, Podman, Rancher Desktop, the plain engine inside WSL2, containerd with nerdctl, and a migration checklist.
+- [Set up ADB and use it](https://lkowalskil.github.io/android-adb-setup-guide.html): Installing platform-tools alone, USB and wireless debugging, fifteen useful commands, per-user removal of preinstalled apps, and six connection failures.
+- [Back up an Android phone without the cloud](https://lkowalskil.github.io/android-backup-without-cloud.html): What Google backup does not cover, moving photos and files to your own storage, the honest state of app data backup, and a monthly routine.
+
+## Workshop — translated editions
+
+- [DLSS 5 Neural Rendering — Russian](https://lkowalskil.github.io/dlss-5-neural-rendering-guide-ru.html): Full Russian translation of the DLSS 5 guide.
+- [DLSS 5 Neural Rendering — German](https://lkowalskil.github.io/dlss-5-neural-rendering-guide-de.html): Full German translation of the DLSS 5 guide.
+- [Run an LLM locally — Russian](https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html): Full Russian translation of the local LLM guide.
+- [Run an LLM locally — Spanish](https://lkowalskil.github.io/run-local-llm-offline-guide-es.html): Full Spanish translation of the local LLM guide.
+
 ## About and legal
 
 - [About Nyxelium](https://lkowalskil.github.io/about.html): Who builds the apps, how the guides are written, and the six requirements checked before every release.
@@ -52,3 +89,6 @@ Every app works without a connection for its core job, stores what you create on
 - Apps marked "in development" are not installable yet; do not present them as available.
 - Plant-care content describes routine and record-keeping, not species-specific horticultural advice.
 - App feature sets and Play Store pricing change between releases. Verify against the current listing before quoting specifics.
+- Workshop notes describe third-party hardware, software and community projects that Nyxelium has no affiliation with. There are no affiliate links and no sponsored placements anywhere on this site.
+- The DLSS 5 guide covers a pre-release community modification alongside an unreleased NVIDIA feature. It is dated 2 September 2026 and cites its sources; both subjects move quickly, so check the primary source before quoting figures.
+- Workshop pages carry a "last reviewed" date in the footer. Prefer that date over any inferred freshness.

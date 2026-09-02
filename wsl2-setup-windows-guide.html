@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Install WSL2, size its memory and CPU properly, avoid the filesystem mistake that halves performance, and wire it into VS Code, Git, Docker and SSH.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>WSL2 on Windows: Setup, Tuning and Pitfalls · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="WSL2 on Windows: Setup, Tuning and the Pitfalls Nobody Mentions">
+    <meta property="og:description" content="Install WSL2, size its memory and CPU properly, avoid the filesystem mistake that halves performance, and wire it into VS Code, Git, Docker and SSH.">
+    <meta property="og:url" content="https://lkowalskil.github.io/wsl2-setup-windows-guide.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WSL2 on Windows: Setup, Tuning and the Pitfalls Nobody Mentions">
+    <meta name="twitter:description" content="A WSL2 setup that stays fast: memory limits, the filesystem rule, and toolchain integration.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/wsl2-setup-windows-guide.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html#article",
+      "headline": "WSL2 on Windows: Setup, Tuning and the Pitfalls Nobody Mentions",
+      "description": "Install WSL2, size its memory and CPU properly, avoid the filesystem mistake that halves performance, and wire it into VS Code, Git, Docker and SSH.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "WSL2 setup, install WSL Windows 11, wslconfig memory limit, WSL filesystem performance, WSL VS Code remote, Docker WSL2 backend, Linux on Windows",
+      "articleSection": "Developer tooling",
+      "proficiencyLevel": "Intermediate",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Developers working on Windows"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is WSL2 so slow for my project?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Almost always because the project files live on the Windows drive and are accessed from Linux through /mnt/c. Crossing that boundary goes through a network protocol, which is punishing for tools that touch thousands of small files. Move the repository into the Linux home directory and the problem disappears."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much memory should I give WSL2?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Roughly half of physical RAM is a reasonable starting point, set in a .wslconfig file in your Windows user profile. Also set a processor count that leaves at least two cores for Windows, and enable swap so an out-of-memory situation slows down rather than killing the process. Run wsl --shutdown for changes to apply."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I run Docker without Docker Desktop on WSL2?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can install the Docker engine directly inside a WSL distribution and use it from that shell. Docker Desktop adds convenience such as the GUI, Kubernetes and easier cross-distribution sharing, so the plain engine is best when you want a lighter setup or need to avoid the Desktop licence terms."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does WSL2 support GPU acceleration?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, for compute. The Windows GPU driver provides passthrough, and you install the CUDA toolkit inside Linux without a Linux display driver. Installing a Linux graphics driver inside WSL breaks the passthrough, which is the most common mistake in this setup."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is WSL2 a replacement for a virtual machine?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For development work targeting Linux, usually yes, and it is faster to start and lighter on resources. For kernel development, custom modules, systemd-heavy infrastructure or anything requiring real isolation from the host, use a full virtual machine — WSL is deliberately integrated with Windows rather than separated from it."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "WSL2 on Windows: Setup, Tuning and the Pitfalls Nobody Mentions",
+          "item": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html#howto",
+      "name": "Install and configure WSL2 on Windows",
+      "description": "Install the Windows Subsystem for Linux, choose a distribution, and configure resource limits so it does not exhaust host memory.",
+      "inLanguage": "en",
+      "totalTime": "PT20M",
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "Windows 10 or 11"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "PowerShell as administrator"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Install WSL",
+          "text": "Run wsl --install from an elevated PowerShell prompt, which enables the required features and installs a default distribution.",
+          "url": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Restart and create a user",
+          "text": "Restart the machine, then set the Linux username and password when the distribution first launches.",
+          "url": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Confirm version 2",
+          "text": "Run wsl -l -v and confirm the distribution reports version 2.",
+          "url": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Create a .wslconfig file",
+          "text": "Create .wslconfig in your Windows user profile and set memory, processor and swap limits.",
+          "url": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Restart the subsystem",
+          "text": "Run wsl --shutdown so the new configuration is applied on the next launch.",
+          "url": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Keep projects on the Linux filesystem",
+          "text": "Store repositories under the Linux home directory rather than under /mnt/c to avoid the cross-filesystem performance penalty.",
+          "url": "https://lkowalskil.github.io/wsl2-setup-windows-guide.html#install"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—06 · DEVELOPER SETUP · 11 MIN READ</p>
+                <h1 class="guide-title">A WSL2 setup that stays fast after the first week.</h1>
+                <p class="guide-deck">Installing WSL2 takes one command. Keeping it from eating your memory, and avoiding the filesystem mistake that quietly halves every build, takes about fifteen minutes more. This covers the install, the configuration file most people never create, and how it connects to the rest of your toolchain.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Windows 10 and 11</strong>
+                        <p>One command to install, one file to configure, one rule about where your code lives.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>WINDOWS 10 AND 11</li>
+                    <li>WSLCONFIG TEMPLATE</li>
+                    <li>THE FILESYSTEM RULE</li>
+                    <li>VS CODE · DOCKER · GPU</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#when">When to use WSL2</a>
+                        <a href="#install">Install it</a>
+                        <a href="#config">Configure resources</a>
+                        <a href="#filesystem">The filesystem rule</a>
+                        <a href="#toolchain">Toolchain integration</a>
+                        <a href="#troubleshooting">Troubleshooting</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="when" class="article-section">
+                    <p class="guide-label">01 · THE DECISION</p>
+                    <h2>WSL2 is a real Linux kernel in a lightweight VM.</h2>
+                    <p class="lede">WSL1 translated Linux system calls into Windows ones. WSL2 runs an actual Linux kernel in a managed virtual machine, which is why compatibility is excellent and why the filesystem boundary matters so much.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Situation</th><th>Best fit</th><th>Because</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Node, Python, Go or Rust development targeting Linux servers</td><td>WSL2</td><td>Same toolchain as production, near-native speed, no dual boot</td></tr>
+                          <tr><td>Docker on a Windows workstation</td><td>WSL2</td><td>The WSL2 backend is how containers run on Windows now</td></tr>
+                          <tr><td>Windows desktop applications, .NET, native Windows APIs</td><td>Native Windows</td><td>WSL adds a boundary you would spend the day crossing</td></tr>
+                          <tr><td>Kernel work, custom modules, systemd-heavy infrastructure</td><td>A full VM</td><td>WSL2 constrains what you can change about the kernel</td></tr>
+                          <tr><td>GPU compute and machine learning experiments</td><td>WSL2</td><td>CUDA and compute pass through, with the caveats in section five</td></tr>
+                          <tr><td>Anything requiring strong isolation</td><td>A full VM</td><td>WSL is integrated with the host by design, which is the opposite of isolation</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                </section>
+
+                <section id="install" class="article-section">
+                    <p class="guide-label">02 · INSTALLATION</p>
+                    <h2>One command, then confirm you got version 2.</h2>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL (ADMIN) · INSTALL</div>
+                      <pre><code># Enables the features and installs the default distribution
+wsl --install
+
+# Or pick one explicitly
+wsl --list --online
+wsl --install -d Ubuntu-24.04
+
+# After the reboot, confirm the version column says 2
+wsl -l -v
+
+# Keep the subsystem itself updated
+wsl --update</code></pre>
+                    </div>
+                    <h3>Choosing a distribution</h3>
+                    <ul>
+                      <li><strong>Ubuntu LTS</strong> — the default for a reason. The largest share of documentation and CI images assume it, so error messages match search results.</li>
+                      <li><strong>Debian</strong> — leaner, slower moving. Good when your servers run Debian.</li>
+                      <li><strong>Fedora or openSUSE</strong> — newer toolchains, more churn. Fine if you already know the ecosystem.</li>
+                      <li><strong>Alpine</strong> — tempting for size, awkward for development because of the musl C library. Use it in containers, not as your workstation shell.</li>
+                    </ul>
+                    <p>You can install several side by side and switch with <code>wsl -d name</code>. A per-project distribution is a legitimate way to keep two incompatible toolchains apart, and each one is a file you can export and re-import.</p>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · SNAPSHOT AND RESTORE A DISTRIBUTION</div>
+                      <pre><code># Export a distribution to a single archive
+wsl --export Ubuntu-24.04 D:\wsl\ubuntu-backup.tar
+
+# Re-import it, under any name, on any machine
+wsl --import work-ubuntu D:\wsl\work D:\wsl\ubuntu-backup.tar</code></pre>
+                    </div>
+                </section>
+
+                <section id="config" class="article-section">
+                    <p class="guide-label">03 · THE CONFIG FILE</p>
+                    <h2>Create .wslconfig before WSL eats your memory.</h2>
+                    <p class="lede">By default WSL2 will claim a large share of system RAM and is slow to give it back. On a 16 GB machine, that is the difference between a usable desktop and one that swaps whenever a build starts.</p>
+                    <p>Create <code>.wslconfig</code> in your Windows user profile — <code>C:\Users\yourname\.wslconfig</code> — and restart the subsystem with <code>wsl --shutdown</code>.</p>
+                    <div class="cmd">
+                      <div class="cmd-head">C:\USERS\YOURNAME\.WSLCONFIG</div>
+                      <pre><code>[wsl2]
+# Roughly half of physical RAM is a sane starting point
+memory=8GB
+processors=4
+swap=4GB
+
+# Reclaim unused memory back to Windows instead of holding it
+autoMemoryReclaim=gradual
+
+# Sparse VHD keeps the virtual disk from growing forever
+sparseVhd=true
+
+# Mirrored networking makes localhost work in both directions
+networkingMode=mirrored
+dnsTunneling=true
+autoProxy=true
+
+[experimental]
+hostAddressLoopback=true</code></pre>
+                    </div>
+                    <h3>Choosing the numbers</h3>
+                    <ul>
+                      <li><strong>Memory</strong> — about half of physical RAM. Raise it if builds are being killed, lower it if Windows starts paging.</li>
+                      <li><strong>Processors</strong> — leave at least two cores for Windows. All of them is not faster once the host starts contending.</li>
+                      <li><strong>Swap</strong> — worth having. Without it, an out-of-memory situation kills the process instead of slowing down.</li>
+                      <li><strong>Networking</strong> — mirrored mode makes services reachable on localhost from both sides, which removes the most common WSL networking confusion. If a VPN or corporate network client misbehaves, remove that line first.</li>
+                    </ul>
+                    <div class="note">
+                      <p><strong>The virtual disk grows but does not shrink on its own.</strong> With <code>sparseVhd</code> enabled, new distributions release space back after large deletions. For an existing one, <code>wsl --manage &lt;distro&gt; --set-sparse true</code> converts it.</p>
+                    </div>
+                </section>
+
+                <section id="filesystem" class="article-section">
+                    <p class="guide-label">04 · THE ONE BIG MISTAKE</p>
+                    <h2>Keep your code on the Linux side. All of it.</h2>
+                    <p class="lede">This is the single most common WSL2 performance complaint, and it has one cause: working on files that live on the Windows drive, accessed through /mnt/c.</p>
+                    <p>Crossing the filesystem boundary goes through a network protocol. For a compiler or a package manager touching thousands of small files, the overhead is severe — installs and builds that should take seconds take minutes, and file watchers become unreliable.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Where the files live</th><th>Accessed from</th><th>Speed</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Linux filesystem (~/projects)</td><td>Linux tools</td><td>Native. This is the correct arrangement.</td></tr>
+                          <tr><td>Windows filesystem (C:\projects)</td><td>Windows tools</td><td>Native. Also fine.</td></tr>
+                          <tr><td>Windows filesystem (/mnt/c/projects)</td><td>Linux tools</td><td>Slow. This is the mistake.</td></tr>
+                          <tr><td>Linux filesystem (\\wsl$\...)</td><td>Windows tools</td><td>Usable for editing, slow for bulk operations.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="cmd">
+                      <div class="cmd-head">BASH · MOVE A PROJECT ONTO THE LINUX FILESYSTEM</div>
+                      <pre><code>mkdir -p ~/projects
+cd ~/projects
+git clone git@github.com:you/your-project.git
+cd your-project
+
+# Open it in VS Code on Windows, running the server inside WSL
+code .</code></pre>
+                    </div>
+                    <p>You can still reach these files from Windows through <code>\\wsl$\Ubuntu-24.04\home\you\projects</code> — good for dropping a file into Explorer, wrong for running a Windows build tool against the whole tree.</p>
+                    <div class="note note-warn">
+                      <p><strong>Never run Windows antivirus real-time scanning across your WSL project directory.</strong> Scanning through the filesystem bridge on every file operation is a large, invisible tax on every build. Exclude the WSL virtual disk path, not the individual folders.</p>
+                    </div>
+                </section>
+
+                <section id="toolchain" class="article-section">
+                    <p class="guide-label">05 · WIRING IT UP</p>
+                    <h2>Editor, Git, containers, keys and the GPU.</h2>
+                    <h3>VS Code</h3>
+                    <p>Install the WSL extension on Windows and run <code>code .</code> from inside the Linux shell. The editor UI stays on Windows while the language servers, terminal, debugger and extensions run in Linux — which means the extensions see the same toolchain your build does. Trying to open a project through <code>\\wsl$</code> instead is the setup that produces mysteriously broken IntelliSense.</p>
+                    <h3>Git</h3>
+                    <ul>
+                      <li>Install and configure Git <strong>inside</strong> WSL, and use it for anything in the Linux filesystem.</li>
+                      <li>Set <code>git config --global core.autocrlf input</code> in Linux so you do not commit Windows line endings.</li>
+                      <li>Sharing a credential helper with Windows works, but a plain SSH key inside WSL is simpler and has fewer failure modes.</li>
+                    </ul>
+                    <h3>Docker</h3>
+                    <p>Docker Desktop uses WSL2 as its backend and exposes the <code>docker</code> command inside your distributions. If you would rather not run Docker Desktop, you can install the Docker engine directly inside a WSL distribution — the <a href="docker-desktop-alternatives-windows.html">container alternatives guide</a> covers when that is worth the extra setup.</p>
+                    <h3>SSH keys</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">BASH · A KEY THAT LIVES IN WSL</div>
+                      <pre><code>ssh-keygen -t ed25519 -C "you@example.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub   # add this to GitHub</code></pre>
+                    </div>
+                    <p>Keep the Linux key separate from your Windows key rather than sharing one across the boundary. Two keys on one account is normal, and it means revoking one does not lock you out of both environments.</p>
+                    <h3>GPU compute</h3>
+                    <p>CUDA workloads run in WSL2 with the Windows driver providing the GPU — you install the CUDA toolkit inside Linux, but <strong>not</strong> a Linux display driver. Installing one is the classic mistake and breaks the passthrough. This is what makes WSL2 a reasonable place to run local models; see the <a href="run-local-llm-offline-guide.html">local LLM guide</a> for the hardware side.</p>
+                </section>
+
+                <section id="troubleshooting" class="article-section">
+                    <p class="guide-label">06 · WHEN IT MISBEHAVES</p>
+                    <h2>The six failures you will actually hit.</h2>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Symptom</th><th>Usual cause</th><th>Fix</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Everything is slow</td><td>Project files under /mnt/c</td><td>Move the repository into the Linux home directory</td></tr>
+                          <tr><td>Windows swaps under load</td><td>No memory limit configured</td><td>Set memory and processors in .wslconfig, then wsl --shutdown</td></tr>
+                          <tr><td>Cannot reach a WSL service from Windows</td><td>Networking mode</td><td>Enable mirrored networking, or bind the service to 0.0.0.0</td></tr>
+                          <tr><td>DNS fails, especially on a VPN</td><td>Generated resolv.conf conflicts with the VPN</td><td>Enable dnsTunneling, or set generateResolvConf to false and write your own</td></tr>
+                          <tr><td>Virtual disk keeps growing</td><td>Sparse mode disabled</td><td>wsl --manage distro --set-sparse true</td></tr>
+                          <tr><td>File watching does not trigger</td><td>Cross-filesystem inotify</td><td>Same fix as the first row; watchers only work reliably on the native side</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · THE RESET SEQUENCE</div>
+                      <pre><code># Stop everything (this is the fix for a surprising number of issues)
+wsl --shutdown
+
+# Update the subsystem itself
+wsl --update
+
+# Check state and versions
+wsl -l -v
+
+# Last resort for one distribution: export, unregister, re-import
+wsl --export Ubuntu-24.04 D:\wsl\backup.tar
+wsl --unregister Ubuntu-24.04</code></pre>
+                    </div>
+                    <p><strong>Export before you unregister.</strong> Unregistering deletes the distribution and everything in it, without a confirmation worth the name.</p>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>WSL2, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>Why is WSL2 so slow for my project?</strong>
+                            <p>Almost always because the project files live on the Windows drive and are accessed from Linux through /mnt/c. Crossing that boundary goes through a network protocol, which is punishing for tools that touch thousands of small files. Move the repository into the Linux home directory and the problem disappears.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>How much memory should I give WSL2?</strong>
+                            <p>Roughly half of physical RAM is a reasonable starting point, set in a .wslconfig file in your Windows user profile. Also set a processor count that leaves at least two cores for Windows, and enable swap so an out-of-memory situation slows down rather than killing the process. Run wsl --shutdown for changes to apply.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Can I run Docker without Docker Desktop on WSL2?</strong>
+                            <p>Yes. You can install the Docker engine directly inside a WSL distribution and use it from that shell. Docker Desktop adds convenience such as the GUI, Kubernetes and easier cross-distribution sharing, so the plain engine is best when you want a lighter setup or need to avoid the Desktop licence terms.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Does WSL2 support GPU acceleration?</strong>
+                            <p>Yes, for compute. The Windows GPU driver provides passthrough, and you install the CUDA toolkit inside Linux without a Linux display driver. Installing a Linux graphics driver inside WSL breaks the passthrough, which is the most common mistake in this setup.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Is WSL2 a replacement for a virtual machine?</strong>
+                            <p>For development work targeting Linux, usually yes, and it is faster to start and lighter on resources. For kernel development, custom modules, systemd-heavy infrastructure or anything requiring real isolation from the host, use a full virtual machine — WSL is deliberately integrated with Windows rather than separated from it.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="install-nodejs-windows-nvm.html"><strong>Install Node.js the way that survives version changes</strong><span aria-hidden="true">→</span></a>
+                        <a href="docker-desktop-alternatives-windows.html"><strong>Docker Desktop alternatives on Windows</strong><span aria-hidden="true">→</span></a>
+                        <a href="git-ssh-keys-github-guide.html"><strong>SSH keys and signed commits for GitHub</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>Built on Windows, shipped to Android, written by someone who spends the day in this exact setup.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://lkowalskil.github.io/</loc><lastmod>2026-08-30</lastmod></url>
-  <url><loc>https://lkowalskil.github.io/guides.html</loc><lastmod>2026-08-30</lastmod></url>
-  <url><loc>https://lkowalskil.github.io/about.html</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/guides.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/about.html</loc><lastmod>2026-09-02</lastmod></url>
   <url><loc>https://lkowalskil.github.io/best-offline-time-tracking-apps-android.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://lkowalskil.github.io/best-plant-care-tracker-apps-android.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://lkowalskil.github.io/best-offline-idle-games-no-ads-android.html</loc><lastmod>2026-08-30</lastmod></url>
@@ -28,4 +28,24 @@
   <url><loc>https://lkowalskil.github.io/privacy-policy-signet.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://lkowalskil.github.io/signet-support.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://lkowalskil.github.io/terms-signet.html</loc><lastmod>2026-08-12</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/dlss-5-neural-rendering-guide.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/dlss-vs-fsr-vs-xess-upscaling.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/clean-gpu-driver-install-windows.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/reduce-input-lag-pc-gaming.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/windows-11-debloat-safe-guide.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/wsl2-setup-windows-guide.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/local-backup-3-2-1-guide.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/run-local-llm-offline-guide.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/install-nodejs-windows-nvm.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/install-flutter-windows-guide.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/python-virtual-environment-guide.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/git-ssh-keys-github-guide.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/deploy-static-site-github-pages.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/docker-desktop-alternatives-windows.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/android-adb-setup-guide.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/android-backup-without-cloud.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/dlss-5-neural-rendering-guide-ru.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/dlss-5-neural-rendering-guide-de.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/run-local-llm-offline-guide-ru.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://lkowalskil.github.io/run-local-llm-offline-guide-es.html</loc><lastmod>2026-09-02</lastmod></url>
 </urlset>

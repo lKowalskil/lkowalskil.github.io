@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Why the plain installer causes problems later, how to choose between nvm-windows, fnm and Volta, and how to pin a Node version per project so builds stay reproducible.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>Install Node.js on Windows Without Version Pain · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Install Node.js on Windows Without the Version Pain">
+    <meta property="og:description" content="Why the plain installer causes problems later, how to choose between nvm-windows, fnm and Volta, and how to pin a Node version per project so builds stay reproducible.">
+    <meta property="og:url" content="https://lkowalskil.github.io/install-nodejs-windows-nvm.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Install Node.js on Windows Without the Version Pain">
+    <meta name="twitter:description" content="Node on Windows, installed so that switching versions never breaks a project again.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/install-nodejs-windows-nvm.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html#article",
+      "headline": "Install Node.js on Windows Without the Version Pain",
+      "description": "Why the plain installer causes problems later, how to choose between nvm-windows, fnm and Volta, and how to pin a Node version per project so builds stay reproducible.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "install Node.js Windows, nvm-windows, fnm, Volta, Node version manager, nvmrc, Corepack pnpm yarn, node-gyp build tools Windows",
+      "articleSection": "Developer tooling",
+      "proficiencyLevel": "Beginner",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "JavaScript and TypeScript developers on Windows"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Should I install Node.js from the official installer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a single project, it is fine. For a machine that builds more than one, install a version manager instead: fnm, nvm-windows or Volta. The version then becomes a property of the project rather than of the computer, which prevents the whole class of problems where an old repository will not install."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between nvm-windows and fnm?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "fnm is a fast native binary that can switch versions automatically when you enter a directory containing a .nvmrc file, using a hook in your shell profile. nvm-windows symlinks the active version into a fixed path and requires you to run nvm use yourself. Both work; fnm needs less manual switching."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I pin a Node version for a project?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Commit a .nvmrc or .node-version file with the major version, and add an engines field to package.json. Add a packageManager field as well and run corepack enable, so pnpm or Yarn is pinned too. Most CI providers read these files automatically, which keeps local and pipeline builds aligned."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do I get EPERM errors installing global npm packages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The install is trying to write into a protected directory. Do not fix this by running the terminal as administrator. Let a version manager own the Node installation directory instead, so global packages land in a user-writable path. Where possible, avoid global installs entirely and run tools with npx."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does npm install fail with C++ compiler errors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A dependency contains native code and needs node-gyp, which requires a C++ toolchain and Python. On Windows, install the Visual Studio Build Tools with the desktop development with C++ workload. Before that, check whether the package offers a prebuilt binary or a pure-JavaScript alternative."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Install Node.js on Windows Without the Version Pain",
+          "item": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html#howto",
+      "name": "Install Node.js on Windows with a version manager",
+      "description": "Install a Node version manager, use it to install a Node release, and pin the version per project so every clone uses the same runtime.",
+      "inLanguage": "en",
+      "totalTime": "PT15M",
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "Windows 10 or 11"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "winget"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "fnm or nvm-windows"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Remove existing Node installations",
+          "text": "Uninstall any Node.js installed from the plain installer so a version manager can own the PATH entry.",
+          "url": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Install a version manager",
+          "text": "Install fnm or nvm-windows, for example with winget install Schniz.fnm.",
+          "url": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Add the shell hook",
+          "text": "Add the version manager initialisation to your PowerShell profile so it switches versions automatically.",
+          "url": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Install a Node release",
+          "text": "Install the current LTS release and set it as the default.",
+          "url": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Pin the version per project",
+          "text": "Add a .nvmrc file or an engines field so every clone resolves to the same version.",
+          "url": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Enable Corepack",
+          "text": "Run corepack enable so pnpm and Yarn come from the version pinned in package.json.",
+          "url": "https://lkowalskil.github.io/install-nodejs-windows-nvm.html#install"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—09 · DEVELOPER SETUP · 9 MIN READ</p>
+                <h1 class="guide-title">Install Node.js once, then never fight a version again.</h1>
+                <p class="guide-deck">The official installer works perfectly until the day you open a two-year-old project. This covers why that happens, which version manager to use on Windows, how to pin a version per repository, and the handful of errors that account for most Node setup problems on this platform.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Version managers first</strong>
+                        <p>Install the manager, not the runtime. Everything else follows from that one decision.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>FNM · NVM-WINDOWS · VOLTA</li>
+                    <li>PER-PROJECT PINNING</li>
+                    <li>COREPACK FOR PNPM</li>
+                    <li>SIX ERRORS DECODED</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#problem">Why the installer hurts</a>
+                        <a href="#managers">Choose a manager</a>
+                        <a href="#install">Install it</a>
+                        <a href="#pinning">Pin per project</a>
+                        <a href="#native">Native modules</a>
+                        <a href="#errors">Common errors</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="problem" class="article-section">
+                    <p class="guide-label">01 · THE PROBLEM</p>
+                    <h2>One global Node is fine until the second project arrives.</h2>
+                    <p class="lede">The Node installer puts one runtime on the PATH. That is exactly right for one project and exactly wrong for a machine that has to build several.</p>
+                    <p>The failures show up in a recognisable order:</p>
+                    <ul>
+                      <li><strong>A project needs an older major.</strong> A native dependency was built against a different ABI, and the install fails with a compilation error that has nothing to do with your code.</li>
+                      <li><strong>A project needs a newer one.</strong> The tooling uses syntax or a built-in API your runtime does not have, and the error message points at a file inside a dependency.</li>
+                      <li><strong>Global packages disappear.</strong> They were installed under the previous version and are invisible to the new one, which reads as &ldquo;the tool is broken&rdquo;.</li>
+                      <li><strong>Permission errors on global installs.</strong> Windows-specific, common, and the reason so many answers tell you to run the terminal as administrator. Do not.</li>
+                      <li><strong>CI disagrees with your machine.</strong> The build passes locally and fails in the pipeline, because nothing declared which version was correct.</li>
+                    </ul>
+                    <p><strong>A version manager solves all five, because the version becomes a property of the project rather than of the computer.</strong></p>
+                </section>
+
+                <section id="managers" class="article-section">
+                    <p class="guide-label">02 · THE OPTIONS</p>
+                    <h2>Four managers, and which one to pick on Windows.</h2>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Tool</th><th>How it works</th><th>Best for</th><th>Trade-off</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>fnm</td>
+                            <td>Fast native binary; switches on directory change via a shell hook</td>
+                            <td>Most people. Quick, cross-platform, reads .nvmrc and .node-version.</td>
+                            <td>Requires a line in your shell profile to switch automatically</td>
+                          </tr>
+                          <tr>
+                            <td>nvm-windows</td>
+                            <td>Symlinks the active version into a fixed path</td>
+                            <td>Familiarity, and teams that already document nvm commands</td>
+                            <td>Unrelated to the Unix nvm despite the name; switching needs an elevated shell in some setups</td>
+                          </tr>
+                          <tr>
+                            <td>Volta</td>
+                            <td>Shims that resolve the version from package.json at execution time</td>
+                            <td>Teams. The version is pinned in the repository and applied automatically with no hook.</td>
+                            <td>Its own pinning field, so the project must adopt Volta</td>
+                          </tr>
+                          <tr>
+                            <td>mise / asdf</td>
+                            <td>Polyglot version manager for many runtimes at once</td>
+                            <td>Machines that also juggle Python, Go, Java and Ruby versions</td>
+                            <td>More concepts than you need if Node is your only runtime</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="note">
+                      <p><strong>Uninstall the plain Node installer first.</strong> A leftover installation stays on the PATH and will silently win against your version manager, producing the single most confusing failure in this whole area: <code>node -v</code> reports a version you did not select.</p>
+                    </div>
+                </section>
+
+                <section id="install" class="article-section">
+                    <p class="guide-label">03 · THE WALKTHROUGH</p>
+                    <h2>fnm on Windows, in about five minutes.</h2>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · INSTALL FNM AND NODE</div>
+                      <pre><code># Install the version manager
+winget install Schniz.fnm
+
+# Make PowerShell load it and switch automatically per directory
+if (-not (Test-Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force }
+Add-Content $PROFILE 'fnm env --use-on-cd | Out-String | Invoke-Expression'
+
+# Open a new terminal, then install and select a runtime
+fnm install --lts
+fnm default lts-latest
+fnm list
+
+node -v
+npm -v</code></pre>
+                    </div>
+                    <p>The <code>--use-on-cd</code> hook is what makes this worth doing: entering a directory that declares a version switches to it, and leaving switches back.</p>
+                    <h3>The nvm-windows alternative</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · NVM-WINDOWS</div>
+                      <pre><code>winget install CoreyButler.NVMforWindows
+
+nvm install lts
+nvm use lts
+nvm list</code></pre>
+                    </div>
+                    <p>nvm-windows does not switch automatically on directory change, so you run <code>nvm use</code> yourself. That is the main practical difference between the two.</p>
+                    <div class="note note-warn">
+                      <p><strong>Close every terminal after installing.</strong> PATH changes are read at process start, so an open shell keeps the old environment and produces contradictory results while you debug. This wastes more time than any other step here.</p>
+                    </div>
+                </section>
+
+                <section id="pinning" class="article-section">
+                    <p class="guide-label">04 · PINNING</p>
+                    <h2>Put the version in the repository, not in your head.</h2>
+                    <p class="lede">A version manager only helps if the project says which version it wants. Three mechanisms, and you can use more than one.</p>
+                    <h3>1. A version file</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">PROJECT ROOT</div>
+                      <pre><code># .nvmrc  — read by nvm, fnm and most CI actions
+22
+
+# .node-version — the same idea, understood by more tools
+22.11.0</code></pre>
+                    </div>
+                    <p>Commit it. Every clone, every colleague and most CI providers will now resolve to the same runtime without being told.</p>
+                    <h3>2. The engines field</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">PACKAGE.JSON</div>
+                      <pre><code>{
+  "engines": {
+    "node": "&gt;=22.0.0 &lt;23"
+  },
+  "packageManager": "pnpm@9.12.0"
+}</code></pre>
+                    </div>
+                    <p><code>engines</code> documents the requirement and lets package managers warn or fail on mismatch. <code>packageManager</code> is the field Corepack reads, and it is the cleanest way to guarantee that everyone uses the same pnpm or Yarn version.</p>
+                    <h3>3. Corepack for the package manager</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL</div>
+                      <pre><code># Ships with Node. Enables pnpm and Yarn from the packageManager field
+corepack enable
+
+# In a project with packageManager set, this uses the pinned version
+pnpm install</code></pre>
+                    </div>
+                    <p>This removes the second half of the version problem. Pinning Node while everyone runs a different pnpm still produces lockfile churn and mysterious install differences.</p>
+                </section>
+
+                <section id="native" class="article-section">
+                    <p class="guide-label">05 · NATIVE MODULES</p>
+                    <h2>When a package needs a compiler on Windows.</h2>
+                    <p class="lede">Most installs are pure JavaScript. The ones that are not fail loudly, with a wall of C++ output, and the fix is nearly always the same.</p>
+                    <p>Packages that build native code use node-gyp, which needs a C++ toolchain and Python. On Windows that means the Visual Studio Build Tools with the desktop C++ workload:</p>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL (ADMIN)</div>
+                      <pre><code># Install the C++ build tools node-gyp expects
+winget install Microsoft.VisualStudio.2022.BuildTools --override "--quiet --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended"
+
+# Confirm Python is available to node-gyp
+python --version</code></pre>
+                    </div>
+                    <ul>
+                      <li><strong>Prefer a prebuilt package.</strong> Many popular native modules now ship prebuilt binaries or have a pure-JavaScript alternative. Check before installing a compiler you will never otherwise use.</li>
+                      <li><strong>Long paths.</strong> Deep dependency trees still hit the Windows path limit. Enable long paths in Group Policy, or keep repositories close to the drive root.</li>
+                      <li><strong>Antivirus.</strong> Real-time scanning over node_modules is a large and invisible tax on installs. Exclude your projects directory.</li>
+                      <li><strong>WSL2 as an escape hatch.</strong> If a package is simply hostile to Windows, building it in Linux is often faster than fixing it — see the <a href="wsl2-setup-windows-guide.html">WSL2 guide</a>.</li>
+                    </ul>
+                </section>
+
+                <section id="errors" class="article-section">
+                    <p class="guide-label">06 · ERRORS</p>
+                    <h2>Six messages and what they actually mean.</h2>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>node -v shows the wrong version</td><td>A leftover plain installation earlier on PATH</td><td>Uninstall Node from Apps, then reopen the terminal</td></tr>
+                          <tr><td>EPERM or EACCES on a global install</td><td>Writing into a protected directory</td><td>Let the version manager own the install location; never elevate npm</td></tr>
+                          <tr><td>A global CLI vanished after switching</td><td>Globals are per version by design</td><td>Reinstall it under the new version, or use npx</td></tr>
+                          <tr><td>gyp ERR! find VS</td><td>No C++ toolchain</td><td>Install the Visual Studio Build Tools with the desktop C++ workload</td></tr>
+                          <tr><td>Unsupported engine warning</td><td>Runtime outside the declared engines range</td><td>Switch to the declared version rather than ignoring the warning</td></tr>
+                          <tr><td>Install works, CI fails</td><td>Nothing pins the version in the repository</td><td>Commit .nvmrc and set packageManager, then have CI read them</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="note note-good">
+                      <p><strong>A clean setup, in one line:</strong> one version manager, a committed version file, Corepack enabled, and no globally installed CLIs that a project actually depends on. Everything on this page follows from those four.</p>
+                    </div>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>Node on Windows, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>Should I install Node.js from the official installer?</strong>
+                            <p>For a single project, it is fine. For a machine that builds more than one, install a version manager instead: fnm, nvm-windows or Volta. The version then becomes a property of the project rather than of the computer, which prevents the whole class of problems where an old repository will not install.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>What is the difference between nvm-windows and fnm?</strong>
+                            <p>fnm is a fast native binary that can switch versions automatically when you enter a directory containing a .nvmrc file, using a hook in your shell profile. nvm-windows symlinks the active version into a fixed path and requires you to run nvm use yourself. Both work; fnm needs less manual switching.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>How do I pin a Node version for a project?</strong>
+                            <p>Commit a .nvmrc or .node-version file with the major version, and add an engines field to package.json. Add a packageManager field as well and run corepack enable, so pnpm or Yarn is pinned too. Most CI providers read these files automatically, which keeps local and pipeline builds aligned.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Why do I get EPERM errors installing global npm packages?</strong>
+                            <p>The install is trying to write into a protected directory. Do not fix this by running the terminal as administrator. Let a version manager own the Node installation directory instead, so global packages land in a user-writable path. Where possible, avoid global installs entirely and run tools with npx.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Why does npm install fail with C++ compiler errors?</strong>
+                            <p>A dependency contains native code and needs node-gyp, which requires a C++ toolchain and Python. On Windows, install the Visual Studio Build Tools with the desktop development with C++ workload. Before that, check whether the package offers a prebuilt binary or a pure-JavaScript alternative.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="wsl2-setup-windows-guide.html"><strong>Set up WSL2 properly on Windows</strong><span aria-hidden="true">→</span></a>
+                        <a href="python-virtual-environment-guide.html"><strong>Python environments without the mess</strong><span aria-hidden="true">→</span></a>
+                        <a href="deploy-static-site-github-pages.html"><strong>Deploy a static site on GitHub Pages</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>Written from a working Windows setup that ships real apps, not from a fresh virtual machine.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

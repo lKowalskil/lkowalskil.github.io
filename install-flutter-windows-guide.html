@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="A Flutter setup on Windows that builds Android releases: the SDK, command line tools, the JDK version that matches your Gradle, and the errors that block first builds.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests">
+    <meta name="theme-color" content="#101318">
+    <title>Install Flutter and the Android SDK on Windows · Nyxelium</title>
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Install Flutter and the Android SDK on Windows">
+    <meta property="og:description" content="A Flutter setup on Windows that builds Android releases: the SDK, command line tools, the JDK version that matches your Gradle, and the errors that block first builds.">
+    <meta property="og:url" content="https://lkowalskil.github.io/install-flutter-windows-guide.html">
+    <meta property="og:site_name" content="Nyxelium">
+    <meta property="og:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nyxelium — offline-first Android apps">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Install Flutter and the Android SDK on Windows">
+    <meta name="twitter:description" content="Flutter on Windows, set up so the first Android release build actually succeeds.">
+    <meta name="twitter:image" content="https://lkowalskil.github.io/assets/img/nyxelium-social-card.png">
+    <meta name="twitter:image:alt" content="Nyxelium — offline-first Android apps">
+    <link rel="canonical" href="https://lkowalskil.github.io/install-flutter-windows-guide.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/guides.css">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lkowalskil.github.io/#organization",
+      "name": "Nyxelium",
+      "url": "https://lkowalskil.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lkowalskil.github.io/assets/img/nyxelium-logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lkowalskil.github.io/about.html#person",
+      "name": "Yehor Kovalchuk",
+      "url": "https://lkowalskil.github.io/about.html",
+      "jobTitle": "Android developer",
+      "sameAs": [
+        "https://github.com/lKowalskil"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://lkowalskil.github.io/install-flutter-windows-guide.html#article",
+      "headline": "Install Flutter and the Android SDK on Windows",
+      "description": "A Flutter setup on Windows that builds Android releases: the SDK, command line tools, the JDK version that matches your Gradle, and the errors that block first builds.",
+      "inLanguage": "en",
+      "datePublished": "2026-09-02",
+      "dateModified": "2026-09-02",
+      "mainEntityOfPage": "https://lkowalskil.github.io/install-flutter-windows-guide.html",
+      "image": "https://lkowalskil.github.io/assets/img/nyxelium-social-card.png",
+      "keywords": "install Flutter Windows, Android SDK command line tools, flutter doctor, JAVA_HOME JDK 17 Gradle, FVM Flutter version management, Android licenses accepted",
+      "articleSection": "Developer tooling",
+      "proficiencyLevel": "Intermediate",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Mobile developers setting up Flutter"
+      },
+      "author": {
+        "@id": "https://lkowalskil.github.io/about.html#person"
+      },
+      "publisher": {
+        "@id": "https://lkowalskil.github.io/#organization"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "@id": "https://lkowalskil.github.io/guides.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lkowalskil.github.io/install-flutter-windows-guide.html#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do I need Android Studio to use Flutter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You need the Android SDK, and Android Studio is the simplest way to get it along with the emulator and SDK manager. You can install the standalone command line tools instead and work entirely in another editor, which is leaner and better suited to CI, but you then wire up each component yourself."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which JDK version should I use with Flutter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The one your project Gradle version supports, not necessarily the newest. Check the Gradle version in android/gradle/wrapper/gradle-wrapper.properties, install a JDK in its supported range, set JAVA_HOME, and point Flutter at it with flutter config --jdk-dir. Installing the newest JDK is the usual cause of the unsupported class file major version error."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the cmdline-tools component is missing error mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Android SDK Command-line Tools package is not installed. Open the SDK Manager in Android Studio, go to the SDK Tools tab, tick Android SDK Command-line Tools and apply. This package provides sdkmanager and the licence machinery, so licence acceptance also fails without it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use FVM for Flutter versions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Once you maintain more than one app, yes. FVM installs Flutter SDK versions side by side and pins one per repository, so upgrading the SDK becomes a deliberate per-project decision instead of a global change. Commit the configuration and point your editor at the project SDK path so the analyser and the build agree."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why are my Flutter builds so slow on Windows?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually antivirus real-time scanning over the build output, the Gradle cache and the Flutter SDK, which are all directories full of thousands of small files. Add exclusions for the project directory, the Flutter SDK and the Gradle home directory. A deep path near the Windows path length limit is the second most common cause."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://lkowalskil.github.io/install-flutter-windows-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nyxelium",
+          "item": "https://lkowalskil.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://lkowalskil.github.io/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Install Flutter and the Android SDK on Windows",
+          "item": "https://lkowalskil.github.io/install-flutter-windows-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://lkowalskil.github.io/install-flutter-windows-guide.html#howto",
+      "name": "Install Flutter and the Android toolchain on Windows",
+      "description": "Install the Flutter SDK, the Android SDK command line tools and a matching JDK, then accept the Android licences and verify with flutter doctor.",
+      "inLanguage": "en",
+      "totalTime": "PT45M",
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "Flutter SDK"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "Android Studio or the Android command line tools"
+        },
+        {
+          "@type": "HowToTool",
+          "name": "A JDK matching your Gradle version"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Install the Flutter SDK",
+          "text": "Extract the Flutter SDK to a short path without spaces and add its bin directory to PATH.",
+          "url": "https://lkowalskil.github.io/install-flutter-windows-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Install the Android SDK",
+          "text": "Install Android Studio, or the standalone command line tools, and install a platform and build tools through the SDK manager.",
+          "url": "https://lkowalskil.github.io/install-flutter-windows-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Install a matching JDK",
+          "text": "Install a JDK version compatible with the Gradle release your project uses and set JAVA_HOME to it.",
+          "url": "https://lkowalskil.github.io/install-flutter-windows-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Point Flutter at the JDK",
+          "text": "Run flutter config --jdk-dir so Flutter uses the same JDK as your Gradle builds.",
+          "url": "https://lkowalskil.github.io/install-flutter-windows-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Accept the Android licences",
+          "text": "Run flutter doctor --android-licenses and accept each licence.",
+          "url": "https://lkowalskil.github.io/install-flutter-windows-guide.html#install"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Verify the toolchain",
+          "text": "Run flutter doctor -v and resolve anything that is not a tick before building.",
+          "url": "https://lkowalskil.github.io/install-flutter-windows-guide.html#install"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+</head>
+
+<body class="guide-page">
+    <a class="skip-link" href="#article">Skip to the guide</a>
+
+    <header class="site-header">
+        <a class="header-brand" href="index.html"><span class="mark" aria-hidden="true"></span>NYXELIUM</a>
+        <a class="header-back" href="guides.html">← ALL GUIDES</a>
+        <nav class="header-nav" aria-label="Primary">
+            <a href="index.html#apps">Apps</a>
+            <a href="guides.html">Guides</a>
+        </nav>
+        <a class="header-cta" href="index.html#apps">Get the apps <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+        <section class="guide-hero">
+            <div class="guide-hero-copy">
+                <p class="guide-kicker">WORKSHOP—10 · DEVELOPER SETUP · 12 MIN READ</p>
+                <h1 class="guide-title">A Flutter setup on Windows that reaches a release build.</h1>
+                <p class="guide-deck">Getting <em>flutter doctor</em> to show green ticks is the easy half. The half that stops people is the Android toolchain underneath it — command line tools, licences, and a JDK version that has to match whatever Gradle your project pins. This is the whole path, in order, with the failures named.</p>
+            </div>
+            <aside class="guide-hero-aside" aria-label="Guide summary">
+                <div class="guide-product">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="Nyxelium studio mark" decoding="async">
+                    <div>
+                        <span class="guide-label">WORKSHOP NOTE</span>
+                        <strong>Written from practice</strong>
+                        <p>This is the setup behind the Android apps on this site, minus the parts specific to them.</p>
+                    </div>
+                </div>
+                <ul class="guide-facts">
+                    <li>FLUTTER + ANDROID SDK</li>
+                    <li>JDK AND GRADLE MATCHING</li>
+                    <li>FVM VERSION PINNING</li>
+                    <li>SEVEN FAILURES NAMED</li>
+                </ul>
+            </aside>
+        </section>
+
+        <div id="article" class="article-shell">
+            <aside class="article-rail" aria-label="On this page">
+                <div class="article-rail-inner">
+                    <p class="guide-label">ON THIS PAGE</p>
+                    <nav>
+                        <a href="#pieces">What you install</a>
+                        <a href="#install">The install order</a>
+                        <a href="#jdk">The JDK question</a>
+                        <a href="#versions">Managing Flutter versions</a>
+                        <a href="#devices">Emulator or device</a>
+                        <a href="#failures">Common failures</a>
+                        <a href="#answers">Quick answers</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <article class="article-body">
+                <section id="pieces" class="article-section">
+                    <p class="guide-label">01 · THE PIECES</p>
+                    <h2>Five separate things, one of which everyone forgets.</h2>
+                    <p class="lede">Flutter on Windows is not one download. Understanding what each piece does turns most setup errors into obvious ones.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Component</th><th>What it is</th><th>Needed for</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Flutter SDK</td><td>The framework, the Dart SDK and the flutter tool</td><td>Everything</td></tr>
+                          <tr><td>Android SDK platform</td><td>The API level your app compiles against</td><td>Any Android build</td></tr>
+                          <tr><td>Android build tools and platform tools</td><td>The packaging tools, plus adb</td><td>Building and installing to devices</td></tr>
+                          <tr><td>A JDK</td><td>Java runtime and compiler that Gradle runs on</td><td>Every Gradle build. This is the piece people forget.</td></tr>
+                          <tr><td>Command line tools</td><td>sdkmanager and the licence machinery</td><td>Accepting licences, installing SDK packages without the IDE</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Android Studio bundles most of this</strong>, which is why it remains the easiest route even if you intend to work in another editor. The alternative — the standalone command line tools — is leaner and better for CI, but you install and wire each piece yourself.</p>
+                </section>
+
+                <section id="install" class="article-section">
+                    <p class="guide-label">02 · INSTALLATION</p>
+                    <h2>Install in this order, and check after each step.</h2>
+                    <div class="step-grid">
+                      <div class="step">
+                        <span class="step-num">STEP—01</span>
+                        <strong>Flutter SDK</strong>
+                        <p>Extract to a short path with no spaces, such as <code>C:\src\flutter</code>. Never under Program Files: the tool writes into its own directory and will hit permission errors there.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—02</span>
+                        <strong>PATH</strong>
+                        <p>Add <code>C:\src\flutter\bin</code> to the user PATH, then open a new terminal. <code>flutter --version</code> should answer.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—03</span>
+                        <strong>Android SDK</strong>
+                        <p>Install Android Studio and, in the SDK Manager, add a platform, the build tools and — on the SDK Tools tab — the <em>Android SDK Command-line Tools</em>. That last checkbox is the most commonly missed item in the entire setup.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—04</span>
+                        <strong>JDK</strong>
+                        <p>Install a JDK that matches the Gradle version your projects use, and set <code>JAVA_HOME</code>. Section three explains how to pick the number.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—05</span>
+                        <strong>Licences</strong>
+                        <p>Run <code>flutter doctor --android-licenses</code> and accept them all. Builds fail with an unhelpful message until you do.</p>
+                      </div>
+                      <div class="step">
+                        <span class="step-num">STEP—06</span>
+                        <strong>Verify</strong>
+                        <p>Run <code>flutter doctor -v</code>. Resolve everything that is not a tick before writing any code — a warning here becomes a confusing build error later.</p>
+                      </div>
+                    </div>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · VERIFY AND CONFIGURE</div>
+                      <pre><code>flutter --version
+flutter doctor -v
+
+# Tell Flutter which JDK to use for Gradle builds
+flutter config --jdk-dir "C:\Program Files\Eclipse Adoptium\jdk-21"
+
+# Tell Flutter where the Android SDK lives, if it did not find it
+flutter config --android-sdk "C:\Users\you\AppData\Local\Android\Sdk"
+
+# Accept every Android licence
+flutter doctor --android-licenses</code></pre>
+                    </div>
+                </section>
+
+                <section id="jdk" class="article-section">
+                    <p class="guide-label">03 · THE JDK</p>
+                    <h2>Match the JDK to Gradle, not to the newest release.</h2>
+                    <p class="lede">More Flutter build failures trace back to a JDK and Gradle mismatch than to anything in Dart. The rule is simple: Gradle decides, not you.</p>
+                    <p>Each Gradle release supports a bounded range of Java versions, and the Android Gradle Plugin adds its own minimum on top. Installing the newest JDK because it is newest produces the error people paste into search engines most often: <em>Unsupported class file major version</em>.</p>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Situation</th><th>Do this</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>New project, current Flutter</td><td>Use the JDK bundled with your Android Studio version, or a current LTS release, and let the template pick Gradle</td></tr>
+                          <tr><td>Older project that will not build</td><td>Read the Gradle version in gradle-wrapper.properties, then install the JDK that release supports</td></tr>
+                          <tr><td>Unsupported class file major version</td><td>Your JDK is newer than Gradle supports. Point at an older JDK or upgrade Gradle and the Android Gradle Plugin together.</td></tr>
+                          <tr><td>Several projects on different Gradle versions</td><td>Install more than one JDK and switch JAVA_HOME per project rather than upgrading everything at once</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · FIND OUT WHAT A PROJECT ACTUALLY USES</div>
+                      <pre><code># The Gradle version the project pins
+Get-Content android\gradle\wrapper\gradle-wrapper.properties
+
+# Which JDK Gradle is currently running on
+cd android; .\gradlew --version; cd ..
+
+# Which JDK is on PATH right now
+java -version
+echo $env:JAVA_HOME</code></pre>
+                    </div>
+                    <div class="note note-warn">
+                      <p><strong>Do not upgrade Gradle to fix a JDK error on a project that ships.</strong> Raising Gradle usually forces an Android Gradle Plugin upgrade, which can force plugin and dependency updates across the project. Install the older JDK, get a green build, and schedule the upgrade as its own piece of work.</p>
+                    </div>
+                </section>
+
+                <section id="versions" class="article-section">
+                    <p class="guide-label">04 · VERSION MANAGEMENT</p>
+                    <h2>Pin the Flutter SDK per project once you have two.</h2>
+                    <p class="lede">Flutter upgrades occasionally change behaviour that a shipped app depends on. Pinning the SDK per project makes that a scheduled decision rather than a surprise.</p>
+                    <h3>The built-in route</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · CHANNELS AND VERSIONS</div>
+                      <pre><code>flutter channel stable
+flutter upgrade
+
+# Pin the global SDK to a specific release
+flutter downgrade 3.24.0</code></pre>
+                    </div>
+                    <h3>The per-project route</h3>
+                    <p>FVM (Flutter Version Management) installs SDK versions side by side and selects one per repository, in the same spirit as a Node version manager:</p>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · FVM</div>
+                      <pre><code>dart pub global activate fvm
+
+# In the project directory: pin and use a version
+fvm use 3.24.0
+
+# Run commands against the pinned SDK
+fvm flutter pub get
+fvm flutter build appbundle --release</code></pre>
+                    </div>
+                    <p>Commit the FVM configuration file. Point your editor&rsquo;s Flutter SDK path at the project&rsquo;s <code>.fvm</code> directory so analysis and the command line agree — a mismatch there produces analyser errors that do not reproduce in a build, which is a genuinely irritating way to lose an afternoon.</p>
+                    <div class="note">
+                      <p><strong>Pin the SDK before your first release, not after.</strong> Reproducing a build from six months ago is only possible if you wrote down which SDK made it.</p>
+                    </div>
+                </section>
+
+                <section id="devices" class="article-section">
+                    <p class="guide-label">05 · RUNNING IT</p>
+                    <h2>Emulator, physical device, or both.</h2>
+                    <h3>The emulator</h3>
+                    <ul>
+                      <li><strong>Enable hardware acceleration.</strong> On Windows this means the Windows Hypervisor Platform feature. Without it the emulator is slow enough to be useless.</li>
+                      <li><strong>Use an x86_64 system image.</strong> ARM images run under translation and are dramatically slower.</li>
+                      <li><strong>Give it a realistic device profile.</strong> A phone-sized window catches layout problems that a large emulator hides.</li>
+                      <li><strong>Cold boot when something is stuck.</strong> A corrupted snapshot explains a surprising share of &ldquo;the emulator will not start&rdquo; reports.</li>
+                    </ul>
+                    <h3>A physical device</h3>
+                    <div class="cmd">
+                      <div class="cmd-head">POWERSHELL · CONNECT A PHONE</div>
+                      <pre><code># Enable developer options and USB debugging on the phone first
+adb devices
+flutter devices
+flutter run
+
+# Wireless, on Android 11 and later
+adb pair 192.168.1.50:41234
+adb connect 192.168.1.50:5555</code></pre>
+                    </div>
+                    <p>Always test on real hardware before release. Emulators do not reproduce actual performance, real notification behaviour, aggressive vendor battery optimisation, or how the app behaves when the system reclaims memory. The <a href="android-adb-setup-guide.html">ADB guide</a> covers the device side in more detail.</p>
+                </section>
+
+                <section id="failures" class="article-section">
+                    <p class="guide-label">06 · FAILURES</p>
+                    <h2>Seven errors, and what each one actually means.</h2>
+                    <div class="table-wrap">
+                      <table class="spec-table">
+                        <thead>
+                          <tr><th>Message</th><th>Meaning</th><th>Fix</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>cmdline-tools component is missing</td><td>The command line tools package was not installed</td><td>SDK Manager, SDK Tools tab, tick Android SDK Command-line Tools</td></tr>
+                          <tr><td>Android licence status unknown</td><td>Licences not accepted for this SDK installation</td><td>flutter doctor --android-licenses, then accept each one</td></tr>
+                          <tr><td>Unsupported class file major version</td><td>JDK newer than the project Gradle supports</td><td>Install a matching JDK and set JAVA_HOME and the Flutter jdk-dir</td></tr>
+                          <tr><td>Gradle task assembleDebug failed</td><td>A generic wrapper around the real error</td><td>Run gradlew assembleDebug --stacktrace inside android for the actual cause</td></tr>
+                          <tr><td>Filename too long</td><td>Windows path limit inside a deep build tree</td><td>Move the project near the drive root, or enable long paths</td></tr>
+                          <tr><td>Waiting for another flutter command to release the startup lock</td><td>A stale lock file from a killed process</td><td>Close every editor, then delete the lockfile in the Flutter SDK bin cache</td></tr>
+                          <tr><td>Builds are extremely slow</td><td>Antivirus scanning the build output</td><td>Exclude the project, the Flutter SDK and the Gradle cache from real-time scanning</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="note note-good">
+                      <p><strong>When a build fails, read the Gradle error, not the Flutter one.</strong> Change into the <code>android</code> directory and run the Gradle task directly with <code>--stacktrace</code>. Flutter summarises; Gradle tells you which dependency, which plugin and which line.</p>
+                    </div>
+                </section>
+
+                <section id="answers" class="article-section">
+                    <p class="guide-label">07 · QUICK ANSWERS</p>
+                    <h2>Flutter on Windows, briefly.</h2>
+                    <div class="quick-answers">
+                        <div class="quick-answer">
+                            <strong>Do I need Android Studio to use Flutter?</strong>
+                            <p>You need the Android SDK, and Android Studio is the simplest way to get it along with the emulator and SDK manager. You can install the standalone command line tools instead and work entirely in another editor, which is leaner and better suited to CI, but you then wire up each component yourself.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Which JDK version should I use with Flutter?</strong>
+                            <p>The one your project Gradle version supports, not necessarily the newest. Check the Gradle version in android/gradle/wrapper/gradle-wrapper.properties, install a JDK in its supported range, set JAVA_HOME, and point Flutter at it with flutter config --jdk-dir. Installing the newest JDK is the usual cause of the unsupported class file major version error.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>What does the cmdline-tools component is missing error mean?</strong>
+                            <p>The Android SDK Command-line Tools package is not installed. Open the SDK Manager in Android Studio, go to the SDK Tools tab, tick Android SDK Command-line Tools and apply. This package provides sdkmanager and the licence machinery, so licence acceptance also fails without it.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Should I use FVM for Flutter versions?</strong>
+                            <p>Once you maintain more than one app, yes. FVM installs Flutter SDK versions side by side and pins one per repository, so upgrading the SDK becomes a deliberate per-project decision instead of a global change. Commit the configuration and point your editor at the project SDK path so the analyser and the build agree.</p>
+                        </div>
+                        <div class="quick-answer">
+                            <strong>Why are my Flutter builds so slow on Windows?</strong>
+                            <p>Usually antivirus real-time scanning over the build output, the Gradle cache and the Flutter SDK, which are all directories full of thousands of small files. Add exclusions for the project directory, the Flutter SDK and the Gradle home directory. A deep path near the Windows path length limit is the second most common cause.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="related-guides" aria-label="Related guides">
+                    <span class="guide-label">KEEP READING</span>
+                    <div class="related-guide-grid">
+                        <a href="android-adb-setup-guide.html"><strong>Set up ADB and use it properly</strong><span aria-hidden="true">→</span></a>
+                        <a href="git-ssh-keys-github-guide.html"><strong>SSH keys and signed commits for GitHub</strong><span aria-hidden="true">→</span></a>
+                        <a href="wsl2-setup-windows-guide.html"><strong>Set up WSL2 properly on Windows</strong><span aria-hidden="true">→</span></a>
+                    </div>
+                </aside>
+
+                <aside class="product-callout">
+                    <img src="assets/img/nyxelium-logo.png" width="512" height="512" alt="" loading="lazy" decoding="async">
+                    <div>
+                        <span class="guide-label">FROM THE STUDIO</span>
+                        <strong>Nyxelium — offline-first Android apps</strong>
+                        <p>Every app on this site is built with exactly this toolchain and shipped from a Windows machine.</p>
+                    </div>
+                    <a class="btn btn-accent btn-sm" href="index.html#apps">See the apps →</a>
+                </aside>
+            </article>
+        </div>
+    </main>
+
+    <footer class="guide-footer">
+        <div class="footer-bottom">
+            <span class="footer-copy"><span class="mark" aria-hidden="true"></span>© 2026 NYXELIUM</span>
+            <div class="footer-legal">
+                <a href="guides.html">ALL GUIDES</a>
+                <a href="index.html">STUDIO HOME</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <span>LAST REVIEWED · SEPTEMBER 2026</span>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+</body>
+
+</html>

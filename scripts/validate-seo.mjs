@@ -9,6 +9,8 @@ const failures = [];
 const seenTitles = new Map();
 const seenCanonicals = new Map();
 const noindexCanonicals = new Map();
+const alternateSets = new Map();
+const pageLanguages = new Map();
 
 function capture(html, pattern) {
   return html.match(pattern)?.[1]?.replace(/\s+/g, ' ').trim();
@@ -74,6 +76,22 @@ for (const file of files) {
   const favicon = capture(html, /<link\b(?=[^>]*\brel=["']icon["'])[^>]*\bhref=["']([^"']+)["'][^>]*>/i);
   const expectedCanonical = canonicalFor(file);
   const h1Count = [...html.matchAll(/<h1\b/gi)].length;
+
+  // Translated editions are only useful to search engines when the whole
+  // hreflang set agrees; collect it here and check reciprocity below.
+  pageLanguages.set(file, capture(html, /<html\b[^>]*\blang=["']([^"']+)["']/i));
+  const alternates = new Map();
+  for (const match of html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])[^>]*>/gi)) {
+    const hreflang = attribute(match[0], 'hreflang');
+    const href = attribute(match[0], 'href');
+    if (!hreflang || !href) {
+      failures.push(`${file}: alternate link needs both hreflang and href`);
+      continue;
+    }
+    if (alternates.has(hreflang)) failures.push(`${file}: duplicate hreflang ${hreflang}`);
+    alternates.set(hreflang, href);
+  }
+  if (alternates.size) alternateSets.set(file, alternates);
 
   if (!title) failures.push(`${file}: missing title`);
   if (!description) failures.push(`${file}: missing meta description`);
@@ -205,6 +223,36 @@ for (const [canonical, file] of noindexCanonicals) {
 }
 for (const loc of sitemapUrls.keys()) {
   if (!seenCanonicals.has(loc)) failures.push(`sitemap.xml: URL is not an indexable canonical ${loc}`);
+}
+
+// An hreflang set is ignored unless every edition points at every other one,
+// itself included, and each target agrees. A one-way declaration is dead weight.
+for (const [file, alternates] of alternateSets) {
+  const lang = pageLanguages.get(file);
+  if (!lang) {
+    failures.push(`${file}: page with hreflang alternates must declare an html lang`);
+  } else if (alternates.get(lang) !== canonicalFor(file)) {
+    failures.push(`${file}: hreflang set must reference itself as ${lang}`);
+  }
+  if (!alternates.has('x-default')) failures.push(`${file}: hreflang set is missing x-default`);
+
+  for (const [hreflang, url] of alternates) {
+    if (hreflang === 'x-default') continue;
+    const target = localPath(url);
+    const mirrored = alternateSets.get(target);
+    if (!mirrored) {
+      failures.push(`${file}: ${target} is the ${hreflang} alternate but declares no alternates back`);
+      continue;
+    }
+    if (pageLanguages.get(target) !== hreflang) {
+      failures.push(`${file}: declares ${target} as ${hreflang}, but that page is lang="${pageLanguages.get(target)}"`);
+    }
+    for (const [otherLang, otherUrl] of alternates) {
+      if (mirrored.get(otherLang) !== otherUrl) {
+        failures.push(`${file}: ${target} does not mirror the ${otherLang} alternate`);
+      }
+    }
+  }
 }
 
 const robotsText = await readFile(resolve(root, 'robots.txt'), 'utf8');
